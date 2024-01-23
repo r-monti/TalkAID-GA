@@ -1,45 +1,22 @@
-from Connection import Connector # Se la classe si chiama Connector
+from Connection import Connector
 import mysql.connector
 
-def seleziona_user(id):
-    # Usa la classe Connector per ottenere una connessione
+
+def informationUser(ID):
+    """
+    Take Condition information of patient
+    :Arg ID: ID of the patient that you want the information
+    :return List: list of all condition parameter of the patient
+    """
     connessione = Connector.Connector()
-    try:
-        if connessione.get_connection() is not None:
-            cursor = connessione.get_connection().cursor(dictionary=True)
-            query = "SELECT * FROM user WHERE ID = %s"
-            parametro = (id,)
-            cursor.execute(query,parametro)
-
-            records = cursor.fetchall()
-
-
-
-            if(len(records)==0):
-                return None
-            else:
-                for record in records:
-                    print(record["ID_Therapist"])
-
-    except mysql.connector.Error as e:
-        print("Error while connecting to MySQL", e)
-        return None
-    finally:
-        if connessione.get_connection() is not None:
-            cursor.close()
-            connessione.get_connection().close()
-            print("MySQL connection is closed")
-
-def takeInfoUser(id):
-    connessione = Connector.Connector()
-    condizioni={}
+    cursor = None
+    patologie = {}
     try:
         if connessione.get_connection() is not None:
             cursor = connessione.get_connection().cursor(dictionary=True)
             query = """
                     SELECT
                         pc.ID_condition AS ConditionID,
-                        c.DisorderName AS ConditionName,
                         pc.Severity,
                         pc.WritingSeverity,
                         pc.ReadingSeverity
@@ -50,26 +27,27 @@ def takeInfoUser(id):
                     WHERE
                         pc.ID_patient = %s;
                             """
-            parametro = (id,)
+            parametro = (ID,)
             cursor.execute(query, parametro)
 
             records = cursor.fetchall()
 
-            if (len(records) == 0):
-                return None
+            if len(records) == 0:
+                return dict()
             else:
                 for record in records:
-                    tupla=(record["Severity"],
-                           record["WritingSeverity"],
-                           record["ReadingSeverity"])
-                    condizioni[record["ConditionID"]]=tupla
-                return condizioni
+                    tupla = (record["Severity"],
+                             record["WritingSeverity"],
+                             record["ReadingSeverity"])
+                    patologie[record["ConditionID"]] = tupla
+                return patologie
 
     except mysql.connector.Error as e:
-        print("Error while connecting to MySQL", e)
+        print("Error while connecting to MySQL ", e)
         return None
     finally:
         if connessione.get_connection() is not None:
-            cursor.close()
+            if cursor is not None:
+                cursor.close()
             connessione.get_connection().close()
-            print("MySQL connection is closed")
+            print("MySQL connection is closed.")
