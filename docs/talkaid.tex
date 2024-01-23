@@ -1,0 +1,78 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{TalkAID}
+\author{
+    Anna Benedetta Salerno\\
+    \and
+    Michele D'Arienzo\\
+    \and
+    Raffaele Monti\\
+    \and
+    Luigi Petrillo\\
+    \and
+    Samuele Sparno\\
+}
+\date{23 Gennaio 2024}
+
+\begin{document}
+
+    \maketitle
+
+    \section{Introduzione}
+
+    Il progetto TALKAID rappresenta davvero un passo avanti significativo nel campo della riabilitazione e del supporto alle persone con disabilità del linguaggio. La possibilità di offrire trattamenti completamente a distanza e in maniera asincrona è un'innovazione che potrebbe aprire nuove opportunità per un numero ancora maggiore di individui affetti da queste patologie.
+
+    I metodi tradizionali potrebbero non essere altamente personalizzati alle esigenze specifiche dei pazienti, poiché potrebbe essere difficile adattarli in modo rapido ed efficiente.
+
+    La registrazione e il monitoraggio dei progressi dei pazienti potrebbero essere complessa e limitata a causa della mancanza di strumenti tecnologici dedicati.
+
+    La componente di Intelligenza Artificiale è ritenuta fondamentale ai nostri obiettivi siccome aggiunge un livello di personalizzazione e adattabilità, permettendo ai pazienti di ricevere esercizi mirati in base al loro grado di severità della patologia. Questo non solo rende il trattamento più efficace, ma anche più agevole per i logopedisti, in quanto saranno aiutati dall'IA nella scelta degli esercizi migliori. I pazienti verranno incoraggiati a perseguire con impegno il percorso di miglioramento attraverso le loro statistiche.
+
+    \section{Obiettivi}
+
+    Lo scopo del nostro progetto è quello di realizzare un agente intelligente che possa:
+
+    • Consigliare un insieme di esercizi mirato per paziente, basandosi sull'esperienza del paziente o sul lasso di tempo passato dall'ultima interazione con quella tipologia di esercizio;
+
+    • Migliorare il sistema di consigli nel tempo, facendolo evolvere sulla base dei feedback del logopedista, il quale deciderà se un esercizio è appropriato o meno;
+
+    \section{Modello PEAS}
+
+    • Performance:
+
+    Le prestazioni dell’agente sono valutate attraverso le seguenti misure:
+
+    la sua capacità di consigliare esercizi più il mirati possibile per il paziente in base alla patologia
+
+    il punteggio dell'esercizio che il paziente ha effettuato su quell'esercizio
+
+    quanto tempo è passato dall'ultima volta che il paziente ha svolto l'esercizio
+
+    • Environment:
+
+    L’ambiente è:
+
+    Completamente osservabile, in quanto si ha accesso a tutte le informazioni relative ai pazienti, in particolare le patologie e gli esercizi svolti, e alla lista degli esercizi svolti per ogni paziente;
+
+    Non deterministico, in quanto lo stato dell’ambiente cambia indipendentemente dalle azioni dell’agente;
+
+    Sequenziale, in quanto le esercitazioni effettuate dai pazienti e le scelte del logopedista influenzano le decisioni future dell’agente;
+
+    Dinamico, in quanto nel corso delle elaborazioni dell’agente, un paziente potrebbe svolgere un esercizio, cambiando in tal modo le sue esigenze;
+
+    Discreto, Il numero di percezioni dell’agente è limitato in quanto ha un numero discreto di patologie, esercizi, pazienti, azioni e percezioni possibili;
+
+    A singolo agente, in quanto l’unico agente che opera in questo ambiente è quello in oggetto.
+
+    • Actuators:
+
+    Pagina web dove viene creata una lista di esercizi in maniera tabellare consigliata per ogni paziente.
+
+    • Sensors:
+
+    Gli esercizi svolti dal paziente, gli esercizi assegnati al paziente da parte del logopedista, il punteggio per esercizio del paziente, e il tempo passato dall'ultima volta che il paziente ha effettuato l'esercizio.
+
+    Il dataset è un riadattamento del database utilizzato dal sito web principale, eliminando gli attributi non necessari e aggiungendo gli attributi gravità di lettura e scrittura, necessari al fine di poter avere una più completa visualizzazione delle necessità reali del paziente
+
+\end{document}
