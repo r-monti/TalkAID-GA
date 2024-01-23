@@ -3,7 +3,7 @@ import random
 
 def randomSelection(population):
     """
-    This method randomly selects an individual and creates a new population
+    This function generates a new population based on the Random selection algorithm
     :param population: the starting population
     :return: a new population after selection
     """

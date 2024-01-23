@@ -2,9 +2,9 @@ from random import random
 from GA.Selection.selectionUtility import normalize
 
 
-def RouletteWheel(population):
+def rouletteWheel(population):
     """
-    This funcion selects one individual based on the Roulette Wheel selection algorithm
+    This function generates a new population based on the Roulette Wheel selection algorithm
     :param population: the starting population
     :return: a new population after selection
     """

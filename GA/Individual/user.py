@@ -8,7 +8,7 @@ class User:
         :param conditions: a dictionary with the conditions and their severities,
                 dict{conditionID: (Severity, WritingSeverity, ReadingSeverity)}
         :param exercises: last 50 exercises done,
-                dict{exerciseID: (CompletionDate, Evaluation, Feedback, Difficulty, Type)}
+                dict{exerciseID: (Exercise)}
         """
 
         self._ID = ID

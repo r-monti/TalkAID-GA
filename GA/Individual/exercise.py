@@ -25,6 +25,9 @@ class Exercise:
         self._lastCompletionDate = lastCompletionDate
         self._lastFeedback = lastFeedback
 
+    def __str__(self):
+        return "ExerciseID: {}, ExerciseType: {}, Valutation: {}".format(self._exerciseID, self._exType, self._lastEvaluation)
+
     def getFitnessValue(self):
         return self._fitnessValue
 

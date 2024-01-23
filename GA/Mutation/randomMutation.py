@@ -1,4 +1,5 @@
 import random
+import DataBase.DBExercise as db
 
 
 def randomMutation(p, mutationRate):
@@ -9,26 +10,20 @@ def randomMutation(p, mutationRate):
     :return: the population after mutation
     """
     if random.random() < mutationRate:
-        i = randomSelect(p)
-        # mutate(i)
+        i = random.choice(p)
+        p = mutate(i, p)
+
+    return p
 
 
-def randomSelect(p):
-    """
-    This function will randomly select an individual
-    :param p: the population
-    :return: the individual selected
-    """
-    random_index = random.randint(0, len(p) - 1)
-    return p[random_index]
-
-
-def mutate(i):
+def mutate(i, population):
     """
     This function will mutate the individual of the population
+    :param population: the starting population
     :param i: the individual to replace
-    :return: the new individual
+    :return: the population with a new individual
     """
-    # database.replace(i) # TODO: implement database connection
-    pass
+    index = population.index(i)
+    population[index] = db.seleziona_esercizio_casuale(population.getUserID)
 
+    return population
