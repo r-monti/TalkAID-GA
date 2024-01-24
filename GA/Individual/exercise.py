@@ -26,7 +26,10 @@ class Exercise:
         self._lastFeedback = lastFeedback
 
     def __str__(self):
-        return "ExerciseID: {}, ExerciseType: {}, Valutation: {}".format(self._exerciseID, self._exType, self._lastEvaluation)
+        return "Exercise ID: {}, Exercise Type: {}".format(self._exerciseID, self._exType)
+
+    def __repr__(self):
+        return "ID: {}".format(self._exerciseID)
 
     def getFitnessValue(self):
         return self._fitnessValue

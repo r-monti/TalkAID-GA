@@ -1,7 +1,7 @@
-def divide(lst, n):
+def divide(lst: list, n: int) -> list:
     """
-    Divides an individual in n parts
-    :param lst: the individual to divide
+    Divides an individual's list in n parts
+    :param lst: the individual's list of exercises to divide
     :param n: the number of parts
     :return: a list with the divided parts
     """

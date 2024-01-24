@@ -1,16 +1,15 @@
-from Connection import Connector
 import mysql.connector
+from Connection.DBConnector import Connector
 from GA.Individual.exercise import Exercise
 
 
-def seleziona_esercizi_non_fatti(ID):
+def seleziona_esercizi_non_fatti(ID: int) -> list:
     """
-    Find exercise not done from patient
-    :Arg ID: patient ID for search of exercise not done
-    :return list: return a list of exercise class not done from patient
+    Finds exercise not done by the User
+    :param ID: the patient's ID
+    :return: a list of exercise class not done from the User
     """
-    # Usa la classe Connector per ottenere una connessione
-    connessione = Connector.Connector()
+    connessione = Connector()
     lista = []
     cursor = None
     try:
@@ -52,13 +51,13 @@ def seleziona_esercizi_non_fatti(ID):
             print("MySQL connection is closed.")
 
 
-def seleziona_esercizi_fatti(ID):
+def seleziona_esercizi_fatti(ID: int) -> dict:
     """
-     Find exercises done from Patient
-    :Arg ID: patient ID for search the exercises
-    :return: dict: dict that contains last 50 exercises from patient
+    Finds exercises done from the User
+    :param ID: the patient's ID
+    :return: a dict that contains the last 50 exercises done
     """
-    connessione = Connector.Connector()
+    connessione = Connector()
     cursor = None
     esercizi = {}
     try:
@@ -113,66 +112,68 @@ def seleziona_esercizi_fatti(ID):
             connessione.get_connection().close()
             print("MySQL connection is closed.")
 
-def seleziona_esercizio_casuale(ID):
+
+def seleziona_esercizi_casuale(n: int, ID: int) -> list[Exercise]:
     """
-       Select random exercise from DB
-       :param:
-       :return Exercise: a class Exercise
+    Selects random exercises from DB
+    :param n: the number of exercises to retrieve
+    :param ID: the patient's ID
+    :return: a list of Exercise instances
     """
-    connessione = Connector.Connector()
+    connessione = Connector()
+    lst = list()
     cursor = None
     try:
         if connessione.get_connection() is not None:
             cursor = connessione.get_connection().cursor(dictionary=True)
-            cursor2 = connessione.get_connection().cursor(dictionary=True)
             query = """
-                        SELECT *
-                        FROM exercise_glossary
-                        ORDER BY RAND()
-                        LIMIT 1;
+                        SELECT
+                          eg_random.ID_exercise,
+                          eg_random.Difficulty,
+                          eg_random.Target,
+                          eg_random.Type,
+                          DATE_FORMAT(e.CompletionDate, '%Y-%m-%d') AS ExerciseCompletionDate,
+                          e.Evaluation,
+                          e.Feedback
+                        FROM (
+                          SELECT *
+                          FROM exercise_glossary
+                          ORDER BY RAND()
+                          LIMIT %s
+                        ) AS eg_random
+                        LEFT JOIN exercise e ON eg_random.ID_exercise = e.ID_exercise
+                          AND e.ID_user = %s
+                          AND e.InsertionDate = (
+                            SELECT MAX(InsertionDate)
+                            FROM exercise
+                            WHERE ID_exercise = eg_random.ID_exercise
+                              AND ID_user = %s
+                          )
+                        ORDER BY e.InsertionDate DESC;
                     """
-            cursor.execute(query)
-            record = cursor.fetchone()
+            parametro = (n, ID, ID,)
+            cursor.execute(query, parametro)
+            records = cursor.fetchall()
 
-            secondQuery = """
-                    SELECT DATE_FORMAT(e.CompletionDate, '%Y-%m-%d') AS ExerciseCompletionDate,
-                     e.Evaluation,
-                      e.Feedback
-                    FROM exercise e
-                    JOIN exercise_glossary eg ON e.ID_exercise = eg.ID_exercise
-                    WHERE e.ID_user = %s AND e.ID_exercise = %s
-                    ORDER BY e.InsertionDate DESC
-                    LIMIT 1;
-                """
-            parametro = (ID, record["ID_exercise"],)
-            cursor2.execute(secondQuery, parametro)
+            if records is not None:
+                for record in records:
+                    esercizio = Exercise(record["ID_exercise"],
+                                         record["Difficulty"],
+                                         record["Target"],
+                                         record["Type"],
+                                         record["Evaluation"],
+                                         record["ExerciseCompletionDate"],
+                                         record["Feedback"])
+                    lst.append(esercizio)
 
-            secondRecord = cursor2.fetchone()
-
-            if(secondRecord is not None):
-                esercizio = Exercise(record["ID_exercise"],
-                                     record["Difficulty"],
-                                     record["Target"],
-                                     record["Type"],
-                                     secondRecord["Evaluation"],
-                                     secondRecord["ExerciseCompletionDate"],
-                                     secondRecord["Feedback"])
-            else:
-                esercizio = Exercise(record["ID_exercise"],
-                                     record["Difficulty"],
-                                     record["Target"],
-                                     record["Type"],
-                                     None,
-                                     None,
-                                     None)
-            return esercizio
+            return lst
 
     except mysql.connector.Error as e:
         print("Error while connecting to MySQL ", e)
-        return None
+        return list()
     finally:
         if connessione.get_connection() is not None:
             if cursor is not None:
                 cursor.close()
             connessione.get_connection().close()
-            print("MySQL connection is closed.")
+            # print("MySQL connection is closed.")

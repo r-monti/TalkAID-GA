@@ -1,14 +1,14 @@
-from Connection import Connector
 import mysql.connector
+from Connection.DBConnector import Connector
 
 
-def informationUser(ID):
+def informationUser(ID: int) -> dict:
     """
-    Take Condition information of patient
-    :Arg ID: ID of the patient that you want the information
-    :return List: list of all condition parameter of the patient
+    Takes the Condition's information of a patient
+    :param ID: the patient's ID
+    :return: a dict of all conditions of the patient
     """
-    connessione = Connector.Connector()
+    connessione = Connector()
     cursor = None
     patologie = {}
     try:
@@ -44,7 +44,7 @@ def informationUser(ID):
 
     except mysql.connector.Error as e:
         print("Error while connecting to MySQL ", e)
-        return None
+        return dict()
     finally:
         if connessione.get_connection() is not None:
             if cursor is not None:

@@ -15,6 +15,9 @@ class User:
         self._conditions = conditions
         self._exercises = exercises
 
+    def __str__(self):
+        return f"User ID: {self._ID}"
+
     def getID(self):
         return self._ID
 

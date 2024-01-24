@@ -1,9 +1,10 @@
 import mysql.connector
-from mysql.connector.errors import Error
 
 
 class Connector:
-
+    """
+    This class is responsible for connecting to MySQL Database
+    """
     def __init__(self):
         self._connection = None
         try:
@@ -13,8 +14,8 @@ class Connector:
                                                        user='nicro',
                                                        password='pwd',
                                                        )
-            if self._connection.is_connected():
-                print("Connected to MySQL Server!")
+            # if self._connection.is_connected():
+            #    print("Connected to MySQL Server!")
 
         except mysql.connector.Error as e:
             print("Error while connecting to MySQL, ", e)
