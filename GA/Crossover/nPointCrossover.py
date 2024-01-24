@@ -1,8 +1,9 @@
 from random import random
 from GA.Crossover.crossoverUtility import divide
+from GA.Individual.exerciseIndividual import Individual
 
 
-def nPoint(n, i1, i2):
+def nPoint(n: int, i1: Individual, i2: Individual) -> tuple[Individual, Individual]:
     """
     This function will perform n-point crossover with perfect interleaving
     :param n: number of points
@@ -15,7 +16,7 @@ def nPoint(n, i1, i2):
     elif n > len(i1):
         raise ValueError("Invalid n value, must be less than the lenght of the individual!")
 
-    dividedI1, dividedI2 = divide(i1, n), divide(i2, n)
+    dividedI1, dividedI2 = divide(i1.getList(), n), divide(i2.getList(), n)
 
     newI1 = []
     newI2 = []
@@ -28,10 +29,13 @@ def nPoint(n, i1, i2):
             newI1.extend(pair[1])
             newI2.extend(pair[0])
 
-    return newI1, newI2
+    i1.setList(newI1)
+    i2.setList(newI2)
+
+    return i1, i2
 
 
-def nPointReverse(n, i1, i2):
+def nPointReverse(n: int, i1: Individual, i2: Individual) -> tuple[Individual, Individual]:
     """
     This function will perform n-point crossover with perfect interleaving but starting with a switch
     :param n: number of points
@@ -44,7 +48,7 @@ def nPointReverse(n, i1, i2):
     elif n > len(i1):
         raise ValueError("Invalid n value, must be less than the lenght of the individual!")
 
-    dividedI1, dividedI2 = divide(i1, n), divide(i2, n)
+    dividedI1, dividedI2 = divide(i1.getList(), n), divide(i2.getList(), n)
 
     newI1 = []
     newI2 = []
@@ -57,10 +61,13 @@ def nPointReverse(n, i1, i2):
             newI1.extend(pair[0])
             newI2.extend(pair[1])
 
-    return newI1, newI2
+    i1.setList(newI1)
+    i2.setList(newI2)
+
+    return i1, i2
 
 
-def nPointRandom(n, i1, i2, crossoverProbability):
+def nPointRandom(n: int, i1: Individual, i2: Individual, crossoverProbability: float) -> tuple[Individual, Individual]:
     """
     This function will perform n-point crossover with random interleaving
     :param n: number of points
@@ -74,7 +81,7 @@ def nPointRandom(n, i1, i2, crossoverProbability):
     elif n > len(i1):
         raise ValueError("Invalid n value, must be less than the lenght of the individual!")
 
-    dividedI1, dividedI2 = divide(i1, n), divide(i2, n)
+    dividedI1, dividedI2 = divide(i1.getList(), n), divide(i2.getList(), n)
 
     newI1 = []
     newI2 = []
@@ -87,4 +94,7 @@ def nPointRandom(n, i1, i2, crossoverProbability):
             newI1.extend(pair[0])
             newI2.extend(pair[1])
 
-    return newI1, newI2
+    i1.setList(newI1)
+    i2.setList(newI2)
+
+    return i1, i2

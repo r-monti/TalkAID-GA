@@ -1,8 +1,9 @@
 from random import random
 from GA.Crossover.crossoverUtility import divide
+from GA.Individual.exerciseIndividual import Individual
 
 
-def uniformCrossover(i1, i2, crossoverProbability):
+def uniformCrossover(i1: Individual, i2: Individual, crossoverProbability: float) -> tuple[Individual, Individual]:
     """
     This function will perform uniform crossover
     :param i1: the first individual
@@ -14,7 +15,7 @@ def uniformCrossover(i1, i2, crossoverProbability):
     if len(i1) != len(i2):
         raise ValueError("Invalid individual length! They have to be the same.")
 
-    dividedI1, dividedI2 = divide(i1, len(i1)), divide(i2, len(i2))
+    dividedI1, dividedI2 = divide(i1.getList(), len(i1)), divide(i2.getList(), len(i2))
 
     newI1 = []
     newI2 = []
@@ -30,4 +31,7 @@ def uniformCrossover(i1, i2, crossoverProbability):
         else:
             newI2.extend(pair[1])
 
-    return newI1, newI2
+    i1.setList(newI1)
+    i2.setList(newI2)
+
+    return i1, i2

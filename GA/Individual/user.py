@@ -8,12 +8,15 @@ class User:
         :param conditions: a dictionary with the conditions and their severities,
                 dict{conditionID: (Severity, WritingSeverity, ReadingSeverity)}
         :param exercises: last 50 exercises done,
-                dict{exerciseID: (CompletionDate, Evaluation, Feedback, Difficulty, Type)}
+                dict{exerciseID: (Exercise)}
         """
 
         self._ID = ID
         self._conditions = conditions
         self._exercises = exercises
+
+    def __str__(self):
+        return f"User ID: {self._ID}"
 
     def getID(self):
         return self._ID
