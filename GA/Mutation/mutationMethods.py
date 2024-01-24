@@ -6,14 +6,14 @@ from GA.Individual.exerciseIndividual import Individual
 
 def randomSingleMutation(p: Population, mutationRate: float) -> Population:
     """
-    This function will randomly mutate an individual in a population
-    :param p: the population
-    :param mutationRate: probability of mutation
-    :return: the population after mutation
+    This function will randomly mutate an Individual in a Population.
+    :param p: The Population to mutate.
+    :param mutationRate: Probability of mutation.
+    :return: The population after mutation.
     """
     if random.random() < mutationRate:
         i = random.choice(p.getIndividuals())
-        userID = p.getUserId()
+        userID = p.getUser().getID()
         currGeneration = p.getGeneration()
         p.replaceIndividual(i, mutate(i, userID, currGeneration))
 
@@ -22,14 +22,14 @@ def randomSingleMutation(p: Population, mutationRate: float) -> Population:
 
 def mutate(i: Individual, userId: int, gen: int) -> Individual:
     """
-    This function will mutate a random exercise in an Individual
-    :param i: the individual to mutate
-    :param userId: the ID of the User
-    :param gen: the current generation
-    :return: the new Individual after mutation
+    This function will mutate a random exercise in an Individual.
+    :param i: The Individual to mutate.
+    :param userId: The ID of the User.
+    :param gen: The current generation.
+    :return: The new Individual after mutation.
     """
     oldEx = random.choice(i.getList())
-    newEx = db.seleziona_esercizi_casuale(1, userId)
+    newEx = db.select_random_exercise(1, userId)[0]
     i.replaceExercise(oldEx, newEx, gen)
 
     return i

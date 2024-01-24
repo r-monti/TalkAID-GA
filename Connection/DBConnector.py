@@ -3,7 +3,7 @@ import mysql.connector
 
 class Connector:
     """
-    This class is responsible for connecting to MySQL Database
+    This class is responsible for connecting to MySQL Database.
     """
     def __init__(self):
         self._connection = None
@@ -14,11 +14,16 @@ class Connector:
                                                        user='nicro',
                                                        password='pwd',
                                                        )
-            # if self._connection.is_connected():
+            if self._connection.is_connected():
+                pass
             #    print("Connected to MySQL Server!")
 
         except mysql.connector.Error as e:
             print("Error while connecting to MySQL, ", e)
 
     def get_connection(self):
+        """
+        This method returns the connection to the MySQL database.
+        :return: Connection instance.
+        """
         return self._connection

@@ -3,11 +3,11 @@ from Connection.DBConnector import Connector
 from GA.Individual.exercise import Exercise
 
 
-def seleziona_esercizi_non_fatti(ID: int) -> list:
+def select_exercises_not_done(ID: int) -> list:
     """
-    Finds exercise not done by the User
-    :param ID: the patient's ID
-    :return: a list of exercise class not done from the User
+    Finds exercise not done by the User.
+    :param ID: The patient's ID.
+    :return: A list of exercise class not done from the User.
     """
     connessione = Connector()
     lista = []
@@ -48,14 +48,14 @@ def seleziona_esercizi_non_fatti(ID: int) -> list:
             if cursor is not None:
                 cursor.close()
             connessione.get_connection().close()
-            print("MySQL connection is closed.")
+            # print("MySQL connection is closed.")
 
 
-def seleziona_esercizi_fatti(ID: int) -> dict:
+def select_done_exercises(ID: int) -> dict:
     """
-    Finds exercises done from the User
-    :param ID: the patient's ID
-    :return: a dict that contains the last 50 exercises done
+    Finds exercises done from the User.
+    :param ID: The patient's ID.
+    :return: A dict that contains the last 50 exercises done.
     """
     connessione = Connector()
     cursor = None
@@ -110,15 +110,15 @@ def seleziona_esercizi_fatti(ID: int) -> dict:
             if cursor is not None:
                 cursor.close()
             connessione.get_connection().close()
-            print("MySQL connection is closed.")
+            # print("MySQL connection is closed.")
 
 
-def seleziona_esercizi_casuale(n: int, ID: int) -> list[Exercise]:
+def select_random_exercise(n: int, ID: int) -> list[Exercise]:
     """
-    Selects random exercises from DB
-    :param n: the number of exercises to retrieve
-    :param ID: the patient's ID
-    :return: a list of Exercise instances
+    Selects random exercises from the database.
+    :param n: The number of exercises to retrieve.
+    :param ID: The patient's ID.
+    :return: A list of Exercise instances.
     """
     connessione = Connector()
     lst = list()
@@ -176,4 +176,4 @@ def seleziona_esercizi_casuale(n: int, ID: int) -> list[Exercise]:
             if cursor is not None:
                 cursor.close()
             connessione.get_connection().close()
-            # print("MySQL connection is closed.")
+            # # print("MySQL connection is closed.")

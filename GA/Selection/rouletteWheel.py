@@ -1,27 +1,29 @@
 from random import random
-from GA.Selection.selectionUtility import normalize
+from GA.Evaluation.fitness import individualFitness as evaluate
+from GA.Population.exercisePopulation import Population
+from GA.Individual.exerciseIndividual import Individual
 
 
-def rouletteWheel(population):
+def rouletteWheel(population: Population):
     """
-    This function generates a new population based on the Roulette Wheel selection algorithm
-    :param population: the starting population
-    :return: a new population after selection
+    This function generates a new Population based on the Roulette Wheel selection algorithm.
+    :param population: The starting Population.
+    :return: A new Population after selection.
     """
-    # TODO: manca la funzione di fitness EVALUATE per farlo funzionare
-    minF, maxF = evaluate(population[0])
-    for i in range(1, len(population)):
-        population[i].fitness = evaluate(population[i])
-        if population[i].fitness < minF:
-            minF = population[i].fitness
-        elif population[i].fitness > maxF:
-            maxF = population[i].fitness
-        population[i].normFitness = normalize(population[i].fitness, minF, maxF)
+    user = population.getUser()
+    totalFitness = 0
+    for i in population.getIndividuals():
+        evaluate(i, user)
+        totalFitness += i.fitness()
 
-    newPopulation = []
-    while len(newPopulation) < len(population):
-        for individual in population:
-            if random() < individual.normFitness:
-                newPopulation.append(individual)
+    newIndividuals = list()
+    while len(newIndividuals) < len(population):
+        value = random() * totalFitness
+        comulativeFitness = 0
+        for i in population.getIndividuals():
+            comulativeFitness += i.fitness()
+            if comulativeFitness >= value:
+                newIndividuals.append(Individual(*i.getList()))
+                break
 
-    return newPopulation
+    return newIndividuals

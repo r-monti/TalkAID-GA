@@ -1,18 +1,18 @@
 class Exercise:
     """
-    This class will contain all the necessary information about the exercise
+    This class will contain all the necessary information about the exercise.
     """
-    def __init__(self, ID, exerciseDifficulty, target, exType, lastEvaluation, lastCompletionDate, lastFeedback):
+    def __init__(self, ID: int, exerciseDifficulty: int, target: str, exType: str,
+                 lastEvaluation: int | None, lastCompletionDate: str | None, lastFeedback: int | None):
         """
-        :param ID: the ID of the exercise, int
-        :param exerciseDifficulty: the difficulty of the exercise, int between 1,10
-        :param target: the condition that the exercise aims to help, tuple(Strings)
-        :param exType: the type of exercise, String
-
-        All the next params are based on the last execution of the exercise done by the user
-        :param lastEvaluation: the last evaluation of the exercise, int between 0,100
-        :param lastCompletionDate: the last completion date of the exercise, date
-        :param lastFeedback: the last feedback of the exercise, int between -1,1
+        This method will initialize the Exercise object.
+        :param ID: The ID of the exercise.
+        :param exerciseDifficulty: The difficulty of the exercise.
+        :param target: The conditions that the exercise aims to help.
+        :param exType: The type of exercise.
+        :param lastEvaluation: The last evaluation of the exercise.
+        :param lastCompletionDate: The last completion date of the exercise.
+        :param lastFeedback: The last feedback of the exercise.
         """
 
         self._fitnessValue = 0
@@ -31,35 +31,80 @@ class Exercise:
     def __repr__(self):
         return "ID: {}".format(self._exerciseID)
 
-    def getFitnessValue(self):
+    def getFitnessValue(self) -> float:
+        """
+        This method returns the fitness value of the exercise.
+        :return: The fitness value.
+        """
         return self._fitnessValue
 
-    def setFitnessValue(self, value):
+    def setFitnessValue(self, value: float) -> None:
+        """
+        This method sets the fitness value of the exercise.
+        :param value: The new fitness value to set.
+        """
         self._fitnessValue = value
 
-    def getGeneration(self):
+    def getGeneration(self) -> int:
+        """
+        This method returns the generation in which the exercise has been inserted.
+        :return: The generation value.
+        """
         return self._generation
 
-    def setGeneration(self, value):
+    def setGeneration(self, value: int) -> None:
+        """
+        This method sets the generation in which the exercise has been inserted.
+        :param value: The generation value.
+        """
         self._generation = value
 
-    def getExerciseID(self):
+    def getExerciseID(self) -> int:
+        """
+        This method returns the exercise ID.
+        :return: The exercise ID.
+        """
         return self._exerciseID
 
-    def getExerciseDifficulty(self):
+    def getExerciseDifficulty(self) -> int:
+        """
+        This method returns the exercise difficulty.
+        :return: The exercise difficulty, between 1 and 10.
+        """
         return self._exerciseDifficulty
 
-    def getExerciseTarger(self):
+    def getExerciseTarger(self) -> str:
+        """
+        This method returns the target of the exercise.
+        :return: The target of the exercise, usually at least 3 Conditions names.
+        """
         return self._target
 
-    def getExerciseType(self):
+    def getExerciseType(self) -> str:
+        """
+        This method returns the exercise type.
+        :return: The exercise type, between 'READTEXT', 'READIMAGES', 'IMAGESTOTEXT', 'TEXTTOIMAGES', 'CROSSWORD',
+        'COMPLETETEXT', 'RIGHTTEXT'.
+        """
         return self._exType
 
-    def getLastEvaluation(self):
+    def getLastEvaluation(self) -> int | None:
+        """
+        This method returns the last evaluation of the Exercise.
+        :return: The last Evaluation or None if the exercise has not been evaluated yet.
+        """
         return self._lastEvaluation
 
-    def getLastCompletionDate(self):
+    def getLastCompletionDate(self) -> str | None:
+        """
+        This method returns the last completion date of the Exercise.
+        :return: The last CompletionDate or None if the exercise has not been executed yet.
+        """
         return self._lastCompletionDate
 
-    def getLastFeedback(self):
+    def getLastFeedback(self) -> int:
+        """
+        This method returns the last feedback of the Exercise.
+        :return: The last feedback, between -1 and +1.
+        """
         return self._lastFeedback
