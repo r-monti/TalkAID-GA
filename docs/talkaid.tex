@@ -1,24 +1,26 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
-
-\title{TalkAID}
-\author{
-    Anna Benedetta Salerno\\
-    \and
-    Michele D'Arienzo\\
-    \and
-    Raffaele Monti\\
-    \and
-    Luigi Petrillo\\
-    \and
-    Samuele Sparno\\
-}
-\date{23 Gennaio 2024}
+\usepackage{listings}
+\usepackage{color}
 
 \begin{document}
 
-    \maketitle
+    \title{TalkAID}
+    \author{
+        Anna Benedetta Salerno\\
+        \and
+        Michele D'Arienzo\\
+        \and
+        Raffaele Monti\\
+        \and
+        Luigi Petrillo\\
+        \and
+        Samuele Sparno\\
+    }
+    \date{23 Gennaio 2024}
 
+    \maketitle
+    \pagebreak
     \section{Sistema Attuale}
 
     Il progetto TALKAID rappresenta davvero un passo avanti significativo nel campo della riabilitazione e del supporto alle persone con disabilità del
@@ -46,6 +48,7 @@
     • Migliorare il sistema di consigli nel tempo, facendolo evolvere sulla base dei feedback del logopedista, il quale deciderà se un esercizio è appropriato
     o meno;
 
+    \pagebreak
     \section{Specifica PEAS}
 
     • Performance:
@@ -86,7 +89,7 @@
 
     Il dataset è un riadattamento del database utilizzato dal sito web principale, eliminando gli attributi non necessari e aggiungendo gli attributi gravità
     di lettura e scrittura, necessari al fine di poter avere una più completa visualizzazione delle necessità reali del paziente
-
+    \pagebreak
     \section{Soluzione proposta}
 
     Date le nostre necessità, abbiamo potuto constatare che ciò di cui abbiamo bisogno è un algoritmo di ottimizzazione.
@@ -109,50 +112,150 @@
     Avendo la necessita' di utilizzare un dataset sul quale il nostro modello avrebbe dovuto estrapolare le informazioni riguardanti gli esercizi e i pazienti, la sfida
     consisteva in due opzioni:
 
-
     • Cercare un dataset pre-esistente al fine di avere molte informazioni, e al massimo effettuare data cleaning e adeguarlo a quello che ci serve.
 
-
     • Creare un dataset, formulando gli esercizi, aggiungendo i pazienti e creando le varie valutazioni per ogni esercizio.
-
 
     Purtroppo cercare un dataset pre-esistente non è stato proficuo data l'unicita' delle nostre richieste, infatti non abbiamo trovato dataset che
     riguardassero nel dettaglio della valutazione di esercizi logopedici.
 
-
     Di conseguenza abbiamo deciso di creare un dataset nostro, generando le varie tipologie di esercizi di mano nostra, ottenendo 84 esercizi, mentre la generazione
     dei pazienti e la generazione delle valutazioni degli esercizi è stata prodotta sinteticamente mediante l'utilizzo di valori randomici.
 
+    \lstset{
+        backgroundcolor=\color{white},
+        basicstyle=\footnotesize,
+        breakatwhitespace=false,
+        breaklines=true,
+        captionpos=b,
+        commentstyle=\color{dkgreen},
+        deletekeywords={...},
+        escapeinside={\%*}{*)},
+        extendedchars=true,
+        frame=single,
+        keepspaces=true,
+        language=SQL,
+        otherkeywords={is},
+        morekeywords={*,modify,MODIFY,...},
+        keywordstyle=\keywordcheck,
+        identifierstyle=\setidcolor,
+        numbers=left,
+        numbersep=15pt,
+        numberstyle=\tiny,
+        rulecolor=\color{ltgray},
+        showspaces=false,
+        showstringspaces=false,
+        showtabs=false,
+        stepnumber=1,
+        tabsize=4,
+        title=\lstname
+    }
+    \pagebreak
+    \begin{lstlisting}[language=SQL, breaklines, caption=Generazione Casuale esecuzione esercizio]
+        INSERT INTO exercise (ID_user, ID_exercise, InsertionDate, CompletionDate, Evaluation, Feedback)
+        VALUES
+        (
+            FLOOR(904 + RAND() * (1003 - 904 + 1)), -- Random user ID
+            FLOOR(1 + RAND() * (84 - 1 + 1)), -- Random exercise ID
+            DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY), -- Random date within the past year
+            DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY), -- Random completion date within the past year
+            FLOOR(RAND() * (100 - 0 + 1)), -- Random evaluation between 0 and 100
+            CASE
+                WHEN RAND() <= 0.33 THEN -1
+                WHEN RAND() <= 0.66 THEN 0
+                ELSE 1
+            END -- Random feedback (-1, 0, or 1)
+        );
+    \end{lstlisting}
 
+    \begin{lstlisting}[language=SQL, breaklines, caption=Generazione degli utenti]
+        DELIMITER //
+
+        CREATE PROCEDURE GenerateUsers()
+        BEGIN
+            DECLARE i INT DEFAULT 1;
+            DECLARE j INT;
+
+            WHILE i <= 10 DO
+                SET j = 1;
+                WHILE j <= 10 DO
+                    INSERT INTO user (ID_Therapist) VALUES (i);
+                    SET j = j + 1;
+                END WHILE;
+                SET i = i + 1;
+            END WHILE;
+        END //
+
+        DELIMITER ;
+
+        CALL GenerateUsers();
+    \end{lstlisting}
+\pagebreak
+
+    \begin{lstlisting}[language=SQL, breaklines, caption=Generazione delle severity (tutti gli user)]
+        INSERT INTO patientcondition (ID_condition, ID_patient, Severity, WritingSeverity, ReadingSeverity)
+        SELECT
+            FLOOR(1 + RAND() * 12) as ID_condition,  -- Random condition ID (1 to 12)
+            u.ID as ID_patient,
+            1 as Severity,
+            FLOOR(1 + RAND() * 10) as WritingSeverity,
+            FLOOR(1 + RAND() * 10) as ReadingSeverity
+        FROM
+            user u
+        WHERE
+            u.ID_Therapist != 0;
+    \end{lstlisting}
+
+    \begin{lstlisting}[language=SQL, breaklines, caption=Generazione delle severity (tutti gli user) pt.2]
+        UPDATE patientcondition pc
+        SET
+            pc.Severity = LEAST(GREATEST(pc.WritingSeverity, pc.ReadingSeverity) + IF(RAND() < 0.5, -1, 1), 10)
+        WHERE
+            pc.Severity = 1;
+    \end{lstlisting}
+
+    \begin{lstlisting}[language=SQL, breaklines, caption=Generazione delle severity (solo x users)]
+        INSERT INTO patientcondition (ID_condition, ID_patient, Severity, WritingSeverity, ReadingSeverity)
+        SELECT
+            FLOOR(1 + RAND() * 12) as ID_condition,  -- Random condition ID (1 to 12)
+            u.ID as ID_patient,
+            1 as Severity,
+            FLOOR(1 + RAND() * 10) as WritingSeverity,
+            FLOOR(1 + RAND() * 10) as ReadingSeverity
+        FROM
+            user u
+        WHERE
+            u.ID_Therapist != 0
+        ORDER BY
+            RAND()  -- Randomly order the users and pick the first one
+        LIMIT 30;
+    \end{lstlisting}
+
+\pagebreak
+
+    \section{Studio della funzione di fitness}
 
     \section{Sviluppo del nostro algoritmo genetico}
-    \section{Bozza delle cose da fare sotto Sviluppo del nostro algoritmo genetico}
 
     Convergenza Per convergenza si intende la capacità (obiettivo) di un GA di migliorare iterativamente le soluzioni candidate verso il punto di ottimo. Quando gli
     individui tendono a somigliarsi troppo, bloccando troppo presto il progresso globale dell’intera popolazione, parliamo di convergenza prematura.
 
-
     Diversità Per diversità si intende la capacità di un GA di definire individui che possano navigare il panorama degli stati in maniera efficace, evitando la
     stagnazione verso punti di ottimo locale e soprattutto bisogna evitare che gli individui siano troppo simili il che porterebbe alla terminazione del GA.
-
 
     Funzione di fitness Rappresenta un elemento chiave per la definizione di un algoritmo genetico. Formalmente parlando, la funzione di fitness è una funzione in grado
     di associare un valore a ogni soluzione. Misura il livello di adeguatezza degli individui rispetto al problema considerato e, inevitabilmente, guida il
     processo di selezione. Chiaramente, la funzione dipenderà dal problema in esame e dovrà ben rappresentare il grado di adeguatezza di una soluzione.
 
-
     Nulla vieta di combinare più elementi ad esempio, una combinazione lineare di più fattori. In tutti i casi, indipendentemente da come impostiamo la funzione di
     fitness, stiamo ancora parlando di funzioni mono-obiettivo, in quanto l’obiettivo è formalizzato usando un’unica funzione obiettivo.
-
 
     1. Size (Popolazione) - Numero individui di ciascuna generazione.
     - Se la size è fissa, bisogna decidere il numero;
     - Se la size è variabile, è opportuno decidere una dimensione massima. La ricerca potrebbe diventare eccessivamente lenta.
 
-
     2. Size Mating Pool - Numero di individui selezionati e che partecipano alla riproduzione.
     Più grande è la size, più lento sarà l’algoritmo. Più piccola è la size, più limitata sarà la diversità che l’algoritmo garantirà.
-
 
     3. Probabilità crossover - Con quale probabilità avviene il crossover tra due genitori.
     - Possiamo stabilire una probabilità che l’algoritmo userà per valutare se effettuare l’operazione di crossover o meno. Più alta è la probabilità, più spesso i
@@ -160,10 +263,8 @@
     - Anche in questo caso, però, bisogna stare attenti. Più alta sarà la probabilità, più è probabile che l’algoritmo navighi lo spazio di ricerca senza andare a
     convergenza. Più bassa sarà la probabilità, più è probabile una convergenza prematura.
 
-
     4. Probabilità mutazione - Con quale probabilità avviene una mutazione.
     Considerazioni simili all precedenti.
-
 
     5. Inizializzazione - Con quale criterio si crea la prima generazione.
     - Possiamo creare una popolazione iniziale in maniera totalmente casuale.
@@ -172,12 +273,10 @@
     - Se possibile, basarsi su euristiche è desiderabile: la ricerca può essere immediatamente guidata verso soluzioni ammissibili/migliori, riducendo il carico
     computazionale.
 
-
     6. Rappresentazione individui - Tipo di codifica degli individui.
     - Abbiamo visto, nell’esempio, l’uso di una rappresentazione basata su stringa binaria.
     - Ma possiamo rappresentare gli individui come meglio crediamo per il problema in esame.
     Altre rappresentazioni molto usate sono le stringhe di interi/reali o addirittura gli alberi.
-
 
     7. Algoritmo di selezione - Come avviene la selezione degli individui.
     - Casuale: sconsigliata in molti casi, poiché aumenta le chance di non convergenza.
@@ -199,7 +298,6 @@
     tornei).
     Osserviamo che con K=1, si ha una Truncation Selection. Di fatti, si procederebbe selezionando gli individui migliori fino ad M, escludendo gli altri.
 
-
     8. Algoritmo di crossover Come avviene il crossover tra individui.
     - Single Point: visto nell’esempio, si seleziona un punto del patrimonio genetico dei genitori e si procede alla generazione di due figli tramite scambio di
     cromosomi.
@@ -211,7 +309,6 @@
     per cui ha senso calcolare il mid-point). Ne segue che i due figli saranno gemelli. —> Per differenziare i due figli, è possibile assegnare un peso (fisso o casuale)
     ai due genitori e fare la media pesata invece che quella aritmetica. Quindi, il primo figlio usa peso α per il primo genitore e 1-α per il secondo, viceversa per il
     secondo figlio.
-
 
     9. Algoritmo di mutazione - Come avviene la mutazione degli individui.
     - Bit Flip: visto nell’esempio, consiste nella modifica di un singolo gene binario.
@@ -225,7 +322,6 @@
     maggiore diversità, ma aumentano il rischio di mancata convergenza.
     Tipicamente, gli algoritmi locali sono preferibili proprio perché limitano l’effetto di casualità che la mutazione può avere sulla convergenza dell’algoritmo.
 
-
     10. Stopping Condition - Con quale criterio decidiamo di terminare l’evoluzione oppure proseguire.
     - Tempo di esecuzione: l’evoluzione termina se si è superato un tempo di esecuzione T. Allo stop o si decide di restituire l’ultima generazione ottenuta o la
     migliore ultima (preferibile).
@@ -238,7 +334,5 @@
     Spesso, invece di parlare esplicitamente di stopping condition, si preferisce la locuzione budget di ricerca (search budget), per indicare meglio il concetto
     di risorse a disposizione (tempo/costo/iterazioni/ecc.).
     In molti contesti, una stopping condition composta da tempo di esecuzione/costo e assenza di miglioramenti tende ad essere sufficientemente buona.
-
-
 
 \end{document}
