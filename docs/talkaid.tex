@@ -2,6 +2,11 @@
 \usepackage{graphicx} % Required for inserting images
 \usepackage{listings}
 \usepackage{color}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[italian]{babel}
+\usepackage[letterpaper,top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+\usepackage{amsmath}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
 
 \begin{document}
 
@@ -20,7 +25,9 @@
     \date{23 Gennaio 2024}
 
     \maketitle
+
     \pagebreak
+
     \section{Sistema Attuale}
 
     Il progetto TALKAID rappresenta davvero un passo avanti significativo nel campo della riabilitazione e del supporto alle persone con disabilità del
@@ -49,11 +56,12 @@
 
 
     \pagebreak
+
     \section{Specifica PEAS}
 
     Di seguito abbiamo elencato la specifca PEAS dell'agente intelligente.
 
-    \textbf{Performance:}
+    \subsection{Performance:}
 
     Le prestazioni dell’agente sono valutate attraverso le seguenti misure:
 
@@ -63,7 +71,7 @@
         \item Quanto tempo è passato dall'ultima volta che il paziente ha svolto l'esercizio.
     \end{itemize}
 
-    \textbf{Environment:}
+    \subsection{Environment:}
 
     L’ambiente è:
 
@@ -76,13 +84,13 @@
         \item A singolo agente, in quanto l’unico agente che opera in questo ambiente è quello in oggetto.
     \end{itemize}
 
-    \textbf{Actuators:}
+    \subsection{Actuators:}
 
     \begin{itemize}
         \item Pagina web dove viene creata una lista di esercizi in maniera tabellare consigliata per ogni paziente.
     \end{itemize}
 
-    \textbf{Sensors:}
+    \subsection{Sensors:}
 
     \begin{itemize}
         \item Gli esercizi svolti dal paziente, gli esercizi assegnati al paziente da parte del logopedista, il punteggio per esercizio del paziente, e il tempo passato dall'ultima volta che il paziente ha effettuato l'esercizio.
@@ -90,7 +98,9 @@
         \item Il dataset è un riadattamento del database utilizzato dal sito web principale, eliminando gli attributi non necessari e aggiungendo gli attributi gravità di lettura e scrittura, necessari al fine di poter avere una più completa visualizzazione delle necessità reali del paziente.
 
     \end{itemize}
+
     \pagebreak
+
     \section{Soluzione proposta}
 
     Date le nostre necessità, abbiamo potuto constatare che ciò di cui abbiamo bisogno è un algoritmo di ottimizzazione.
@@ -119,7 +129,7 @@
 
     Purtroppo cercare un dataset pre-esistente non è stato proficuo data l'unicità delle nostre richieste; infatti, non abbiamo trovato dataset che riguardassero nel dettaglio la valutazione di esercizi logopedici.
 
-    Di conseguenza, abbiamo deciso di creare un dataset nostro, utilizzando un database in SQL e generando le varie tipologie di esercizi di nostra iniziativa, ottenendo 84 esercizi. La generazione dei pazienti e la generazione delle valutazioni degli esercizi sono state prodotte sinteticamente mediante l'utilizzo di valori randomici.
+    Di conseguenza, abbiamo deciso di creare un dataset nostro, utilizzando un database in MySQL e generando le varie tipologie di esercizi di nostra iniziativa, ottenendo 84 esercizi. La generazione dei pazienti e la generazione delle valutazioni degli esercizi sono state prodotte sinteticamente mediante l'utilizzo di valori randomici.
 
     \begin{itemize}
         \item Di seguito vengono mostrati i vari codici in SQL realizzati per poter popolare il nostro database.
@@ -153,7 +163,11 @@
         tabsize=4,
         title=\lstname
     }
+
     \pagebreak
+
+    \subsection{Popolazione del DataBase}
+
     \begin{lstlisting}[language=SQL, breaklines, caption=Generazione Casuale esecuzione esercizio]
         INSERT INTO exercise (ID_user, ID_exercise, InsertionDate, CompletionDate, Evaluation, Feedback)
         VALUES
@@ -193,7 +207,8 @@
 
         CALL GenerateUsers();
     \end{lstlisting}
-\pagebreak
+
+    \pagebreak
 
     \begin{lstlisting}[language=SQL, breaklines, caption=Generazione delle severity (tutti gli user)]
         INSERT INTO patientcondition (ID_condition, ID_patient, Severity, WritingSeverity, ReadingSeverity)
@@ -234,108 +249,364 @@
         LIMIT 30;
     \end{lstlisting}
 
+    \pagebreak
+
+    \subsection{Analisi del DataBase}
+    In questa sezione, illustriamo il processo di ideazione delle tabelle, riportando il loro nome, descrivendone la funzione e indicando gli attributi contenuti.
+
+\begin{itemize}
+\item     condition - Contiene tutte le informazioni sulle patologie degli utenti, importante per le relazioni tra esercizi e patologie.
+\end{itemize}
+
+    \begin{table}[h]
+        \centering
+        \caption{condition Table}
+        \begin{tabular}{|c|p{8cm}|}
+            \hline
+                \textbf{Attributo} & \textbf{Descrizione} \\
+            \hline
+                ID\_condition & id della patologia\\
+            \hline
+                Description & serve per capire cosa provoca la patologia, non è un dato rilevante per il nostro agente\\
+            \hline
+                Name & nome della patologia\\
+            \hline
+        \end{tabular}
+    \end{table}
+
+\begin{itemize}
+\item    exercise - Contiene tutti gli esercizi svolti, utile per poter tenere traccia dell'andamento dei vari pazienti.
+\end{itemize}
+
+    \begin{table}[h]
+        \centering
+        \caption{exercise Table}
+        \begin{tabular}{|c|p{8cm}|}
+            \hline
+                \textbf{Attributo} & \textbf{Descrizione} \\
+            \hline
+                ID\_user & id del paziente associato all'esercizio\\
+            \hline
+                ID\_exercise & id dell'esercizio che ha svolto il paziente\\
+            \hline
+                InsertionDate & data di assegnazione dell'esercizio da parte del logopedista\\
+            \hline
+                CompletionDate & data di completamento dell'esercizio\\
+            \hline
+                Evaluation & che punteggio il paziente ha raggiunto\\
+            \hline
+                Feedback & feedback per mostrare se l'esercizio è piaciuto o meno\\
+            \hline
+        \end{tabular}
+    \end{table}
+
 \pagebreak
 
+\begin{itemize}
+\item     exercise\_glossary - Contiene le varie informazioni riguardanti gli esercizi, interessante poiché ci permette di poter trovare il target specifico di un determinato esercizio.
+\end{itemize}
+
+    \begin{table}[h]
+        \centering
+        \caption{execise\_glossary Table}
+        \begin{tabular}{|c|p{8cm}|}
+            \hline
+            \textbf{Attributo} & \textbf{Descrizione} \\
+            \hline
+                ID\_exercise & id dell'esercizio\\
+            \hline
+                ExerciseName & nome dell'esercizio\\
+            \hline
+                ExerciseDescription & breve descrizione dell'esercizio\\
+            \hline
+                Type & tipo dell'esercizio, può essere un esercizio di lettura testo, associare immagini, trovare la frase corretta etc...\\
+            \hline
+                Difficulty & grado di difficoltà dell'esercizio\\
+            \hline
+                Target & il target è la patologia alla quale questo esercizio è mirato\\
+            \hline
+        \end{tabular}
+    \end{table}
+
+\begin{itemize}
+\item     patient\_condition - Contiene le informazioni riguardo la patologia che affligge il paziente, in base a questa il nostro agente potrà selezionare esercizi specifici per il paziente.
+\end{itemize}
+
+    \begin{table}[h]
+        \centering
+        \caption{patient\_condition Table}
+        \begin{tabular}{|c|p{8cm}|}
+            \hline
+            \textbf{Attributo} & \textbf{Descrizione} \\
+            \hline
+                ID\_condition & id della patologia affetta dal paziente\\
+            \hline
+                ID\_patient & id del paziente riferito\\
+            \hline
+                Severity & gravità della patologia del paziente \\
+            \hline
+                WritingSeverity & gravità della condizione del paziente nello scrivere\\
+            \hline
+                ReadingSeverity & gravità della condizione del paziente nel leggere\\
+            \hline
+        \end{tabular}
+    \end{table}
+
+    \subsection{Interazioni con il DataBase}
+    Le interazioni effettuate dal nostro agente sul database sono esclusivamente operazioni di estrapolazione dati, elencando le funzioni create sono:
+
+    Per quanto riguarda le estrazioni degli esercizi:
+    \begin{itemize}
+        \item select\_exercises\_not\_done
+    \end{itemize}
+
+    \begin{itemize}
+        \item select\_done\_exercises
+    \end{itemize}
+
+    \begin{itemize}
+        \item select\_random\_exercise
+    \end{itemize}
+    Per quanto riguarda le estrazioni dei pazienti:
+    \begin{itemize}
+        \item informationUser
+    \end{itemize}
+
+    \subsubsection{Estrazione degli esercizi}
+
+    Successivamente vi è un estratto del codice dove viene mostrata ogni funzione inerente alle interazioni con il database.
+
+\pagebreak
+
+\textbf{\item select\_exercises\_not\_done}: Questa funzione permette di selezionare gli esercizi non ancora svolti dall'paziente.
+
+\begin{lstlisting}[language=Python, breaklines, no caption]
+        def select_exercises_not_done(ID: int) -> list:
+    connessione = Connector()
+    lista = []
+    cursor = None
+    try:
+        if connessione.get_connection() is not None:
+            cursor = connessione.get_connection().cursor(dictionary=True)
+            query = """
+                        SELECT *
+                        FROM exercise_glossary eg
+                        WHERE NOT EXISTS (
+                            SELECT 1
+                            FROM exercise e
+                            WHERE e.ID_exercise = eg.ID_exercise AND e.ID_user = %s);
+                    """
+
+            parametro = (ID,)
+            cursor.execute(query, parametro)
+
+            records = cursor.fetchall()
+
+            for record in records:
+                esercizio = Exercise(record["ID_Exercise"],
+                                     record["Difficulty"],
+                                     record["Target"],
+                                     record["Type"],
+                                     None,
+                                     None,
+                                     None)
+                lista.append(esercizio)
+            return lista
+
+    except mysql.connector.Error as e:
+        print("Error while connecting to MySQL ", e)
+        return list()
+    finally:
+        if connessione.get_connection() is not None:
+            if cursor is not None:
+                cursor.close()
+            connessione.get_connection().close()
+\end{lstlisting}
+
+    \pagebreak
+
+\textbf{\item select\_done\_exercises}: Questa funzione permette il recupero egli esercizi svolti dal paziente.
+
+\begin{lstlisting}[language=Python, breaklines, no caption]
+def select_done_exercises(ID: int) -> dict:
+    connessione = Connector()
+    cursor = None
+    esercizi = {}
+    try:
+        if connessione.get_connection() is not None:
+            cursor = connessione.get_connection().cursor(dictionary=True)
+            query = """
+                        SELECT
+                            e.ID_exercise AS ExerciseID,
+                            eg.Difficulty AS ExerciseDifficulty,
+                            eg.Type AS ExerciseType,
+                            eg.Target AS ExerciseTarget,
+                            e.Evaluation AS ExerciseEvaluation,
+                            e.CompletionDate AS ExerciseCompletionDate,
+                            e.Feedback AS ExerciseFeedback,
+                            DATE_FORMAT(e.CompletionDate, '%Y-%m-%d') AS ExerciseCompletionDate,
+                            e.Evaluation AS ExerciseEvaluation,
+                            e.Feedback AS ExerciseFeedback
+                        FROM
+                            exercise e
+                        JOIN
+                            exercise_glossary eg ON e.ID_exercise = eg.ID_exercise
+                        WHERE
+                            e.ID_user = %s
+                        ORDER BY
+                            e.CompletionDate DESC
+                        LIMIT 50;
+                    """
+
+            parametro = (ID,)
+            cursor.execute(query, parametro)
+
+            records = cursor.fetchall()
+
+            for record in records:
+                esercizio = Exercise(record["ExerciseID"],
+                                     record["ExerciseDifficulty"],
+                                     record["ExerciseTarget"],
+                                     record["ExerciseType"],
+                                     record["ExerciseEvaluation"],
+                                     record["ExerciseCompletionDate"],
+                                     record["ExerciseFeedback"])
+                esercizi[record["ExerciseID"]] = esercizio
+            return esercizi
+
+    except mysql.connector.Error as e:
+        print("Error while connecting to MySQL ", e)
+        return dict()
+    finally:
+        if connessione.get_connection() is not None:
+            if cursor is not None:
+                cursor.close()
+            connessione.get_connection().close()
+\end{lstlisting}
+
+    \pagebreak
+
+\textbf{\item select\_random\_exercise}: Questa funzione recupera casualmente alcuni esercizi e, nel caso in cui vi siano esercizi precedentemente completati dal paziente, restituisce anche i relativi risultati.
+
+\begin{lstlisting}[language=Python, breaklines, no caption]
+def select_random_exercise(n: int, ID: int) -> list[Exercise]:
+    connessione = Connector()
+    lst = list()
+    cursor = None
+    try:
+        if connessione.get_connection() is not None:
+            cursor = connessione.get_connection().cursor(dictionary=True)
+            query = """
+                        SELECT
+                          eg_random.ID_exercise,
+                          eg_random.Difficulty,
+                          eg_random.Target,
+                          eg_random.Type,
+                          DATE_FORMAT(e.CompletionDate, '%Y-%m-%d') AS ExerciseCompletionDate,
+                          e.Evaluation,
+                          e.Feedback
+                        FROM (
+                          SELECT *
+                          FROM exercise_glossary
+                          ORDER BY RAND()
+                          LIMIT %s
+                        ) AS eg_random
+                        LEFT JOIN exercise e ON eg_random.ID_exercise = e.ID_exercise
+                          AND e.ID_user = %s
+                          AND e.InsertionDate = (
+                            SELECT MAX(InsertionDate)
+                            FROM exercise
+                            WHERE ID_exercise = eg_random.ID_exercise
+                              AND ID_user = %s
+                          )
+                        ORDER BY e.InsertionDate DESC;
+                    """
+            parametro = (n, ID, ID,)
+            cursor.execute(query, parametro)
+            records = cursor.fetchall()
+
+            if records is not None:
+                for record in records:
+                    esercizio = Exercise(record["ID_exercise"],
+                                         record["Difficulty"],
+                                         record["Target"],
+                                         record["Type"],
+                                         record["Evaluation"],
+                                         record["ExerciseCompletionDate"],
+                                         record["Feedback"])
+                    lst.append(esercizio)
+
+            return lst
+
+    except mysql.connector.Error as e:
+        print("Error while connecting to MySQL ", e)
+        return list()
+    finally:
+        if connessione.get_connection() is not None:
+            if cursor is not None:
+                cursor.close()
+            connessione.get_connection().close()
+\end{lstlisting}
+
+    \pagebreak
+
+    \subsubsection{Estrazione dei pazienti}
+
+\textbf{\item informationUser}: Questa funzione permette il recupero di informazioni inerenti alle varie patologie che il paziente soffre con il livello di gravità per ogniuna di essa.
+
+\begin{lstlisting}[language=Python, breaklines, no caption]
+def informationUser(ID: int) -> dict:
+    connessione = Connector()
+    cursor = None
+    patologie = {}
+    try:
+        if connessione.get_connection() is not None:
+            cursor = connessione.get_connection().cursor(dictionary=True)
+            query = """
+                    SELECT
+                        c.Name,
+                        pc.Severity,
+                        pc.WritingSeverity,
+                        pc.ReadingSeverity
+                    FROM
+                        patientcondition pc
+                    JOIN
+                        `condition` c ON pc.ID_condition = c.ID_condition
+                    WHERE
+                        pc.ID_patient = %s;
+                            """
+            parametro = (ID,)
+            cursor.execute(query, parametro)
+
+            records = cursor.fetchall()
+
+            if len(records) == 0:
+                return dict()
+            else:
+                for record in records:
+                    tupla = (record["Severity"],
+                             record["WritingSeverity"],
+                             record["ReadingSeverity"])
+                    patologie[record["Name"]] = tupla
+                return patologie
+
+    except mysql.connector.Error as e:
+        print("Error while connecting to MySQL ", e)
+        return dict()
+    finally:
+        if connessione.get_connection() is not None:
+            if cursor is not None:
+                cursor.close()
+            connessione.get_connection().close()
+\end{lstlisting}
+
+    \pagebreak
+
     \section{Studio della funzione di fitness}
+    abbiamo realizzato 7 costanti per identificare l'importanza di quel parametro, in base a quelle definiamo quanto quel parametro è importante
+
+    dato che volevamo valutare piu' opzioni, e nella speranza che un giorno ci saranno piu' dati, abbiamo valutato piu' opzioni
 
     \section{Sviluppo del nostro algoritmo genetico}
-
-    Convergenza Per convergenza si intende la capacità (obiettivo) di un GA di migliorare iterativamente le soluzioni candidate verso il punto di ottimo. Quando gli
-    individui tendono a somigliarsi troppo, bloccando troppo presto il progresso globale dell’intera popolazione, parliamo di convergenza prematura.
-
-    Diversità Per diversità si intende la capacità di un GA di definire individui che possano navigare il panorama degli stati in maniera efficace, evitando la
-    stagnazione verso punti di ottimo locale e soprattutto bisogna evitare che gli individui siano troppo simili il che porterebbe alla terminazione del GA.
-
-    Funzione di fitness Rappresenta un elemento chiave per la definizione di un algoritmo genetico. Formalmente parlando, la funzione di fitness è una funzione in grado
-    di associare un valore a ogni soluzione. Misura il livello di adeguatezza degli individui rispetto al problema considerato e, inevitabilmente, guida il
-    processo di selezione. Chiaramente, la funzione dipenderà dal problema in esame e dovrà ben rappresentare il grado di adeguatezza di una soluzione.
-
-    Nulla vieta di combinare più elementi ad esempio, una combinazione lineare di più fattori. In tutti i casi, indipendentemente da come impostiamo la funzione di
-    fitness, stiamo ancora parlando di funzioni mono-obiettivo, in quanto l’obiettivo è formalizzato usando un’unica funzione obiettivo.
-
-    1. Size (Popolazione) - Numero individui di ciascuna generazione.
-    - Se la size è fissa, bisogna decidere il numero;
-    - Se la size è variabile, è opportuno decidere una dimensione massima. La ricerca potrebbe diventare eccessivamente lenta.
-
-    2. Size Mating Pool - Numero di individui selezionati e che partecipano alla riproduzione.
-    Più grande è la size, più lento sarà l’algoritmo. Più piccola è la size, più limitata sarà la diversità che l’algoritmo garantirà.
-
-    3. Probabilità crossover - Con quale probabilità avviene il crossover tra due genitori.
-    - Possiamo stabilire una probabilità che l’algoritmo userà per valutare se effettuare l’operazione di crossover o meno. Più alta è la probabilità, più spesso i
-    genitori produrranno nuovi individui e, quindi, più diversità ci sarà in termini di soluzioni.
-    - Anche in questo caso, però, bisogna stare attenti. Più alta sarà la probabilità, più è probabile che l’algoritmo navighi lo spazio di ricerca senza andare a
-    convergenza. Più bassa sarà la probabilità, più è probabile una convergenza prematura.
-
-    4. Probabilità mutazione - Con quale probabilità avviene una mutazione.
-    Considerazioni simili all precedenti.
-
-    5. Inizializzazione - Con quale criterio si crea la prima generazione.
-    - Possiamo creare una popolazione iniziale in maniera totalmente casuale.
-    - Oppure, possiamo basarci su euristiche. Se riusciamo a rendere i GA meno ciechi (dando informazioni problem-specific) possiamo evitare di iniziare con individui
-    quasi sicuramente pessimi (se non addirittura inammissibili).
-    - Se possibile, basarsi su euristiche è desiderabile: la ricerca può essere immediatamente guidata verso soluzioni ammissibili/migliori, riducendo il carico
-    computazionale.
-
-    6. Rappresentazione individui - Tipo di codifica degli individui.
-    - Abbiamo visto, nell’esempio, l’uso di una rappresentazione basata su stringa binaria.
-    - Ma possiamo rappresentare gli individui come meglio crediamo per il problema in esame.
-    Altre rappresentazioni molto usate sono le stringhe di interi/reali o addirittura gli alberi.
-
-    7. Algoritmo di selezione - Come avviene la selezione degli individui.
-    - Casuale: sconsigliata in molti casi, poiché aumenta le chance di non convergenza.
-    - Roulette Wheel, visto nell’esempio: gli individui ricevono una probabilità di selezione pari al valore della loro fitness relativa all’intera popolazione.
-    Molto fedele alla natura, ma un individuo “molto forte” verrà selezionato troppe volte, rischiando la convergenza prematura.
-    - Rank: si compie un ordinamento totale degli individui rispetto alla fitness e si assegna a ciascuno individuo il rango in base alla posizione (e.g.,
-    il primo otterrà rango 1, il secondo rango 2, e così via).Ciascun individuo riceve una probabilità di selezione inversamente proporzionata al rango.
-    - Truncation: si compie un ordinamento totale in maniera analoga ad una Rank Selection, ma la selezione non avviene su base casuale quanto con una selezione
-    rigida dei migliori M (< n) individui. Non possono esserci selezioni ripetute.
-    Ha vantaggi e svantaggi simili a Rank, ma toglie una componente di casualità, introducendo l’onere di definire il valore di un ulteriore parametro, i.e., M
-    (quale è un valore ottimale?)
-    - K-way tournament: K (< n) individui sono selezionati casualmente (formando il torneo) e il migliore tra questi K passa la selezione definitivamente.
-    Si ripete finché non si arriva ad M tornei (e quindi M vincitori). Si possono avere selezioni ripetute.
-    E’ poco complessa ed ha interessanti somiglianze con la natura (legge del più forte, letteralmente), tutti motivi per cui è una scelta molto popolare.
-    Tuttavia impone l’onore di una buona scelta di K ed M.
-    Si può adottare una pressione di selezione: invece di far vincere sempre il migliore (assoluto) di un torneo, ogni individuo ha una probabilità di vittoria
-    proporzionata alla sua fitness. In sostanza, i singoli tornei diventano delle piccole Roulette Wheel.
-    Si possono impedire le ripetizioni (in tal caso, se il mating pool è grande quanto la popolazione, ogni individuo ha la garanzia di partecipare ad esattamente K
-    tornei).
-    Osserviamo che con K=1, si ha una Truncation Selection. Di fatti, si procederebbe selezionando gli individui migliori fino ad M, escludendo gli altri.
-
-    8. Algoritmo di crossover Come avviene il crossover tra individui.
-    - Single Point: visto nell’esempio, si seleziona un punto del patrimonio genetico dei genitori e si procede alla generazione di due figli tramite scambio di
-    cromosomi.
-    - Two-Point: simile al single point, va a considerare però due punti di incrocio. Aumenta chiaramente la diversità dei geni degli individui generati.
-    - K-Point: Generalizzazione dei precedenti, è poco utilizzato dal momento che richiede la definizione di una strategia di combinazione dei K cromosomi dei genitori.
-    - Uniform: Ciascun gene i-esimo viene scelto casualmente tra i due geni i-esimi dei genitori.
-    Ha il massimo grado di casualità. E’ un particolare caso di K Point con K=Size\_Individuo.
-    - Arithmetic: Ciascun gene i-esimo è il valor medio dei geni i-esimi dei genitori. Valido solo per rappresentazioni numeriche (precisamente, per le rappresentazione
-    per cui ha senso calcolare il mid-point). Ne segue che i due figli saranno gemelli. —> Per differenziare i due figli, è possibile assegnare un peso (fisso o casuale)
-    ai due genitori e fare la media pesata invece che quella aritmetica. Quindi, il primo figlio usa peso α per il primo genitore e 1-α per il secondo, viceversa per il
-    secondo figlio.
-
-    9. Algoritmo di mutazione - Come avviene la mutazione degli individui.
-    - Bit Flip: visto nell’esempio, consiste nella modifica di un singolo gene binario.
-    - Random Resetting: cambio casuale di un gene a un altro valore ammissibile. La distribuzione da cui campionare il valore è a scelta: uniforme/normale/ecc.
-    - Swap: scambio di due geni, scelti casualmente.
-    - Scramble: si sceglie un subset di geni in modo casuale e lo si permuta casualmente.
-    - Inversion: si sceglie un subset di geni in modo casuale e lo si ribalta.
-    In altri termini, in termini di mutazione abbiamo molta flessibilità. Qualsiasi variazione va bene in linea di principio, ma è bene che la mutazione sia ammissibile
-    (i.e., da un individuo ammissibile si passi a un altro ammissibile, ovvero che la mutazione non vada a violare i vincoli del problema).
-    Alcuni algoritmi di mutazione lavorano localmente, ovvero su singoli geni dell’individuo, altri a livello globale. Chiaramente, gli algoritmi globali creano
-    maggiore diversità, ma aumentano il rischio di mancata convergenza.
-    Tipicamente, gli algoritmi locali sono preferibili proprio perché limitano l’effetto di casualità che la mutazione può avere sulla convergenza dell’algoritmo.
-
-    10. Stopping Condition - Con quale criterio decidiamo di terminare l’evoluzione oppure proseguire.
-    - Tempo di esecuzione: l’evoluzione termina se si è superato un tempo di esecuzione T. Allo stop o si decide di restituire l’ultima generazione ottenuta o la
-    migliore ultima (preferibile).
-    - Costo: se è presente una funzione di costo (i.e., una funzione---diversa dalla fitness---che associa ad individuo un costo secondo un certo criterio),
-    allora al raggiungimento o superamento di quel costo l’evoluzione termina.
-    - Numero di iterazioni: si itera per un massimo di X generazioni.
-    - Assenza di miglioramenti: visto nell’esempio, se per Y generazioni consecutive non ci sono miglioramenti (significativi), allora l’evoluzione termina.
-    - Ibride: ovvero, basate su una combinazione delle precedenti.
-    - Problem specific: conoscendo i dettagli del problema, possiamo definire condizioni ad-hoc.
-    Spesso, invece di parlare esplicitamente di stopping condition, si preferisce la locuzione budget di ricerca (search budget), per indicare meglio il concetto
-    di risorse a disposizione (tempo/costo/iterazioni/ecc.).
-    In molti contesti, una stopping condition composta da tempo di esecuzione/costo e assenza di miglioramenti tende ad essere sufficientemente buona.
 
 \end{document}
