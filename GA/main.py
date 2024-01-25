@@ -1,8 +1,8 @@
 from GA.Initialization.populationInitializer import initialize
+from GA.StoppingCondition.stopConditionMethods import stoppingCondition
 
-from GA.Crossover.crossover import executeCrossover as crossover
-import GA.Crossover.crossoverMethods as cType
-
+# from GA.Crossover.crossover import executeCrossover as crossover
+# import GA.Crossover.crossoverMethods as cType
 from GA.Crossover.crossover3Parents import execute3Crossover as crossover3P
 import GA.Crossover.crossover3Methods as c3Type
 
@@ -26,15 +26,19 @@ def startGA():
     pool.join()
 
 
-def GATasks(*args):
-    processNumber = args[0]
-    population = args[1]
+def GATasks(processNumber, population):
     gen = 0
-    maxGen = 100
+    unchangedCount = 0
+    lastFitness = 0
+
+    maxGen = 400
+    maxEqualsGen = 5
+    increaseRate = 1
 
     print(f"Started process {processNumber}.")
-    while gen < maxGen:
+    while gen < maxGen and unchangedCount < maxEqualsGen:
         gen += 1
+
         print(f"Current generation for P:{processNumber}: {gen}")
         population.setIndividuals(sType.rankSelection(population))
         # population.setIndividuals(crossover(population, cType.nPoint, 2))
@@ -42,8 +46,10 @@ def GATasks(*args):
         mType.randomIndividualMutation(population, 0.5)
         population.incrementGeneration()
         print("--------------------------------------------------------------------")
-    print(f"Process {args[0]} has ended.")
-    printIntoResults(*args)
+        unchangedCount, lastFitness = stoppingCondition(population, lastFitness, unchangedCount, increaseRate)
+
+    print(f"\n\nProcess {processNumber} has ended.\n\n")
+    printIntoResults(processNumber, population)
 
 
 if __name__ == '__main__':
