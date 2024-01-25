@@ -13,7 +13,7 @@ This project aims to realise an intelligent system of exercise recommendations f
 
 Requirements:
 
-- Python3;
+- Python 3.10 or above;
 - MySQL database.
   
 1. Clone the repository:
