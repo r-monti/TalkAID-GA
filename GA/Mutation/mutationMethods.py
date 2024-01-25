@@ -34,3 +34,23 @@ def mutate(i: Individual, userId: int, gen: int) -> Individual:
 
     return i
 
+def worstIndividualMutation(p: Population, mutationRate: float) -> Population:
+    """
+    This function will mutate the worst Individual in a Population.
+    :param p: The Population to mutate.
+    :param mutationRate: Probability of mutation.
+    :return: The population after mutation.
+    """
+    individuals = p.getIndividuals()
+    minF = individuals[0].fitness()
+    indice = 0
+    for index, individual in enumerate(individuals):
+        if minF > individual.fitness():
+            minF = individual.fitness()
+            indice = index
+
+    if random.random() < mutationRate:
+        i = p.getIndividuals()[indice]
+        p.replaceIndividual(i, mu.mutateIndividual(i, p))
+
+    return p
