@@ -7,7 +7,7 @@ from GA.Evaluation.fitness import individualFitness as evaluate
 
 def mutateEx(i: Individual, p: Population) -> Individual:
     """
-    This function will mutate a random exercise in an Individual.
+    Mutates a random exercise in an Individual.
     :param i: The Individual to mutate.
     :param p: The Population of the individual.
     :return: The new Individual after mutation.
@@ -24,7 +24,7 @@ def mutateEx(i: Individual, p: Population) -> Individual:
 
 def mutateIndividual(i: Individual, p: Population):
     """
-    This function will mutate the entire Individual.
+    Mutates the entire Individual.
     :param i: The Individual to mutate.
     :param p: The Population of the Individual.
     :return: The new Individual after mutation.

@@ -6,7 +6,7 @@ import random
 
 def execute3Crossover(p: Population, crossoverType: crossover, *args) -> list[Individual]:
     """
-    This function executes the crossover on a population taking 3 individuals instead of 2.
+    Executes the crossover on a population taking 3 individuals instead of 2.
     :param p: The starting population.
     :param crossoverType: The crossover algorithm we want to perform.
     :param args: The arguments to pass to the crossover method as needed.

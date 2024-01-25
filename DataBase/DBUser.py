@@ -1,5 +1,5 @@
 import mysql.connector
-from Connection.DBConnector import Connector
+from DataBase.DBConnector import Connector
 
 
 def informationUser(ID: int) -> dict:

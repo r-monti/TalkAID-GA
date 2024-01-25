@@ -7,7 +7,7 @@ from GA.Evaluation.fitness import individualFitness as evaluate
 
 def randomSelection(population: Population):
     """
-    This function generates a new population based on the Random selection algorithm.
+    Generates a new population based on the Random selection algorithm.
     :param population: The starting Population.
     :return: A new Population after selection.
     """
@@ -19,7 +19,7 @@ def randomSelection(population: Population):
 
 def rankSelection(population: Population):
     """
-    This function generates a new Population based on the Rank selection algorithm.
+    Generates a new Population based on the Rank selection algorithm.
     :param population: The starting population.
     :return: A new population after selection.
     """
@@ -40,7 +40,7 @@ def rankSelection(population: Population):
 
 def rouletteWheel(population: Population):
     """
-    This function generates a new Population based on the Roulette Wheel selection algorithm.
+    Generates a new Population based on the Roulette Wheel selection algorithm.
     :param population: The starting Population.
     :return: A new Population after selection.
     """

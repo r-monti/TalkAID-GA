@@ -5,7 +5,7 @@ import GA.Mutation.mutationUtility as mu
 
 def randomSingleMutation(p: Population, mutationRate: float) -> Population:
     """
-    This function will randomly mutate a gene in an Individual in a Population.
+    Randomly mutates a gene in an Individual in a Population.
     :param p: The Population to mutate.
     :param mutationRate: Probability of mutation.
     :return: The population after mutation.
@@ -19,7 +19,7 @@ def randomSingleMutation(p: Population, mutationRate: float) -> Population:
 
 def randomIndividualMutation(p: Population, mutationRate: float) -> Population:
     """
-    This function will randomly mutate an entire Individual in a Population.
+    Randomly mutates an entire Individual in a Population.
     :param p: The Population to mutate.
     :param mutationRate: Probability of mutation.
     :return: The population after mutation.
@@ -33,10 +33,9 @@ def randomIndividualMutation(p: Population, mutationRate: float) -> Population:
     return p
 
 
-
 def worstIndividualMutation(p: Population, mutationRate: float) -> Population:
     """
-    This function will mutate the worst Individual in a Population.
+    Mutates the worst Individual in a Population.
     :param p: The Population to mutate.
     :param mutationRate: Probability of mutation.
     :return: The population after mutation.

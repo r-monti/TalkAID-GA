@@ -5,7 +5,7 @@ class Exercise:
     def __init__(self, ID: int, exerciseDifficulty: int, target: str, exType: str,
                  lastEvaluation: int | None, lastCompletionDate: str | None, lastFeedback: int | None):
         """
-        This method will initialize the Exercise object.
+        Initializes the Exercise object.
         :param ID: The ID of the exercise.
         :param exerciseDifficulty: The difficulty of the exercise.
         :param target: The conditions that the exercise aims to help.
@@ -33,56 +33,56 @@ class Exercise:
 
     def getFitnessValue(self) -> float:
         """
-        This method returns the fitness value of the exercise.
+        Returns the fitness value of the exercise.
         :return: The fitness value.
         """
         return self._fitnessValue
 
     def setFitnessValue(self, value: float) -> None:
         """
-        This method sets the fitness value of the exercise.
+        Sets the fitness value of the exercise.
         :param value: The new fitness value to set.
         """
         self._fitnessValue = value
 
     def getGeneration(self) -> int:
         """
-        This method returns the generation in which the exercise has been inserted.
+        Returns the generation in which the exercise has been inserted.
         :return: The generation value.
         """
         return self._generation
 
     def setGeneration(self, value: int) -> None:
         """
-        This method sets the generation in which the exercise has been inserted.
+        Sets the generation in which the exercise has been inserted.
         :param value: The generation value.
         """
         self._generation = value
 
     def getExerciseID(self) -> int:
         """
-        This method returns the exercise ID.
+        Returns the exercise ID.
         :return: The exercise ID.
         """
         return self._exerciseID
 
     def getExerciseDifficulty(self) -> int:
         """
-        This method returns the exercise difficulty.
+        Returns the exercise difficulty.
         :return: The exercise difficulty, between 1 and 10.
         """
         return self._exerciseDifficulty
 
     def getExerciseTarger(self) -> str:
         """
-        This method returns the target of the exercise.
+        Returns the target of the exercise.
         :return: The target of the exercise, usually at least 3 Conditions names.
         """
         return self._target
 
     def getExerciseType(self) -> str:
         """
-        This method returns the exercise type.
+        Returns the exercise type.
         :return: The exercise type, between 'READTEXT', 'READIMAGES', 'IMAGESTOTEXT', 'TEXTTOIMAGES', 'CROSSWORD',
         'COMPLETETEXT', 'RIGHTTEXT'.
         """
@@ -90,21 +90,21 @@ class Exercise:
 
     def getLastEvaluation(self) -> int | None:
         """
-        This method returns the last evaluation of the Exercise.
+        Returns the last evaluation of the Exercise.
         :return: The last Evaluation or None if the exercise has not been evaluated yet.
         """
         return self._lastEvaluation
 
     def getLastCompletionDate(self) -> str | None:
         """
-        This method returns the last completion date of the Exercise.
+        Returns the last completion date of the Exercise.
         :return: The last CompletionDate or None if the exercise has not been executed yet.
         """
         return self._lastCompletionDate
 
     def getLastFeedback(self) -> int:
         """
-        This method returns the last feedback of the Exercise.
+        Returns the last feedback of the Exercise.
         :return: The last feedback, between -1 and +1.
         """
         return self._lastFeedback

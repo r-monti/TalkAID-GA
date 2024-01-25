@@ -4,7 +4,7 @@ from GA.Individual.exerciseIndividual import Individual
 
 def find_rank(individuals: list[Individual], subdivision: float) -> Individual:
     """
-    This function selects the Individual based on the Rank selection algorithm.
+    Selects the Individual based on the Rank selection algorithm.
     :param individuals: The Individuals sorted from worst to best.
     :param subdivision: The subdivision of the percentile for the selection.
     :return: The selected Individual.

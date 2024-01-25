@@ -8,7 +8,7 @@ class Population:
     """
     def __init__(self, u: User, *args: Individual):
         """
-        This method will initialize the Population object.
+        Initializes the Population object.
         :param u: The User.
         :param args: The Individuals that the Population object will contain.
         """
@@ -31,7 +31,11 @@ class Population:
         else:
             return None
 
-    def totalFitness(self):
+    def totalFitness(self) -> int:
+        """
+        Returns the total fitness of the Population.
+        :return: the fitness of the Population.
+        """
         self._entireFitness = 0
         for individual in self._individuals:
             self._entireFitness += individual.fitness()
@@ -39,7 +43,7 @@ class Population:
 
     def replaceIndividual(self, oldIndividual: Individual, newIndividual: Individual):
         """
-        This method will replace an Individual with a new Individual.
+        Replaces an Individual with a new Individual.
         :param oldIndividual: The Individual to replace.
         :param newIndividual: The new Individual to insert.
         """
@@ -51,7 +55,7 @@ class Population:
 
     def removeIndividual(self, i: Individual):
         """
-        This method removes an Individual.
+        Removes an Individual.
         :param i: The Individual to remove.
         """
         if i in self._individuals:
@@ -61,34 +65,34 @@ class Population:
 
     def getIndividuals(self) -> list[Individual]:
         """
-        This method returns a list of Individuals.
+        Returns a list of Individuals.
         :return: The Individuals of the Population.
         """
         return self._individuals
 
     def setIndividuals(self, newIndividuals: list[Individual]):
         """
-        This method sets new Individuals removing all the old ones.
+        Sets new Individuals removing all the old ones.
         :param newIndividuals: The Individuals to set.
         """
         self._individuals = newIndividuals
 
     def getUser(self) -> User:
         """
-        This method return the User of the Population.
+        Returns the User of the Population.
         :return: The User object.
         """
         return self._user
 
     def incrementGeneration(self):
         """
-        This method increments the current generation by 1.
+        Increments the current generation by 1.
         """
         self._currGen += 1
 
     def getGeneration(self) -> int:
         """
-        This method return the current generation.
+        Returns the current generation.
         :return: The current Generation number.
         """
         return self._currGen

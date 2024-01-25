@@ -6,7 +6,7 @@ from DataBase.DBCreate import createUser
 
 def initialize(pSize: int, iSize: int, userId: int) -> Population:
     """
-    This function will initialize the Population, creating pSize Individuals, each with iSize random Exercises.
+    Initializes the Population, creating pSize Individuals, each with iSize random Exercises.
     :param pSize: The size of the Population.
     :param iSize: The size of an Individual.
     :param userId: The ID of the User.

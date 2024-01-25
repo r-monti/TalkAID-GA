@@ -4,7 +4,7 @@ class User:
     """
     def __init__(self, ID: int, conditions: dict, exercises: dict):
         """
-        This function will initialize the User object.
+        Initializes the User object.
         :param ID: The id of the user.
         :param conditions: The conditions and their severities.
         :param exercises:  The last 50 exercises done.
@@ -22,21 +22,21 @@ class User:
 
     def getID(self) -> int:
         """
-        This function return the ID of the User.
+        Returns the ID of the User.
         :return: The ID of the User.
         """
         return self._ID
 
     def getConditions(self) -> dict:
         """
-        This function returns a copy of the User's conditions.
+        Returns a copy of the User's conditions.
         :return: The Conditions of the User.
         """
         return self._conditions.copy()
 
     def getExercises(self) -> dict:
         """
-        This function return a copy of the User's exercises.
+        Returns a copy of the User's exercises.
         :return: The Exercises done by the User.
         """
         return self._exercises.copy()

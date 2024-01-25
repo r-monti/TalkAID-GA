@@ -7,7 +7,7 @@ class Individual:
     """
     def __init__(self, *args: Exercise):
         """
-        This method will initialize the Individual object.
+        Initializes the Individual object.
         :param args: all the Exercises that will form the individual.
         """
         self._individualFitness = 0
@@ -29,7 +29,7 @@ class Individual:
 
     def fitness(self) -> float:
         """
-        This function will calculate and then return the fitness of the Individual.
+        Calculates and then return the fitness of the Individual.
         :return: The fitness of the Individual formed by the fitness of the exercises in the Individual.
         """
         self._individualFitness = 0
@@ -39,7 +39,7 @@ class Individual:
 
     def getExerciseByIndex(self, i: int) -> Exercise | None:
         """
-        This function returns the exercise with the desired index if it exists.
+        Returns the exercise with the desired index if it exists.
         :param i: The index of the exercise.
         :return: The Exercise of that index or None if the Exercise does not exist.
         """
@@ -50,7 +50,7 @@ class Individual:
 
     def replaceExercise(self, oldEx: Exercise, newEx: Exercise, gen: int):
         """
-        This function will replace an Exercise with a new Exercise, updating the generation number of the new Exercise.
+        Replaces an Exercise with a new Exercise, updating the generation number of the new Exercise.
         :param oldEx: The Exercise to replace.
         :param newEx: The Exercise to insert.
         :param gen: The current generation.
@@ -61,14 +61,14 @@ class Individual:
 
     def getList(self) -> list[Exercise]:
         """
-        This function returns the list of Exercises of the Individual.
+        Returns the list of Exercises of the Individual.
         :return: The list of Exercises.
         """
         return self._exercises
 
     def setList(self, lst: list):
         """
-        This function sets a new list of Exercises for the Individual.
+        Sets a new list of Exercises for the Individual.
         :param lst: The new list of Exercises.
         """
         self._exercises = lst

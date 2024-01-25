@@ -6,7 +6,7 @@ from GA.Individual.exerciseIndividual import Individual
 
 def nPoint(i1: Individual, i2: Individual, i3: Individual, n: int) -> tuple[Individual, Individual, Individual]:
     """
-    This function will perform n-point crossover with perfect interleaving.
+    Performs n-point crossover with perfect interleaving.
     :param i1: The first individual.
     :param i2: The second individual.
     :param i3: The third individual.
@@ -47,7 +47,7 @@ def nPoint(i1: Individual, i2: Individual, i3: Individual, n: int) -> tuple[Indi
 
 def nPointReverse(i1: Individual, i2: Individual, i3: Individual, n: int) -> tuple[Individual, Individual, Individual]:
     """
-    This function will perform n-point crossover with perfect interleaving but starting with a switch.
+    Performs n-point crossover with perfect interleaving but starting with a switch.
     :param i1: The first individual.
     :param i2: The second individual.
     :param i3: The third individual.
@@ -88,7 +88,7 @@ def nPointReverse(i1: Individual, i2: Individual, i3: Individual, n: int) -> tup
 
 def nPointRandom(i1: Individual, i2: Individual, i3: Individual, n: int, crossoverProbability: float) -> tuple[Individual, Individual, Individual]:
     """
-    This function will perform n-point crossover with random interleaving.
+    Performs n-point crossover with random interleaving.
     :param i1: The first individual.
     :param i2: The second individual.
     :param i3: The third individual.
