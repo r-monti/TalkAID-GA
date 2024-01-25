@@ -1,8 +1,14 @@
+from GA.Population.exercisePopulation import Population
 from Printer.printerUtility import createTextFile
 from datetime import datetime
 
 
-def printIntoResults(processNumber, population):
+def printIntoResults(processNumber: int, population: Population):
+    """
+    Prints on a file the results of the GA.
+    :param processNumber: The process that ran the GA.
+    :param population: The population.
+    """
     path = createTextFile()
     timestamp = f"\n\nTimestamp: {datetime.now()}, process {processNumber}\n"
 
