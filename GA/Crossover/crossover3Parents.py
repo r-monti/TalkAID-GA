@@ -25,6 +25,7 @@ def execute3Crossover(p: Population, crossoverType: crossover, *args) -> list[In
             i2 = random.choice(individuals)
             p.removeIndividual(i2)
             i3 = random.choice(individuals)
+            p.removeIndividual(i3)
             i1, i2, i3 = crossoverType(i1, i2, i3, *args)
             newIndividuals.append(i1)
             newIndividuals.append(i2)

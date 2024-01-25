@@ -18,7 +18,8 @@ class Connector:
                                                        password='pwd',
                                                        )
             if self._connection.is_connected():
-                print("Connected to MySQL Server!")
+                # print("Connected to MySQL Server!")
+                pass
 
         except mysql.connector.Error as e:
             print("Error while connecting to MySQL, ", e)

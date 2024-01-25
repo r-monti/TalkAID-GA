@@ -101,7 +101,7 @@ def nPointRandom(i1: Individual, i2: Individual, i3: Individual, n: int, crossov
     elif n > len(i1):
         raise ValueError("Invalid n value, must be less than the lenght of the individual!")
     elif crossoverProbability < 0 or crossoverProbability > 1:
-        raise ValueError("Invalid crossoverProbability! Must be between 0 and 1")
+        raise ValueError("Invalid crossoverProbability! Must be between 0 and 1.")
 
     dividedI1, dividedI2, dividedI3 = divide(i1.getList(), n), divide(i2.getList(), n), divide(i3.getList(), n)
 
@@ -124,6 +124,10 @@ def nPointRandom(i1: Individual, i2: Individual, i3: Individual, n: int, crossov
                 newI1.extend(triplet[1])
                 newI2.extend(triplet[2])
                 newI3.extend(triplet[0])
+        else:
+            newI1.extend(triplet[0])
+            newI2.extend(triplet[1])
+            newI3.extend(triplet[2])
 
     i1.setList(newI1)
     i2.setList(newI2)
