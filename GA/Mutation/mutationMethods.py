@@ -1,38 +1,38 @@
 import random
-import DataBase.DBExercise as db
 from GA.Population.exercisePopulation import Population
-from GA.Individual.exerciseIndividual import Individual
+import GA.Mutation.mutationUtility as mu
 
 
 def randomSingleMutation(p: Population, mutationRate: float) -> Population:
     """
-    This function will randomly mutate an Individual in a Population.
+    This function will randomly mutate a gene in an Individual in a Population.
     :param p: The Population to mutate.
     :param mutationRate: Probability of mutation.
     :return: The population after mutation.
     """
     if random.random() < mutationRate:
         i = random.choice(p.getIndividuals())
-        userID = p.getUser().getID()
-        currGeneration = p.getGeneration()
-        p.replaceIndividual(i, mutate(i, userID, currGeneration))
+        p.replaceIndividual(i, mu.mutateEx(i, p))
 
     return p
 
 
-def mutate(i: Individual, userId: int, gen: int) -> Individual:
+def randomIndividualMutation(p: Population, mutationRate: float) -> Population:
     """
-    This function will mutate a random exercise in an Individual.
-    :param i: The Individual to mutate.
-    :param userId: The ID of the User.
-    :param gen: The current generation.
-    :return: The new Individual after mutation.
+    This function will randomly mutate an entire Individual in a Population.
+    :param p: The Population to mutate.
+    :param mutationRate: Probability of mutation.
+    :return: The population after mutation.
     """
-    oldEx = random.choice(i.getList())
-    newEx = db.select_random_exercise(1, userId)[0]
-    i.replaceExercise(oldEx, newEx, gen)
+    individuals = p.getIndividuals()
 
-    return i
+    if random.random() < mutationRate:
+        i = random.choice(individuals)
+        p.replaceIndividual(i, mu.mutateIndividual(i, p))
+
+    return p
+
+
 
 def worstIndividualMutation(p: Population, mutationRate: float) -> Population:
     """
