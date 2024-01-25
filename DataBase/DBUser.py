@@ -4,9 +4,9 @@ from Connection.DBConnector import Connector
 
 def informationUser(ID: int) -> dict:
     """
-    Takes the Condition's information of a patient
-    :param ID: the patient's ID
-    :return: a dict of all conditions of the patient
+    Takes the Condition's information of a patient.
+    :param ID: The patient's ID.
+    :return: A dict of all conditions of the patient.
     """
     connessione = Connector()
     cursor = None
@@ -16,7 +16,7 @@ def informationUser(ID: int) -> dict:
             cursor = connessione.get_connection().cursor(dictionary=True)
             query = """
                     SELECT
-                        pc.ID_condition AS ConditionID,
+                        c.Name,
                         pc.Severity,
                         pc.WritingSeverity,
                         pc.ReadingSeverity
@@ -39,7 +39,7 @@ def informationUser(ID: int) -> dict:
                     tupla = (record["Severity"],
                              record["WritingSeverity"],
                              record["ReadingSeverity"])
-                    patologie[record["ConditionID"]] = tupla
+                    patologie[record["Name"]] = tupla
                 return patologie
 
     except mysql.connector.Error as e:
@@ -50,4 +50,4 @@ def informationUser(ID: int) -> dict:
             if cursor is not None:
                 cursor.close()
             connessione.get_connection().close()
-            print("MySQL connection is closed.")
+            # print("MySQL connection is closed.")
