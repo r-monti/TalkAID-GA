@@ -42,53 +42,54 @@
 
     Lo scopo del nostro progetto è quello di realizzare un agente intelligente che possa:
 
-    • Consigliare un insieme di esercizi mirato per paziente, basandosi sull'esperienza del paziente o sul lasso di tempo passato dall'ultima interazione con
-    quella tipologia di esercizio;
+    \begin{itemize}
+        \item Consigliare un insieme di esercizi mirato per il paziente, basandosi sull'esperienza del paziente o sul lasso di tempo trascorso dall'ultima interazione con quella tipologia di esercizio;
+        \item Migliorare il sistema di consigli nel tempo, facendolo evolvere sulla base dei feedback del logopedista, il quale deciderà se un esercizio è appropriato o meno.
+    \end{itemize}
 
-    • Migliorare il sistema di consigli nel tempo, facendolo evolvere sulla base dei feedback del logopedista, il quale deciderà se un esercizio è appropriato
-    o meno;
 
     \pagebreak
     \section{Specifica PEAS}
 
-    • Performance:
+    Di seguito abbiamo elencato la specifca PEAS dell'agente intelligente.
+
+    \textbf{Performance:}
 
     Le prestazioni dell’agente sono valutate attraverso le seguenti misure:
 
-    la sua capacità di consigliare esercizi più il mirati possibile per il paziente in base alla patologia
+    \begin{itemize}
+        \item La sua capacità di consigliare esercizi più mirati possibile per il paziente in base alla patologia.
+        \item Il punteggio dell'esercizio che il paziente ha effettuato su quell'esercizio.
+        \item Quanto tempo è passato dall'ultima volta che il paziente ha svolto l'esercizio.
+    \end{itemize}
 
-    il punteggio dell'esercizio che il paziente ha effettuato su quell'esercizio
-
-    quanto tempo è passato dall'ultima volta che il paziente ha svolto l'esercizio
-
-    • Environment:
+    \textbf{Environment:}
 
     L’ambiente è:
 
-    Completamente osservabile, in quanto si ha accesso a tutte le informazioni relative ai pazienti, in particolare le patologie e gli esercizi svolti, e
-    alla lista degli esercizi svolti per ogni paziente;
+    \begin{itemize}
+        \item Completamente osservabile, in quanto si ha accesso a tutte le informazioni relative ai pazienti, in particolare le patologie e gli esercizi svolti, e alla lista degli esercizi svolti per ogni paziente.
+        \item Non deterministico, in quanto lo stato dell’ambiente cambia indipendentemente dalle azioni dell’agente.
+        \item Sequenziale, in quanto le esercitazioni effettuate dai pazienti e le scelte del logopedista influenzano le decisioni future dell’agente.
+        \item Dinamico, in quanto nel corso delle elaborazioni dell’agente, un paziente potrebbe svolgere un esercizio, cambiando in tal modo le sue esigenze.
+        \item Discreto, il numero di percezioni dell’agente è limitato in quanto ha un numero discreto di patologie, esercizi, pazienti, azioni e percezioni possibili.
+        \item A singolo agente, in quanto l’unico agente che opera in questo ambiente è quello in oggetto.
+    \end{itemize}
 
-    Non deterministico, in quanto lo stato dell’ambiente cambia indipendentemente dalle azioni dell’agente;
+    \textbf{Actuators:}
 
-    Sequenziale, in quanto le esercitazioni effettuate dai pazienti e le scelte del logopedista influenzano le decisioni future dell’agente;
+    \begin{itemize}
+        \item Pagina web dove viene creata una lista di esercizi in maniera tabellare consigliata per ogni paziente.
+    \end{itemize}
 
-    Dinamico, in quanto nel corso delle elaborazioni dell’agente, un paziente potrebbe svolgere un esercizio, cambiando in tal modo le sue esigenze;
+    \textbf{Sensors:}
 
-    Discreto, Il numero di percezioni dell’agente è limitato in quanto ha un numero discreto di patologie, esercizi, pazienti, azioni e percezioni possibili;
+    \begin{itemize}
+        \item Gli esercizi svolti dal paziente, gli esercizi assegnati al paziente da parte del logopedista, il punteggio per esercizio del paziente, e il tempo passato dall'ultima volta che il paziente ha effettuato l'esercizio.
 
-    A singolo agente, in quanto l’unico agente che opera in questo ambiente è quello in oggetto.
+        \item Il dataset è un riadattamento del database utilizzato dal sito web principale, eliminando gli attributi non necessari e aggiungendo gli attributi gravità di lettura e scrittura, necessari al fine di poter avere una più completa visualizzazione delle necessità reali del paziente.
 
-    • Actuators:
-
-    Pagina web dove viene creata una lista di esercizi in maniera tabellare consigliata per ogni paziente.
-
-    • Sensors:
-
-    Gli esercizi svolti dal paziente, gli esercizi assegnati al paziente da parte del logopedista, il punteggio per esercizio del paziente, e il tempo passato
-    dall'ultima volta che il paziente ha effettuato l'esercizio.
-
-    Il dataset è un riadattamento del database utilizzato dal sito web principale, eliminando gli attributi non necessari e aggiungendo gli attributi gravità
-    di lettura e scrittura, necessari al fine di poter avere una più completa visualizzazione delle necessità reali del paziente
+    \end{itemize}
     \pagebreak
     \section{Soluzione proposta}
 
@@ -109,18 +110,20 @@
 
     \section{Raccolta e sviluppo del dataset}
 
-    Avendo la necessita' di utilizzare un dataset sul quale il nostro modello avrebbe dovuto estrapolare le informazioni riguardanti gli esercizi e i pazienti, la sfida
-    consisteva in due opzioni:
+    Avendo la necessità di utilizzare un dataset sul quale il nostro modello avrebbe dovuto estrapolare le informazioni riguardanti gli esercizi e i pazienti, la sfida consisteva in due opzioni:
 
-    • Cercare un dataset pre-esistente al fine di avere molte informazioni, e al massimo effettuare data cleaning e adeguarlo a quello che ci serve.
+    \begin{itemize}
+        \item Cercare un dataset pre-esistente al fine di avere molte informazioni, e al massimo effettuare data cleaning e adeguarlo a quello che ci serve.
+        \item Creare un dataset, formulando gli esercizi, aggiungendo i pazienti e creando le varie valutazioni per ogni esercizio.
+    \end{itemize}
 
-    • Creare un dataset, formulando gli esercizi, aggiungendo i pazienti e creando le varie valutazioni per ogni esercizio.
+    Purtroppo cercare un dataset pre-esistente non è stato proficuo data l'unicità delle nostre richieste; infatti, non abbiamo trovato dataset che riguardassero nel dettaglio la valutazione di esercizi logopedici.
 
-    Purtroppo cercare un dataset pre-esistente non è stato proficuo data l'unicita' delle nostre richieste, infatti non abbiamo trovato dataset che
-    riguardassero nel dettaglio della valutazione di esercizi logopedici.
+    Di conseguenza, abbiamo deciso di creare un dataset nostro, utilizzando un database in SQL e generando le varie tipologie di esercizi di nostra iniziativa, ottenendo 84 esercizi. La generazione dei pazienti e la generazione delle valutazioni degli esercizi sono state prodotte sinteticamente mediante l'utilizzo di valori randomici.
 
-    Di conseguenza abbiamo deciso di creare un dataset nostro, generando le varie tipologie di esercizi di mano nostra, ottenendo 84 esercizi, mentre la generazione
-    dei pazienti e la generazione delle valutazioni degli esercizi è stata prodotta sinteticamente mediante l'utilizzo di valori randomici.
+    \begin{itemize}
+        \item Di seguito vengono mostrati i vari codici in SQL realizzati per poter popolare il nostro database.
+    \end{itemize}
 
     \lstset{
         backgroundcolor=\color{white},
