@@ -121,7 +121,7 @@ def uniformCrossover(i1: Individual, i2: Individual, crossoverProbability: float
     newI1 = []
     newI2 = []
 
-    for i, pair in enumerate(zip(dividedI1, dividedI2)):
+    for pair in zip(dividedI1, dividedI2):
         if random() < crossoverProbability:
             newI1.extend(pair[1])
         else:
