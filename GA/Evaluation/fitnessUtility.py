@@ -12,7 +12,11 @@ def getExperience(u: User) -> float:
     exercises = u.getExercises()
     for ex in exercises.values():
         data.append(ex.getExerciseDifficulty())
-    return stat.median(data)
+
+    if not data:
+        return 0
+    else:
+        return stat.median(data)
 
 
 def getMaxMinExperience(u: User) -> tuple[float, float]:
