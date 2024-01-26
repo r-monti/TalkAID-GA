@@ -853,16 +853,23 @@ I singoli esercizi sono caratterizzati da:
 \pagebreak
 
 
-    \section{Sviluppo del nostro algoritmo genetico}
-    Per lo sviluppo del nostro porgetto abbiamo optato per una soluzioen con Algoritmo Genetico trovandoci più comodi nella sua implementaizone per la suddivisione dei compiti tra i vari membri del team.
-    Vista la dimensione del nostro gruppo abbiamo anche deciso di imlementare e provare diversi algoritmi per le diverse fasi dell'algoritmo Genetico.
-    L'algoritmo genetico è suddiviso nelle fasi di Selezione, Crossover e Mutaizone.
-    \subsection{Selezione}
-    Nella fase di selezione abbiamo implementato 3 tipi diversi di algoritmi:
-    \begin{itemize}
-        \item\textbf{Roulette Wheel}: Sfruttiamo il valore della funzione di fintess di ogni elemento per impostare la probabilità che venga scelto, tramite un sorteggio randomico dii un numero verrà prellevato l'elemento.
-    \end{itemize}
-        \begin{lstlisting}[language=Python, breaklines, no caption]
+\section{Sviluppo del nostro algoritmo genetico}
+
+Per lo sviluppo del nostro porgetto abbiamo optato per una soluzioen con Algoritmo Genetico trovandoci più comodi nella sua implementaizone per la suddivisione dei compiti tra i vari membri del team.
+
+Vista la dimensione del nostro gruppo abbiamo anche deciso di imlementare e provare diversi algoritmi per le diverse fasi dell'algoritmo Genetico.
+
+L'algoritmo genetico è suddiviso nelle fasi di Selezione, Crossover e Mutaizone.
+
+\subsection{Selezione}
+
+Nella fase di selezione abbiamo implementato 3 tipi diversi di algoritmi:
+
+\begin{itemize}
+\item\textbf{Roulette Wheel}: Sfruttiamo il valore della funzione di fintess di ogni elemento per impostare la probabilità che venga scelto, tramite un sorteggio randomico dii un numero verrà prellevato l'elemento.
+\end{itemize}
+
+\begin{lstlisting}[language=Python, breaklines, no caption]
 import random
 import GA.Selection.selectionUtility as su
 from GA.Individual.exerciseIndividual import Individual
@@ -885,14 +892,15 @@ from GA.Evaluation.fitness import individualFitness as evaluate
                     if comulativeFitness >= value:
                         newIndividuals.append(Individual(*i.getList()))
                         break
-
             return newIndividuals
-        \end{lstlisting}
+\end{lstlisting}
 
 \pagebreak
+
 \begin{itemize}
 \item\textbf{Rank Selection}: Sfrutta il rank di ogni elemento per suddividere una torta di selezione in partizioni proporzionare al rank dell'elemento, il rank va dal più basso al più alto proporzionata alla percentuale di possibilità di essere selezionato, questa metodologia riesce ad escludere meno gli elementi rispetto all aroulette siccome la percentuale è proporzionata agli elementi e non al valore fitness. Per individuare i rank degli elementi viene richiamata la funzione findRank.
 \end{itemize}
+
 \begin{lstlisting}[language=Python, breaklines, no caption]
 import random
 import GA.Selection.selectionUtility as su
@@ -914,7 +922,7 @@ from GA.Evaluation.fitness import individualFitness as evaluate
     while len(newPopolation) < len(population):
         newPopolation.append(su.find_rank(sortedIndividuals, subdivision))
     return sortedIndividuals
-        \end{lstlisting}
+\end{lstlisting}
 
         \begin{lstlisting}[language=Python, breaklines, no caption]
             import random
@@ -949,10 +957,13 @@ def randomSelection(population: Population):
     return newP
         \end{lstlisting}
 
-    \subsection{Crossover}
-    La fase Crossover utilizza degli algoritmi per la generazione di nuovi elementi partendo dagli elementi scelti nella fase di Selezione.
-    Le tipologie che sono state create di Crossover non solo per tipologia ma anche per il numero di elementi da usare.
-    Le mitodologie di Crossover eseguite su 3 elementi sono:
+\subsection{Crossover}
+
+La fase Crossover utilizza degli algoritmi per la generazione di nuovi elementi partendo dagli elementi scelti nella fase di Selezione.
+
+Le tipologie che sono state create di Crossover non solo per tipologia ma anche per il numero di elementi da usare.
+
+Le mitodologie di Crossover eseguite su 3 elementi sono:
 
 \begin{itemize}
 \item\textbf{nPoint}: Questo Crossover va a modificare n punti di 3 liste di esercizi, ogni lista è sarà suddivisa in sottoliste di meno elementi queste'ultime rappresentano i punti che saranno combinati con gli altri.
@@ -997,9 +1008,13 @@ def nPoint(i1: Individual, i2: Individual, i3: Individual, n: int) -> tuple[Indi
 
     return i1, i2, i3
 \end{lstlisting}
+
+\pagebreak
+
 \begin{itemize}
 \item\textbf{nPointReverse}: Questo Crossover va a modificare n punti di 3 liste di esercizi, ogni lista è sarà suddivisa in sottoliste di meno elementi queste'ultime rappresentano i punti che saranno combinati con gli altri ma in ordine diverso a nPoint.
 \end{itemize}
+
 \begin{lstlisting}[language=Python, breaklines, no caption]
 from random import random
 from random import randint
@@ -1007,14 +1022,6 @@ from GA.Crossover.crossoverUtility import divide
 from GA.Individual.exerciseIndividual import Individual
 
         def nPointReverse(i1: Individual, i2: Individual, i3: Individual, n: int) -> tuple[Individual, Individual, Individual]:
-    """
-    Performs n-point crossover with perfect interleaving but starting with a switch.
-    :param i1: The first individual.
-    :param i2: The second individual.
-    :param i3: The third individual.
-    :param n: Number of points.
-    :return: The two new individuals.
-    """
     if len(i1) != len(i2) != len(i3):
         raise ValueError("Invalid individual length! They have to be the same.")
     elif n > len(i1):
@@ -1047,6 +1054,8 @@ from GA.Individual.exerciseIndividual import Individual
     return i1, i2, i3
         \end{lstlisting}
 
+        \pagebreak
+
 \begin{itemize}
 \item\textbf{nPointRandom}: Questo Crossover va a modificare n punti di 3 liste di esercizi, ogni lista è sarà suddivisa in sottoliste di meno elementi queste'ultime rappresentano i punti che saranno combinati con gli altri ma in ordine casuale.
 \end{itemize}
@@ -1058,15 +1067,6 @@ from GA.Crossover.crossoverUtility import divide
 from GA.Individual.exerciseIndividual import Individual
 
             def nPointRandom(i1: Individual, i2: Individual, i3: Individual, n: int, crossoverProbability: float) -> tuple[Individual, Individual, Individual]:
-    """
-    Performs n-point crossover with random interleaving.
-    :param i1: The first individual.
-    :param i2: The second individual.
-    :param i3: The third individual.
-    :param n: Number of points.
-    :param crossoverProbability: The probability of crossover.
-    :return: The two new individuals.
-    """
     if len(i1) != len(i2) != len(i3):
         raise ValueError("Invalid individual length! They have to be the same.")
     elif n > len(i1):
@@ -1104,23 +1104,20 @@ from GA.Individual.exerciseIndividual import Individual
         \end{lstlisting}
     \end{itemize}
 
+\pagebreak
+
 Le metodologie di Crossover eseguite su 2 elementi sono:
+
 \begin{itemize}
 \item\textbf{nPoint}: Questo Crossover va a modificare n punti di 2 liste di esercizi, ogni lista sarà suddivisa in sottoliste di meno elementi queste'ultime rappresentano i punti che saranno combinati con gli altri.
 \end{itemize}
+
 \begin{lstlisting}[language=Python, breaklines, no caption]
 from random import random
 from GA.Crossover.crossoverUtility import divide
 from GA.Individual.exerciseIndividual import Individual
 
 def nPoint(i1: Individual, i2: Individual, n: int) -> tuple[Individual, Individual]:
-    """
-    Performs n-point crossover with perfect interleaving.
-    :param i1: The first individual.
-    :param i2: The second individual.
-    :param n: Number of points.
-    :return: The two new individuals.
-    """
     if len(i1) != len(i2):
         raise ValueError("Invalid individual length! They have to be the same.")
     elif n > len(i1):
@@ -1145,22 +1142,18 @@ def nPoint(i1: Individual, i2: Individual, n: int) -> tuple[Individual, Individu
     return i1, i2
         \end{lstlisting}
 
+\pagebreak
+
 \begin{itemize}
 \item\textbf{nPointReverse}: Questo Crossover va a modificare n punti di 2 liste di esercizi, ogni lista è sarà suddivisa in sottoliste di meno elementi queste'ultime rappresentano i punti che saranno combinati con gli altri ma in ordine diverso a nPoint.
 \end{itemize}
+
 \begin{lstlisting}[language=Python, breaklines, no caption]
 from random import random
 from GA.Crossover.crossoverUtility import divide
 from GA.Individual.exerciseIndividual import Individual
 
 def nPointReverse(i1: Individual, i2: Individual, n: int) -> tuple[Individual, Individual]:
-    """
-    Performs n-point crossover with perfect interleaving but starting with a switch.
-    :param i1: The first individual.
-    :param i2: The second individual.
-    :param n: Number of points.
-    :return: The two new individuals.
-    """
     if len(i1) != len(i2):
         raise ValueError("Invalid individual length! They have to be the same.")
     elif n > len(i1):
@@ -1184,23 +1177,19 @@ def nPointReverse(i1: Individual, i2: Individual, n: int) -> tuple[Individual, I
 
     return i1, i2
 \end{lstlisting}
+
+\pagebreak
+
 \begin{itemize}
 \item\textbf{nPointRandom}: Questo Crossover va a modificare n punti di 2 liste di esercizi, ogni lista è sarà suddivisa in sottoliste di meno elementi queste'ultime rappresentano i punti che saranno combinati con gli altri ma in ordine casuale.
 \end{itemize}
+
 \begin{lstlisting}[language=Python, breaklines, no caption]
 from random import random
 from GA.Crossover.crossoverUtility import divide
 from GA.Individual.exerciseIndividual import Individual
 
 def nPointRandom(i1: Individual, i2: Individual, n: int,  crossoverProbability: float) -> tuple[Individual, Individual]:
-    """
-    Performs n-point crossover with random interleaving.
-    :param i1: The first individual.
-    :param i2: The second individual.
-    :param n: Number of points.
-    :param crossoverProbability: The probability of crossover.
-    :return: The two new individuals.
-    """
     if len(i1) != len(i2):
         raise ValueError("Invalid individual length! They have to be the same.")
     elif n > len(i1):
@@ -1227,6 +1216,8 @@ def nPointRandom(i1: Individual, i2: Individual, n: int,  crossoverProbability: 
     return i1, i2
 \end{lstlisting}
 
+\pagebreak
+
 \begin{itemize}
 \item\textbf{unifromCrossover}: Questo Crossover va a modificare n punti di 2 liste di esercizi, ogni sottolista viene suddivisa nei suoi singoli di esercizi e queste suddivisioni potrebbero essere scambiate tra le 2 liste .
 \end{itemize}
@@ -1237,14 +1228,6 @@ from GA.Crossover.crossoverUtility import divide
 from GA.Individual.exerciseIndividual import Individual
 
 def uniformCrossover(i1: Individual, i2: Individual, crossoverProbability: float) -> tuple[Individual, Individual]:
-    """
-    Performs uniform crossover.
-    :param i1: The first individual.
-    :param i2: The second individual.
-    :param crossoverProbability: The probability of crossover.
-    :return: The two new individuals.
-    """
-
     if len(i1) != len(i2):
         raise ValueError("Invalid individual length! They have to be the same.")
     elif crossoverProbability < 0 or crossoverProbability > 1:
@@ -1272,12 +1255,33 @@ def uniformCrossover(i1: Individual, i2: Individual, crossoverProbability: float
     return i1, i2
 \end{lstlisting}
 
+\pagebreak
+
 Queste tipologie di Crossover sono eseguite da:
+
 \begin{itemize}
 \item\textbf{executeCrossover}: Questa funzione esegue il Crossover su una popolazione, la popolazioen rappresenta un insieme di informazioni inerenti all'utente e ad una lista di esercizi.
 \end{itemize}
-\begin{lstlisting}[language=Python, breaklines, no caption]
 
+\begin{lstlisting}[language=Python, breaklines, no caption]
+def executeCrossover(p: Population, crossoverType: crossover, *args) -> list[Individual]:
+    newIndividuals = list()
+    individuals = p.getIndividuals()
+    size = len(p)
+
+    if size % 2 != 0:
+        raise ValueError("The size of the population must be even!")
+    else:
+        for _ in range(round(len(p) / 2)):
+            i1 = random.choice(individuals)
+            p.removeIndividual(i1)
+            i2 = random.choice(individuals)
+            p.removeIndividual(i2)
+            i1, i2 = crossoverType(i1, i2, *args)
+            newIndividuals.append(i1)
+            newIndividuals.append(i2)
+
+        return newIndividuals
 \end{lstlisting}
 
 \begin{itemize}
@@ -1290,15 +1294,7 @@ from GA.Individual.exerciseIndividual import Individual
 import GA.Crossover.crossover3Methods as crossover
 import random
 
-
 def execute3Crossover(p: Population, crossoverType: crossover, *args) -> list[Individual]:
-    """
-    Executes the crossover on a population taking 3 individuals instead of 2.
-    :param p: The starting population.
-    :param crossoverType: The crossover algorithm we want to perform.
-    :param args: The arguments to pass to the crossover method as needed.
-    :return: The new population.
-    """
     newIndividuals = list()
     individuals = p.getIndividuals()
     size = len(p)
@@ -1319,47 +1315,42 @@ def execute3Crossover(p: Population, crossoverType: crossover, *args) -> list[In
 
         return newIndividuals
 \end{lstlisting}
-    Tutte queste funzionalità vengono effettuate sfruttando la funzione divide che alla ricezioen di ua lista di esercizi essa viene suddivisa in una lista di liste formate dagli esercizi della lista originale, questa fuznioen permette la suddivisione della lista in punti che poi saranno usati dai Crossover.
-    \subsection{Mutazione}
-    La mutazione è quella fase degli algoritmi GA che esegue una modifica al singolo dato, tale modifica può portare sia ad un vanaggio che ad un svantaggio, dipende dal tipo di algoritmo che viene usato, quelli da noi sviluppati sono:
-    \begin{itemize}
-        \item randomSingleMutation: Questa funzione può eseguire una mutazione su un esercizio di una popolazione. Se viene effettuate richiama la funzieon mutateEX.
-        \begin{lstlisting}[language=Python, breaklines, no caption]
+
+\pagebreak
+
+Tutte queste funzionalità vengono effettuate sfruttando la funzione divide che alla ricezioen di ua lista di esercizi essa viene suddivisa in una lista di liste formate dagli esercizi della lista originale, questa fuznioen permette la suddivisione della lista in punti che poi saranno usati dai Crossover.
+
+\subsection{Mutazione}
+
+La mutazione è quella fase degli algoritmi GA che esegue una modifica al singolo dato, tale modifica può portare sia ad un vanaggio che ad un svantaggio, dipende dal tipo di algoritmo che viene usato, quelli da noi sviluppati sono:
+
+\begin{itemize}
+\item\textbf{randomSingleMutation}: Questa funzione può eseguire una mutazione su un esercizio di una popolazione. Se viene effettuate richiama la funzieon mutateEX.
+\end{itemize}
+
+\begin{lstlisting}[language=Python, breaklines, no caption]
 import random
 from GA.Population.exercisePopulation import Population
 import GA.Mutation.mutationUtility as mu
 
-
 def randomSingleMutation(p: Population, mutationRate: float) -> Population:
-    """
-    Randomly mutates a gene in an Individual in a Population.
-    :param p: The Population to mutate.
-    :param mutationRate: Probability of mutation.
-    :return: The population after mutation.
-    """
     if random.random() < mutationRate:
         i = random.choice(p.getIndividuals())
         p.replaceIndividual(i, mu.mutateEx(i, p))
 
     return p
+\end{lstlisting}
 
-        \end{lstlisting}
-    \end{itemize}
-    \begin{itemize}
-        \item randomIndividualMutation: Questa fuznione può eseguire una mutazione sull'intero set di esercizi di una popolazione, se la mutazioen accade richiama la funzione mutateIndividual.
-        \begin{lstlisting}[language=Python, breaklines, no caption]
+\begin{itemize}
+\item\textbf{randomIndividualMutation}: Questa fuznione può eseguire una mutazione sull'intero set di esercizi di una popolazione, se la mutazioen accade richiama la funzione mutateIndividual.
+\end{itemize}
+
+\begin{lstlisting}[language=Python, breaklines, no caption]
 import random
 from GA.Population.exercisePopulation import Population
 import GA.Mutation.mutationUtility as mu
 
-
-        def randomIndividualMutation(p: Population, mutationRate: float) -> Population:
-    """
-    Randomly mutates an entire Individual in a Population.
-    :param p: The Population to mutate.
-    :param mutationRate: Probability of mutation.
-    :return: The population after mutation.
-    """
+def randomIndividualMutation(p: Population, mutationRate: float) -> Population:
     individuals = p.getIndividuals()
 
     if random.random() < mutationRate:
@@ -1367,23 +1358,20 @@ import GA.Mutation.mutationUtility as mu
         p.replaceIndividual(i, mu.mutateIndividual(i, p))
 
     return p
-        \end{lstlisting}
-    \end{itemize}
-    \begin{itemize}
-        \item worstIndividualMutation: Questa funzione può eseguire una mutazione ma con la scelta del set di esercizi da cambiare, infatti viene individuato il set di esercizi con la fitness minore, successivamente viene richiamata la funzioen mutateIndividual.
-        \begin{lstlisting}[language=Python, breaklines, no caption]
+\end{lstlisting}
+
+\pagebreak
+
+\begin{itemize}
+\item\textbf{worstIndividualMutation}: Questa funzione può eseguire una mutazione ma con la scelta del set di esercizi da cambiare, infatti viene individuato il set di esercizi con la fitness minore, successivamente viene richiamata la funzioen mutateIndividual.
+\end{itemize}
+
+\begin{lstlisting}[language=Python, breaklines, no caption]
 import random
 from GA.Population.exercisePopulation import Population
 import GA.Mutation.mutationUtility as mu
 
-
-        def worstIndividualMutation(p: Population, mutationRate: float) -> Population:
-    """
-    Mutates the worst Individual in a Population.
-    :param p: The Population to mutate.
-    :param mutationRate: Probability of mutation.
-    :return: The population after mutation.
-    """
+def worstIndividualMutation(p: Population, mutationRate: float) -> Population:
     individuals = p.getIndividuals()
     minF = individuals[0].fitness()
     indice = 0
@@ -1398,25 +1386,20 @@ import GA.Mutation.mutationUtility as mu
 
     return p
         \end{lstlisting}
-    \end{itemize}
     Queste 3 tipologie di mutazioni per funzionare utilizzano:
-    \begin{itemize}
-        \item mutateEX: Questa fuznione esegue uan ricerca casuale nel set di esercizi che ha ricevuto e sul DataBase per poi cambiare l'esercizio.
-        \begin{lstlisting}[language=Python, breaklines, no caption]
+
+\begin{itemize}
+\item\textbf{mutateEX}: Questa fuznione esegue uan ricerca casuale nel set di esercizi che ha ricevuto e sul DataBase per poi cambiare l'esercizio.
+\end{itemize}
+
+\begin{lstlisting}[language=Python, breaklines, no caption]
 import random
 import DataBase.DBExercise as db
 from GA.Population.exercisePopulation import Population
 from GA.Individual.exerciseIndividual import Individual
 from GA.Evaluation.fitness import individualFitness as evaluate
 
-
 def mutateEx(i: Individual, p: Population) -> Individual:
-    """
-    Mutates a random exercise in an Individual.
-    :param i: The Individual to mutate.
-    :param p: The Population of the individual.
-    :return: The new Individual after mutation.
-    """
     userId = p.getUser().getID()
     gen = p.getGeneration()
     oldEx = random.choice(i.getList())
@@ -1425,25 +1408,22 @@ def mutateEx(i: Individual, p: Population) -> Individual:
     evaluate(i, p.getUser())
 
     return i
-        \end{lstlisting}
-    \end{itemize}
-    \begin{itemize}
-        \item mutateIndividual: esegue una ricerca casuale nel DataBase di un numero di esercizi per un intero set per poi sostituirli e ricalcolare il valore fitness.
-        \begin{lstlisting}[language=Python, breaklines, no caption]
+\end{lstlisting}
+
+\pagebreak
+
+\begin{itemize}
+\item\textbf{mutateIndividual}: esegue una ricerca casuale nel DataBase di un numero di esercizi per un intero set per poi sostituirli e ricalcolare il valore fitness.
+\end{itemize}
+
+\begin{lstlisting}[language=Python, breaklines, no caption]
 import random
 import DataBase.DBExercise as db
 from GA.Population.exercisePopulation import Population
 from GA.Individual.exerciseIndividual import Individual
 from GA.Evaluation.fitness import individualFitness as evaluate
 
-
-        def mutateIndividual(i: Individual, p: Population):
-    """
-    Mutates the entire Individual.
-    :param i: The Individual to mutate.
-    :param p: The Population of the Individual.
-    :return: The new Individual after mutation.
-    """
+def mutateIndividual(i: Individual, p: Population):
     userId = p.getUser().getID()
     gen = p.getGeneration()
     newIndividual = Individual(*db.select_random_exercise(len(i.getList()), userId))
@@ -1452,7 +1432,5 @@ from GA.Evaluation.fitness import individualFitness as evaluate
         ex.setGeneration(gen)
 
     return newIndividual
-        \end{lstlisting}
-    \end{itemize}
-
+\end{lstlisting}
 \end{document}
