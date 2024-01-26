@@ -10,7 +10,10 @@
 \usepackage{fancyhdr}
 \usepackage[T1]{fontenc}
 \usepackage{imakeidx}
+\usepackage[utf8]{inputenc}
 \makeindex[columns=3, title=Alphabetical Index, intoc]
+\usepackage{xcolor}
+\definecolor{ltgray}{RGB}{169,169,169}
 
 \begin{document}
 
@@ -18,19 +21,20 @@
 \fancyhead{}
 \fancyhead[C]{UNISA - TalkAID}
 
-    \title{TalkAID}
+    \title{
+    \includegraphics[width=0.5\textwidth]{logoTalkAid.png} \\[1cm]
+    \textbf{TalkAID - FIA}\\
+    \vspace{0.5cm}
+    \large Algoritmo Genetico per la raccomandazione di esercizi di Logopedia, basati su esperienza e necessità dei pazienti.
+}
     \author{
-        Anna Benedetta Salerno\\
-        \and
-        Michele D'Arienzo\\
-        \and
-        Raffaele Monti\\
-        \and
-        Luigi Petrillo\\
-        \and
-        Samuele Sparno\\
-    }
-    \date{23 Gennaio 2024}
+    Raffaele Monti\\
+    Luigi Petrillo\\
+    Michele D'Arienzo\\
+     Samuele Sparno\\
+    Anna Benedetta Salerno
+}
+    \date{26 Gennaio 2024}
 
     \maketitle
 
@@ -39,16 +43,16 @@
     \tableofcontents
 
     \pagebreak
-    
+
     \section{Sistema Attuale}
 
     Il progetto TALKAID rappresenta davvero un passo avanti significativo nel campo della riabilitazione e del supporto alle persone con disabilità del linguaggio. La possibilità di offrire trattamenti completamente \textit{a distanza} e in maniera \textit{asincrona} è un'innovazione che potrebbe aprire nuove opportunità per un numero ancora maggiore di individui affetti da queste patologie.
 
     La registrazione e il monitoraggio dei progressi dei pazienti potrebbe essere complessa e limitata a causa della mancanza di strumenti tecnologici dedicati.
 
-    Inoltre i metodi tradizionali potrebbero non essere altamente personalizzati alle esigenze specifiche dei pazienti, poiché potrebbe essere difficile adattarli in modo rapido ed efficiente. Inoltre la necessità delle visite dal vivo può essere un ostacolo per coloro che abitano a grandi distanze dai centri logopedici oppure per i lavoratori.
+    Inoltre i metodi tradizionali potrebbero non essere altamente personalizzati alle esigenze specifiche dei pazienti, poiché potrebbe essere difficile adattarli in modo rapido ed efficiente. Inoltre la necessità delle visite dal vivo può essere un ostacolo per coloro che abitano a grandi distanze dai centri di logopedia oppure per i lavoratori.
 
-    
+
 
     La componente di Intelligenza Artificiale è ritenuta fondamentale ai nostri obiettivi siccome aggiunge un livello di personalizzazione e adattabilità, permettendo ai pazienti di ricevere esercizi mirati in base al loro necessità ed esperienza. Questo non solo rende il trattamento più efficace, ma anche più agevole per i logopedisti, in quanto saranno aiutati dall'IA nella scelta degli esercizi migliori. I pazienti verranno incoraggiati a perseguire con impegno il percorso di miglioramento attraverso le loro statistiche.
 
@@ -67,7 +71,7 @@
 
     \section{Specifica PEAS}
 
-    Di seguito abbiamo elencato la specifca P.E.A.S. dell'agente intelligente.
+    Di seguito abbiamo elencato la specifica P.E.A.S. dell'agente intelligente.
 
     \subsection{Performance:}
 
@@ -78,7 +82,7 @@
         \item Il punteggio dell'esercizio che il paziente ha effettuato su quell'esercizio.
     \end{itemize}
 
-    \subsection{Environment:}
+    \subsection{Environment :}
 
     L’ambiente è:
 
@@ -101,7 +105,7 @@
 
     \begin{itemize}
         \item L'agente accede ad un dataset, il quale è un riadattamento del database attualmente utilizzato dal sistema principale di TalkAID, eliminando gli attributi non necessari e aggiungendo gli attributi gravità di lettura e scrittura, necessari al fine di poter avere una più completa visualizzazione delle necessità reali del paziente. (Nella versione definitiva del sistema principale, gli attributi aggiunti per gravità di lettura e scrittura esisterebbero e verrebbero gestiti dal logopedista curante);
-        
+
         \item Il dataset comprende informazioni e dati su:
             \begin{itemize}
                 \item Le condizioni trattate dal sistema principale;
@@ -110,7 +114,7 @@
                 \item La gravità delle condizioni degli utenti.
             \end{itemize}
 
-        
+
 
     \end{itemize}
 
@@ -139,9 +143,9 @@
         \item Creare un dataset, formulando gli esercizi, aggiungendo i pazienti e creando le varie valutazioni per ogni esercizio.
     \end{itemize}
 
-    Purtroppo la ricerca di un dataset pre-esistente non è stato proficuo data l'unicità delle nostre richieste; infatti, non abbiamo trovato dataset che riguardassero nel dettaglio la valutazione di esercizi logopedici.
+    Purtroppo la ricerca di un dataset pre-esistente non è stato proficuo data l'unicità delle nostre richieste; infatti, non abbiamo trovato dataset che riguardassero nel dettaglio la valutazione di esercizi di logopedia.
 
-    Di conseguenza, abbiamo deciso di creare un nostro dataset, utilizzando un database in MySQL e generando le varie tipologie di esercizi di nostra iniziativa, ottenendo \textit{84 esercizi}, divisi per \textit{7 diverse tipologie}, e una selezione di \textit{12 patologie} tra le più comuni e con difficoltà il più possibile incentrate principalmente sulla Scrittura o Lettura. La generazione dei pazienti e la generazione delle valutazioni degli esercizi sono state prodotte sinteticamente mediante l'utilizzo di valori randomici.
+    Di conseguenza, abbiamo deciso di creare un nostro dataset, utilizzando un database in MySQL e generando le varie tipologie di esercizi di nostra iniziativa, ottenendo \textit{84 esercizi}, divisi per \textit{7 diverse tipologie}, e una selezione di \textit{12 patologie} tra le più comuni e con difficoltà il più possibile incentrate principalmente sulla Scrittura o Lettura. La generazione dei pazienti e la generazione delle valutazioni degli esercizi sono state prodotte sinteticamente mediante l'utilizzo di valori casuali.
 
     \begin{itemize}
         \item Di seguito vengono mostrati i vari codici in SQL realizzati per poter popolare il nostro database.
@@ -208,7 +212,7 @@
             WHILE i <= 10 DO -- For each therapist user
                 SET j = 1;
                 WHILE j <= 10 DO -- Create 10 patient users
-                    INSERT INTO user (ID_Therapist) VALUES (i); 
+                    INSERT INTO user (ID_Therapist) VALUES (i);
                     SET j = j + 1;
                 END WHILE;
                 SET i = i + 1;
@@ -269,7 +273,7 @@
     In questa sezione, illustriamo il processo di ideazione delle tabelle, riportando il loro nome, descrivendone la funzione e indicando gli attributi contenuti.
 
 \begin{itemize}
-\item     condition - Contiene tutte le informazioni sulle patologie trattate dal sistema, importante per le relazioni tra esercizi e patologie.
+\item     \textit{condition} - Contiene tutte le informazioni sulle patologie trattate dal sistema, importante per le relazioni tra esercizi e patologie.
 \end{itemize}
 
     \begin{table}[h]
@@ -289,7 +293,7 @@
     \end{table}
 
 \begin{itemize}
-\item    exercise - Contiene tutti gli esercizi assegnati e/o svolti, utile per poter tenere traccia dell'andamento dei vari pazienti.
+\item    \textit{exercise} - Contiene tutti gli esercizi assegnati e/o svolti, utile per poter tenere traccia dell'andamento dei vari pazienti.
 \end{itemize}
 
     \begin{table}[h]
@@ -317,7 +321,7 @@
 \pagebreak
 
 \begin{itemize}
-\item     exercise\_glossary - Contiene le varie informazioni specifiche degli esercizi, interessante poiché ci permette di poter trovare il target specifico di un determinato esercizio, o la sua difficoltà.
+\item     \textit{exercise\_glossary} - Contiene le varie informazioni specifiche degli esercizi, interessante poiché ci permette di poter trovare il target specifico di un determinato esercizio, o la sua difficoltà.
 \end{itemize}
 
     \begin{table}[h]
@@ -343,7 +347,7 @@
     \end{table}
 
 \begin{itemize}
-\item     patient\_condition - Contiene le informazioni riguardo la patologia che affligge il paziente, in base a questa il nostro agente potrà selezionare esercizi specifici per il paziente.
+\item     \textit{patient\_condition} - Contiene le informazioni riguardo la patologia che affligge il paziente, in base a questa il nostro agente potrà selezionare esercizi specifici per il paziente.
 \end{itemize}
 
     \begin{table}[h]
@@ -371,10 +375,10 @@
     \subsection{Interazioni con il DataBase}
     Le interazioni effettuate dal nostro agente sul database sono esclusivamente operazioni di estrapolazione dati. Elencando, le funzioni create sono:
 
-    
+
     Per quanto riguarda le estrazioni degli esercizi:
     \begin{itemize}
-        \item\textbf{select\_exercises\_not\_done}: Questa funzione permette di ottenere gli esercizi non ancora svolti dall'paziente.
+        \item\textbf{select\_exercises\_not\_done}: Questa funzione permette di ottenere tutti gli esercizi non ancora svolti dal paziente.
 
         \item\textbf{select\_done\_exercises}: Questa funzione permette il recupero egli esercizi svolti dal paziente.
 
@@ -383,34 +387,38 @@
     \end{itemize}
     Per quanto riguarda le estrazioni dei pazienti:
     \begin{itemize}
-        \item\textbf{informationUser}: Questa funzione permette il recupero di informazioni inerenti alle varie patologie che il paziente è affetto con i livelli di gravità per ogniuna di essa.
+        \item\textbf{informationUser}: Questa funzione permette il recupero di informazioni inerenti alle varie patologie che il paziente è affetto con i livelli di gravità per ognuna di essa.
 
     \end{itemize}
 
 \pagebreak
 
     \section{Studio della funzione di fitness}
-    Da qui cominciamo a descrivere lo studio che è stato effettuato per poter sviluppare la funzione di fitness. Essa è basata su varie informazioni inerenti al paziente, agli esercizi e la loro ultima esecuzione, se esiste. 
-    
-    Più precisamente, le seguenti calcolano la fitness unicamente dall'esercizio e necessità dell'utente:
+    Da qui cominciamo a descrivere lo studio che è stato effettuato per poter sviluppare la funzione di fitness. Essa è basata su varie informazioni inerenti al paziente, agli esercizi e la loro ultima esecuzione, se esiste.
+
+    Più precisamente, le seguenti calcolano la fitness unicamente dall'esercizio e necessità del paziente:
 
 \begin{itemize}
 
-\item\textbf{difficultBasedFitness}: Restituisce un valore sulla base della difficoltà del singolo esercizio. Per prima cosa otteniamo l'esperienza dell'utente andando a calcolare la \textit{mediana} della difficoltà degli ultimi 50 esercizi svolti. Calcoliamo poi la media delle General Severity delle condition del paziente. Quando più è alta questa media, più lenta deve essere la curva di crescita della difficoltà, rispetto all'esperienza. Se la difficoltà rientra nella curva di crescita, restituisce 100, altrimenti un valore sempre più basso quanto si discosta. (Nel caso di utente con zero esperienza, il valore di experience è uguale a 0).
+\item\textbf{difficultBasedFitness}: Restituisce un valore sulla base della difficoltà del singolo esercizio. Per prima cosa otteniamo l'esperienza del paziente andando a calcolare la \textit{mediana} della difficoltà degli ultimi 50 esercizi svolti. Calcoliamo poi la media delle General Severity delle conditions. Quando più è alta questa media, più lenta deve essere la curva di crescita della difficoltà, rispetto all'esperienza. Se la difficoltà rientra nella curva di crescita, restituisce 100, altrimenti un valore sempre più basso quanto si discosta. (Nel caso di paziente con zero esperienza, il valore di experience è uguale a 0).
 \begin{lstlisting}
     def difficultBasedFitness(e: Exercise, u: User) -> float:
         difficulty = e.getExerciseDifficulty()
         severity = fu.getMeanSeverity(u)
         experience = fu.getExperience(u)
         maxD, minD = fu.getMaxMinExperience(u)
-    
+
+        r = maxD - minD
+        if r == 0:
+            r = 1
+
         distance = abs(difficulty - experience)
         slope = fu.getSlope(severity)
-    
+
         if distance < difficulty <= distance + slope:
             value = 100
         else:
-            value = 100 - (distance / (maxD - minD) * 100)
+            value = 100 - ((distance / r) * 100)
         return value
 \end{lstlisting}
 
@@ -428,7 +436,7 @@
 
 
 
-\item\textbf{targetBasedFitness}: Restituisce un valore che va da 0 a 100 in base all'adeguatezza dell'esercizio per le patologie affette del paziente.
+\item\textbf{targetBasedFitness}: Restituisce un valore che va da 0 a 100 in base all'adeguatezza dell'esercizio per le patologie affette del paziente, tramite le informazioni contenute nel Target dell'esercizio.
 \begin{lstlisting}
     def targetBasedFitness(e: Exercise, u: User) -> float:
     rightTarget = 0
@@ -441,7 +449,10 @@
 
 \pagebreak
 
-\item\textbf{evaluateBasedFitness}: La funzione restituisce un valore che va da 0 a 100 ottenuto sottraendo la votazione massima che si può avere da un'esecuzione, e la votazione che il paziente ha avuto su quell'esercizio.
+Le seguenti invece, calcolano la fitness utilizzando le informazioni inerenti all'ultima esecuzione dell'esercizio da parte del paziente. Se non è mai stato eseguito, restituiscono il massimo della fitness:
+
+
+\item\textbf{evaluateBasedFitness}: La funzione restituisce un valore che va da 0 a 100 ottenuto sottraendo la votazione massima che si può avere da un'esecuzione di un esercizio, e la votazione che il paziente ha avuto su quell'esercizio.
 \begin{lstlisting}
     def evaluateBasedFitness(e: Exercise) -> float:
     if e.getLastEvaluation() is not None:
@@ -451,7 +462,7 @@
     return value
 \end{lstlisting}
 
-\item\textbf{dateBasedFitness}: Restituisce un valore sulla base della quantità di tempo passata dalla data odierna alla data di completamento del esercizio.
+\item\textbf{dateBasedFitness}: Restituisce un valore che va da 0 a 100 sulla base della quantità di tempo passata dalla data odierna all'ultima data di completamento del esercizio.
 \begin{lstlisting}
     def dateBasedFitness(e: Exercise, maxDays: int) -> float:
     value = 100
@@ -465,14 +476,7 @@
 \end{lstlisting}
 
 
-
-
-
-
-
-
-
-\item\textbf{feedbackBasedFitness}: Restituisce un valore in base al feedback del paziente, quindi controlla se il paziente ha ricevuto un esercizio che gli aggrada e che gli è stato utile.
+\item\textbf{feedbackBasedFitness}: Restituisce un valore in base al feedback del paziente, quindi controlla se il paziente ha espresso un giudizio positivo (100) o uno negativo (0).
 \begin{lstlisting}
     def feedbackBasedFitness(e: Exercise) -> float:
     if e.getLastFeedback() is not None:
@@ -484,7 +488,7 @@
         return 100
 \end{lstlisting}
 
-\item\textbf{last50Fitness}: Valuta se l'esercizio offerto all'paziente è compreso negli ultimi 50 esercizi fatti, in caso negativo verrà riproposto.
+\item\textbf{last50Fitness}: Restituisce un valore in base alla posizione negli ultimi 50 esercizi fatti dall'paziente. Nel caso in cui non è presente, restituisce 100, altrimenti un valore sempre più basso quanto più alta è la posizione.
 \begin{lstlisting}
     def last50Fitness(e: Exercise, u: User) -> float:
     if e.getExerciseID() in u.getExercises().keys():
@@ -501,7 +505,7 @@
 
 \pagebreak
 
-Tutti questi dati sono di vario tipo e di varia importanza, infatti ogni dato nel calcolo del valore fitness è moltiplicato con una costante di importanza dedicata.
+Tutti questi valori sono di varia importanza e origine, per questo ogni funzione nel calcolo del valore fitness è moltiplicato con una costante di importanza dedicata.
 \begin{lstlisting}
     def fitness(ex: Exercise, u: User) -> float:
     f1, f2, f3, f4, f5, f6, f7 = F1, F2, F3, F4, F5, F6, F7
@@ -517,84 +521,143 @@ Tutti questi dati sono di vario tipo e di varia importanza, infatti ogni dato ne
     return somma
 \end{lstlisting}
 
-Tale variabile è modificabile in modo tale che il logopedista può decidere se considerare un dato rispetto ad un altro in base alle proprie esigenze.
+Tale variabile è modificabile in modo tale che il logopedista può decidere se considerare più un determinante rispetto ad un'altra in base alle proprie esigenze ed esperienza. Inoltre ci sembrava inopportuno forzare l'utilizzo delle nostre personali costanti, data la nostra incompentenza nel settore della terapia logopedica rispetto all'effettivo terapista.
 
 \pagebreak
 
-I dati su cui noi eseguiamo l'algoritmo GA è Popolation. Tale dato è strutturato da vari campi ognuno caratterizzato da parametri e le funzioni di modifica e visualizzazione dei singoli parametri, più precisamente queste classi sono:
+
+\section{Sviluppo del nostro algoritmo genetico}
+
+Vista la dimensione del nostro gruppo abbiamo anche deciso di implementare e provare diversi algoritmi per le diverse fasi dell'algoritmo Genetico.
+
+L'algoritmo genetico è suddiviso nelle fasi di Selezione, Crossover, Mutazione e valutazione.
+
+\subsection{Scelte progettuali}
+
+\begin{itemize}
+\item La \textbf{\textit{size della popolazione}} è fissa, ovviamente può essere modificata, ma una volta avviato l'algoritmo la dimensione rimane tale. Dato che abbiamo implementato sia crossover con 2 che con 3 genitori, l'unica accortezza è scegliere una dimensione tale che possa permettere il crossover scelto (esempio, se la popolazione è dispari e si prova a eseguire un crossover con 2 genitori, potrebbe portare l'agente ad un arresto o un comportamento imprevisto);
+
+\item La \textbf{\textit{size mating pool}} è grande quanto il numero di individui. Il possibile rallentamento che comporta non è un fattore rilevante, infatti l'algoritmo potrebbe aggirare tale problema venendo eseguito sempre in orari in cui il tempo di esecuzione non è un problema (quindi quando il paziente ha già esercizi da fare / quando il logopedista ha già degli esercizi da valutare, oppure in orari notturni in cui sia il paziente che il logopedista non utilizzano il sistema principale);
+\begin{itemize}
+    \item Inoltre, è stato implementato con funzionalità di multiprocessing, quindi può eseguire in parallelo più utenti. Le performance temporali non sono dunque un problema rilevante per il reale contesto di utilizzo;
+\end{itemize}
+\item La \textbf{\textit{probabilità di crossover}} dipende dal tipo di crossover scelto. Infatti abbiamo implementato crossover dove è certo lo scambio dei geni, e crossover dove si può specificare la probabilità;
+
+\item La \textbf{\textit{probabilità di mutazione}} è dichiarabile prima dell'avvio dell'algoritmo;
+
+\item L' \textbf{\textit{inizializzazione}} avviene selezionando casualmente degli esercizi dal dataset e, nel caso fossero già stati eseguiti almeno una volta, conterrebbero le informazioni dell'ultima esecuzione ;
+
+\item Gli \textbf{\textit{individui}} sono istanze di una classe, essa contiene il valore di fitness dell'individuo e una lista di istanze di esercizi (più informazioni alla sezione \ref{sec:individualImplementation});
 
 \begin{itemize}
 
-\item\textbf{user}: informazioni inerenti al paziente, come le sue patologie
-
-\item\textbf{individuals}: una lista di set di esercizi da elaborare
-
-\item\textbf{entirefitness}: valore fitness dell'intero Popolation
+\item Ogni \textbf{\textit{gene}} è anch'esso un'istanza di una classe, che al suo interno contiene tutte le informazioni dell'esercizio generale, sia le eventuali informazioni inerenti all'ultima esecuzione da parte del paziente (più informazioni alla sezione \ref{sec:exerciseImplementation}).
 
 \end{itemize}
 
-\bigskip
-La size della popolazione è fissa, ovviamente puo' essere modificata ma una volta inizializzato il ga la dimensione rimane tale.
-Dato che abbiamo implementato sia crossover a 2 che a 3 genitori, l'unica accortezza è scegliere una dimensione tale che possa permettere appunto il crossover scelto (esempio, se la popolazione è dispari e si prova a fare crossover a 2 genitori il ga potrebbe avere errori imprevisti)
+\item Per la \textbf{\textit{Selezione}} abbiamo sviluppato sia l'algoritmo \textit{Roulette Wheel} (ma abbiamo notato una tendenza verso la convergenza prematura), che \textit{Rank Selection}, il quale risolve il problema riscontrato dalla Roulette Wheel. Inoltre abbiamo anche implementato una \textit{Random Selection}.
+
+\item Per il \textbf{\textit{Crossover}} ne abbiamo sviluppati diversi, tutti funzionanti sia per 2 che per 3 genitori:
+
+\begin{itemize}
+
+\item \textit{nPoint} e \textit{nPointReverse} dove è possibile specificare il numero di punti per la divisione degli individui. nPointReverse si differenzia da nPoint poiché inizia con uno scambio, in questo modo anche le posizioni iniziali vengono scambiate per aumentare la casualità della scelta;
+\begin{itemize}
+    \item Entrambe sono state implementate con e senza probabilità di crossover.
+\end{itemize}
+\item Inoltre è stato implementato anche \textit{uniformCrossover}, in cui i singoli geni, tramite la \% di crossover, hanno la probabilità di venire scelti casualmente tra geni dei genitori.
+
+\end{itemize}
+
+\pagebreak
+
+\item Come \textit{\textbf{Mutazione}} abbiamo implementato, con probabilità di mutazione a nostra scelta:
+\begin{itemize}
+\item \textit{Mutazione del singolo gene}, in cui viene selezionato casualmente un gene in un unico individuo e viene rimpiazzato con un nuovo individuo prelevato dal dataset;
+\item \textit{Mutazione di un intero Individuo}, in cui viene selezionato:
+    \begin{itemize}
+        \item Un \textit{individuo a caso} e completamente scartato e ricreato;
+        \item Il \textit{peggior individuo}, anch'esso completamente scartato e ricreato.
+    \end{itemize}
+\end{itemize}
+
+\item La \textit{\textbf{Stopping condition}} ha due implementazioni, che si possono usare singolarmente o in coppia:
+\begin{itemize}
+    \item \textit{Stop dopo x generazioni}, in cui l'algoritmo si ferma dopo aver eseguito x generazioni;
+    \item \textit{Stop se il valore fitness aumenta per \textbf{x} generazioni di \textbf{y\%}}, in cui l'algoritmo controlla ad ogni generazione, l'aumentare del valore di fitness, e nel caso in cui non aumenta di una percentuale di nostra decisione, si interrompe e restituisce l'ultima generazione.
+\end{itemize}
+\end{itemize}
+
 \bigskip
 
-User è caratterizzato da:
+\subsection{Implementazione delle classi}
+
+L'algoritmo GA esegue le varie generazioni e valutazioni su istanze della classe \textit{Population}.
+
+Tale classe è strutturata dai seguenti attributi, ognuno dotato di funzioni di modifica e visualizzazione.
+
+Più precisamente sono:
+
 \begin{itemize}
-\item\textbf{ID}: indicante l'id identificativo del paziente
-\item\textbf{conditions}: lista di patologie del paziente
-\item\textbf{exercises}: ultimi 50 esercizi fatti dal paziente
+
+\item\textbf{user}: contiene l'istanza della classe User, dotata delle informazioni inerenti al paziente;
+
+\item\textbf{entirefitness}: valore fitness dell'intera Popolation;
+
+\item\textbf{currGen}: valore attuale della generazione;
+
+\item\textbf{individuals}: una lista di istanze della classe Individual, ognuna contenente una lista di esercizi.
+
+
+
+\begin{lstlisting}
+    class Population:
+    def __init__(self, u: User, *args: Individual):
+
+        self._user = u
+        self._entireFitness = 0
+        self._currGen = 0
+        self._individuals = list()
+        for i in args:
+            self._individuals.append(i)
+\end{lstlisting}
+\end{itemize}
+
+\bigskip
+
+La classe \textit{User} è caratterizzato da:
+\begin{itemize}
+\item\textbf{ID}: indicante l'id identificativo del paziente;
+\item\textbf{conditions}: dizionario delle patologie del paziente, in cui la chiave è il nome della patologia e il valore è una tupla delle tre gravità (Generale, Scrittura, Lettura);
+\item\textbf{exercises}: dizionario degli ultimi 50 esercizi eseguiti dal paziente, in cui la chiave è l'ID dell'esercizio e il valore è l'istanza della classe Exercise inerente a quell'esercizio.
 \begin{lstlisting}
     class User:
     def __init__(self, ID: int, conditions: dict, exercises: dict):
-        
+
         self._ID = ID
         self._conditions = conditions
         self._exercises = exercises
 \end{lstlisting}
 \end{itemize}
-
-\bigskip
-
-Conditions è un dizionario caratterizzato da:
-\begin{itemize}
-\item\textbf{Key}: nome della patologia
-\item\textbf{value}: una tupla che indica la gravità della patologia nei tre aspetti Severity(gravità generale), SeverytyWrite(gravità nella scrittura) e SeverityRead(gravità nella lettura)
-\end{itemize}
-
-Gli individui rappresenta un set di esercizi e il vlaore di fitness del set.
-
-Ogni esercizio è anch'esso un'istanza della classe esercizio che ha al suo interno tutte le informazioni dell'esercizio generale, sia le eventuali informazioni inerenti all'ultima esecuzione da parte dell'paziente del determinato esercizio.
-
-\bigskip
-
-Più precisamente Individual è caratterizzato:
-\begin{itemize}
-\item\textbf{individualFitness}: valore fitness del singolo set di esercizi
-\item\textbf{exercises}: l'insieme di esercizi che compongono il set di esercizi
-\begin{lstlisting}
-    class Individual:
-    def __init__(self, *args: Exercise):
-        self._individualFitness = 0
-        self._exercises = list()
-        for ex in args:
-            self._exercises.append(ex)
-\end{lstlisting}
-\end{itemize}
-
 \pagebreak
 
-I singoli esercizi sono caratterizzati da:
+
+Gli individui sono istanze della classe \textit{Instance}, contenente un set di esercizi. Ogni esercizio è un'istanza della classe \textit{Exercise}, ognuna rappresenta un gene.
+
+\bigskip
+\label{sec:exerciseImplementation}
+La classe \textit{Exercise} è caratterizzata da:
 \begin{itemize}
-\item\textbf{fitness}: valore fitness calcolato del singolo esercizio
-\item\textbf{generation}: indicante a quando è stato generato l'esercizio e inserito nel set
-\item\textbf{ID}: id unico del'esercizio
-\item\textbf{exerciseDifficulty}: difficolta dell'esercizio
-\item\textbf{target}: indica a quale tipologia di patologie è meglio dedicata l'esercizio
-\item\textbf{type}: indica il tipo di esercizio(lettura, scrittura...)
-\item\textbf{lastEvaluation}: indicante l'ultima vlalutazioen dell'esercizio se questo è stato già eseguito dal paziente
-\item\textbf{lasCompletionDate}: indicante l'ultima data in cui è stato fatto l'esercizio
-\item\textbf{lastFeedback}: Feedback lasciato dal paziente all'esercizio
-\end{itemize}
+\item\textbf{fitnessValue}: valore di fitness calcolato del singolo esercizio;
+\item\textbf{generation}: indica in quale generazione l'esercizio è stato prelevato dal dataset;
+\item\textbf{ID}: indica l'id identificativo dell'esercizio;
+\item\textbf{exerciseDifficulty}: la difficoltà dell'esercizio;
+\item\textbf{target}: indica a quali patologie è meglio dedicata l'esercizio;
+\item\textbf{extTpe}: indica il tipo di esercizio tra i 7 sviluppati;
+\item\textbf{lastEvaluation}: indicante l'ultima valutazione dell'esercizio se questo è stato già eseguito;
+\item\textbf{lasCompletionDate}: indicante l'ultima data in cui è stato completato l'esercizio;
+\item\textbf{lastFeedback}: indicante il feedback lasciato dal paziente all'esercizio.
+
 \begin{lstlisting}[language=Python, breaklines, no caption]
     class Exercise:
     def __init__(self, ID: int, exerciseDifficulty: int, target: str, exType: str,
@@ -610,73 +673,30 @@ I singoli esercizi sono caratterizzati da:
         self._lastFeedback = lastFeedback
 
 \end{lstlisting}
-
+\end{itemize}
+\label{sec:individualImplementation}
+Infine, più precisamente la classe \textit{Individual} è caratterizzato da:
+\begin{itemize}
+\item\textbf{individualFitness}: valore fitness del singolo set di esercizi;
+\item\textbf{exercises}: la lista delle istanze di Exercise che compongono il set di esercizi.
+\begin{lstlisting}
+    class Individual:
+    def __init__(self, *args: Exercise):
+        self._individualFitness = 0
+        self._exercises = list()
+        for ex in args:
+            self._exercises.append(ex)
+\end{lstlisting}
+\end{itemize}
 
 \pagebreak
 
-
-\section{Sviluppo del nostro algoritmo genetico}
-
-Vista la dimensione del nostro gruppo abbiamo anche deciso di imlementare e provare diversi algoritmi per le diverse fasi dell'algoritmo Genetico.
-
-L'algoritmo genetico è suddiviso nelle fasi di Selezione, Crossover e Mutaizone.
-
-\subsection{Scelte progettuali}
-
-\begin{itemize}
-\item La size della popolazione è fissa, ovviamente puo' essere modificata, ma una volta inizializzato il ga la dimensione è rimane tale.
-Dato che abbiamo implementato sia crossover a 2 che a 3 genitori, l'unica accortezza è scegliere una dimensione tale che possa permettere appunto il crossover scelto (esempio, se la popolazione è dispari e si prova a fare crossover a 2 potrebbe portare problemi all'agente).
-
-\item La size mating pool è grande quanto il numero di individui, non ci interessa la lentezza dato che, oltre al fatto che verrà eseguito sempre in orari in cui il tempo di esecuzione non è un problema (quindi quando l'paziente ha già esercizi da fare / quando il logopedista ha già degli esercizi da valutare). 
-
-Inoltre l'abbiamo reso multiprocessing quindi può eseguire in parallelo più utenti, quindi il le performance temporali non sono un problema.
-
-\item La probabilità di crossover dipende dal tipo di crossover scelto, infatti abbiamo crossover dove è certo che accada, crossover dove puoi specificare la probabilità.
-
-\item La probabilità di mutazione è scelta prima dell'inizio del ga.
-
-\item Gli individui sono una classe, essa ha il valore di fitness dell'individuo e una lista di istanze di esercizi.
-
-\begin{itemize}
-
-\item Ogni esercizio è anch'esso un'istanza della classe esercizio che ha al suo interno tutte le informazioni dell'esercizio generale, sia le eventuali informazioni inerenti all'ultima esecuzione da parte del paziente del determinato esercizio.
-
-\end{itemize}
-
-\item Per la selezione abbiamo sviluppato sia l'algoritmo roulette Wheel (ma abbiamo notato che spesso porta a convergenza prematura), che rank selection, il quale risolve il problema della convergenza prematura.
-
-\item Crossover ne abbiamo sviluppati diversi:
-
-\begin{itemize}
-
-\item nPoint e nPointReverse dove è possibile specificare il numero di punti. La differenza tra nPoint e nPointReverse è che nPointReverse inizia con uno scambio.
-
-\item Oltre questo abbiamo anche sviluppato la versione con probabilità di crossover, e anche qui si può scegliere la probabilità di crossover.
-
-\item Infine anche uniformCrossover, che essenzialmente è nPoint dove n=lunghezza.
-
-\end{itemize}
-
-\item Come mutazione abbiamo implementato mutazione del singolo gene (singolo esercizio a caso ad un singolo individuo a caso), un intero individuo a caso viene completamente cambiato e infine il peggior individuo viene completamente cambiato .
-
-\begin{itemize}
-\item Anche qui, si può decidere la probabilità di mutazione
-\end{itemize}
-
-\item Stopping condition abbiamo sia dopo tot generazioni, sia se la fitness della popolazione non aumenta per x generazioni di y.
-Ovviamente si può usare una sola condizione o entrambe insieme.
-\end{itemize}
-
-\bigskip
-
 \subsection{Selezione}
 
-Nella fase di selezione abbiamo implementato 3 tipi diversi di algoritmi:
+Nella fase di Selezione, viene anche attuata la fase di valutazione, poiché abbiamo implementato metodi che si basano sui valori di fitness. Nello specifico, abbiamo sviluppato 3 tipi diversi di algoritmi per la selezione degli individui da inserire nella mating pool:
 
 \begin{itemize}
-\item\textbf{Roulette Wheel}: Sfruttiamo il valore della funzione di fintess di ogni elemento per impostare la probabilità che venga scelto.
-
-Poi tramite un sorteggio randomico di un numero verrà prelevato l'elemento che passera' alla generazione successiva.
+\item\textbf{Roulette Wheel}: Come nei Casinò, abbiamo una "ruota" in cui ogni porzione è proporzionale al valore di fitness dell'individuo. Facendo girare la ruota, si selezionano gli individui vincenti.
 \end{itemize}
 
 \begin{lstlisting}[language=Python, breaklines, no caption]
@@ -700,7 +720,10 @@ def rouletteWheel(population: Population):
 \end{lstlisting}
 
 \begin{itemize}
-\item\textbf{Rank Selection}: Questo metodo sfrutta il rango di ciascun elemento per suddividere una "torta" di selezione in partizioni proporzionali al rango dell'elemento. Il rango varia dal più basso al più alto, con la percentuale di possibilità di essere selezionato proporzionata al rango. Questa metodologia riesce a escludere meno elementi rispetto alla roulette, poiché la percentuale è legata agli elementi e non al valore di fitness. Per individuare i ranghi degli elementi, viene utilizzata la funzione findRank.
+\item\textbf{Rank Selection}: Questo metodo sfrutta il rango di ciascun individuo per suddividere una "torta" di selezione in partizioni proporzionali al rango dell'elemento. Il rango varia dal più basso al più alto, con la percentuale di essere selezionato proporzionata al rango. Riesce a mitigare i difetti della Roulette Wheel, poiché la percentuale è legata agli elementi e non unicamente al valore di fitness.
+\begin{itemize}
+    \item Per individuare i ranghi degli elementi, viene utilizzata la funzione \textit{findRank}.
+\end{itemize}
 
 \end{itemize}
 
@@ -734,7 +757,7 @@ def find_rank(individuals: list[Individual], subdivision: float) -> Individual:
 
 \begin{itemize}
 
-\item\textbf{item Random Selection}: La selezione attuata è completamente casuale; in effetti, l'assenza di una logica sottostante può generare dati del tutto inefficienti.
+\item\textbf{Random Selection}: La selezione degli individui attuata è completamente casuale; in effetti, l'assenza di una logica sottostante può generare dati del tutto inefficienti o dati straordinariamente eccezionali. Tutto è lasciato al caso.
 
 \end{itemize}
 
@@ -742,20 +765,19 @@ def find_rank(individuals: list[Individual], subdivision: float) -> Individual:
 def randomSelection(population: Population):
     newP = []
     while len(newP) < len(population):
-        newP.append(random.choice(population))
+
+        newP.append(Individual(*random.choice(population)).getList())
     return newP
         \end{lstlisting}
 
 \subsection{Crossover}
 
-La fase di Crossover impiega algoritmi per generare nuovi elementi a partire da quelli selezionati nella fase precedente.
-
-Le tipologie di Crossover non sono state categorizzate solo in base al tipo, ma anche al numero di elementi da impiegare.
+Questa fase si occupa di generare nuovi elementi a partire da quelli selezionati. I metodi sono categorizzati in base al tipo, poiché concettualmente eseguono lo stesso lavoro, ma con un numero di individui diversi. Per questo motivo, vengono mostrati solo i metodi con 3 genitori, poiché possono risultare più interessanti.
 
 \subsubsection {Metodologie di Crossover applicate a 3 elementi}
 
 \begin{itemize}
-\item\textbf{nPoint}: Il Crossover in questione modifica n punti all'interno di 3 liste di esercizi. Ciascuna lista viene suddivisa in sottoliste più piccole, le quali rappresentano i punti che saranno combinati con gli analoghi punti nelle altre liste.
+\item\textbf{nPoint}: Spezza le liste degli individui selezionati in n punti. Ciascuna lista viene quindi suddivisa in sottoliste più piccole, le quali saranno scambiate con le altre analoghe sottoliste nei punti di divisione.
 \end{itemize}
 
 \begin{lstlisting}[language=Python, breaklines, no caption]
@@ -791,11 +813,10 @@ def nPoint(i1: Individual, i2: Individual, i3: Individual, n: int) -> tuple[Indi
 
     return i1, i2, i3
 \end{lstlisting}
-
 \pagebreak
 
 \begin{itemize}
-\item\textbf{nPointReverse}: La procedura di Crossover modifica n punti all'interno di 3 liste di esercizi. Ciascuna lista viene suddivisa in sottoliste con un numero ridotto di elementi; queste ultime costituiscono i punti che saranno combinati con quelli delle altre liste, ma seguendo un ordine diverso rispetto a quanto avviene con nPoint.
+\item\textbf{nPointReverse}: A differenza della precedente implementazione, questa versione esegue lo scambio già dal primo elemento, affinché possa risultare più casuale un possibile ripescaggio dello stesso individuo.
 \end{itemize}
 
 \begin{lstlisting}[language=Python, breaklines, no caption]
@@ -835,7 +856,7 @@ def nPointReverse(i1: Individual, i2: Individual, i3: Individual, n: int) -> tup
         \pagebreak
 
 \begin{itemize}
-\item\textbf{nPointRandom}: Questo Crossover va a modificare n punti di 3 liste di esercizi, ogni lista è sarà suddivisa in sottoliste di meno elementi queste'ultime rappresentano i punti che saranno combinati con gli altri ma in ordine casuale.
+\item\textbf{nPointRandom}: Questa versione di nPoint aggiunge la possibilità di dichiarare la \textit{probabilità di crossover}(precedentemente avveniva sempre).
 \end{itemize}
 
 \begin{lstlisting}[language=Python, breaklines, no caption]
@@ -845,7 +866,7 @@ def nPointRandom(i1: Individual, i2: Individual, i3: Individual, n: int, crossov
     elif n > len(i1):
         raise ValueError("Invalid n value, must be less than the lenght of the individual!")
     elif crossoverProbability < 0 or crossoverProbability > 1:
-        raise ValueError("Invalid crossoverProbability! Must be between 0 and 1")
+        raise ValueError("Invalid crossoverProbability! Must be between 0 and 1.")
 
     dividedI1, dividedI2, dividedI3 = divide(i1.getList(), n), divide(i2.getList(), n), divide(i3.getList(), n)
 
@@ -868,6 +889,10 @@ def nPointRandom(i1: Individual, i2: Individual, i3: Individual, n: int, crossov
                 newI1.extend(triplet[1])
                 newI2.extend(triplet[2])
                 newI3.extend(triplet[0])
+        else:
+            newI1.extend(triplet[0])
+            newI2.extend(triplet[1])
+            newI3.extend(triplet[2])
 
     i1.setList(newI1)
     i2.setList(newI2)
@@ -878,172 +903,91 @@ def nPointRandom(i1: Individual, i2: Individual, i3: Individual, n: int, crossov
 
 \pagebreak
 
-\subsubsection {Metodologie di Crossover eseguite su 2 elementi}
 
 \begin{itemize}
-\item\textbf{nPoint}: Questo Crossover va a modificare n punti di 2 liste di esercizi, ogni lista sarà suddivisa in sottoliste di meno elementi queste'ultime rappresentano i punti che saranno combinati con gli altri.
+\item\textbf{uniformCrossover}: In questo caso, ogni gene ha la possibilità di venir casualmente rimpiazzato con un gene degli altri genitori.
 \end{itemize}
 
 \begin{lstlisting}[language=Python, breaklines, no caption]
-def nPoint(i1: Individual, i2: Individual, n: int) -> tuple[Individual, Individual]:
-    if len(i1) != len(i2):
+def uniformCrossover(i1: Individual, i2: Individual, i3: Individual, crossoverProbability: float) -> tuple[Individual, Individual, Individual]:
+    if len(i1) != len(i2) != len(i3):
         raise ValueError("Invalid individual length! They have to be the same.")
-    elif n > len(i1):
-        raise ValueError("Invalid n value, must be less than the lenght of the individual!")
+    elif crossoverProbability < 0 or crossoverProbability > 1:
+        raise ValueError("Invalid crossoverProbability! Must be between 0 and 1.")
 
-    dividedI1, dividedI2 = divide(i1.getList(), n), divide(i2.getList(), n)
+    dividedI1 = divide(i1.getList(), len(i1))
+    dividedI2 = divide(i2.getList(), len(i2))
+    dividedI3 = divide(i3.getList(), len(i3))
 
-    newI1 = list()
-    newI2 = list()
+    newI1 = []
+    newI2 = []
+    newI3 = []
 
-    for i, pair in enumerate(zip(dividedI1, dividedI2)):
-        if i % 2 == 0:
-            newI1.extend(pair[0])
-            newI2.extend(pair[1])
+    for triplet in zip(dividedI1, dividedI2, dividedI3):
+        if random() < crossoverProbability:
+            if random() < 0.5:
+                newI1.extend(triplet[1])
+            else:
+                newI1.extend(triplet[2])
         else:
-            newI1.extend(pair[1])
-            newI2.extend(pair[0])
+            newI1.extend(triplet[0])
+
+        if random() < crossoverProbability:
+            if random() < 0.5:
+                newI2.extend(triplet[2])
+            else:
+                newI2.extend(triplet[0])
+        else:
+            newI2.extend(triplet[1])
+
+        if random() < crossoverProbability:
+            if random() < 0.5:
+                newI3.extend(triplet[0])
+            else:
+                newI1.extend(triplet[1])
+        else:
+            newI1.extend(triplet[2])
 
     i1.setList(newI1)
     i2.setList(newI2)
+    i3.setList(newI3)
 
-    return i1, i2
+    return i1, i2, i3
         \end{lstlisting}
 
 \begin{itemize}
-\item\textbf{nPointReverse}: Questo Crossover va a modificare n punti di 2 liste di esercizi, ogni lista è sarà suddivisa in sottoliste di meno elementi queste'ultime rappresentano i punti che saranno combinati con gli altri ma in ordine diverso a nPoint.
+\begin{itemize}
+    \item La funzione \textit{divide} si occupa, in base a n, della divisione delle liste in input in sottoliste usando la seguente \textit{comprehension}.
+
+
 \end{itemize}
+     \begin{lstlisting}[language=Python, breaklines, no caption]
+def divide(lst: list, n: int) -> list:
 
-\begin{lstlisting}[language=Python, breaklines, no caption]
-def nPointReverse(i1: Individual, i2: Individual, n: int) -> tuple[Individual, Individual]:
-    if len(i1) != len(i2):
-        raise ValueError("Invalid individual length! They have to be the same.")
-    elif n > len(i1):
-        raise ValueError("Invalid n value, must be less than the lenght of the individual!")
-
-    dividedI1, dividedI2 = divide(i1.getList(), n), divide(i2.getList(), n)
-
-    newI1 = []
-    newI2 = []
-
-    for i, pair in enumerate(zip(dividedI1, dividedI2)):
-        if i % 2 == 0:
-            newI1.extend(pair[1])
-            newI2.extend(pair[0])
-        else:
-            newI1.extend(pair[0])
-            newI2.extend(pair[1])
-
-    i1.setList(newI1)
-    i2.setList(newI2)
-
-    return i1, i2
-\end{lstlisting}
+    return [lst[i * len(lst) // n: (i + 1) * len(lst) // n] for i in range(n)]
+        \end{lstlisting}
+\end{itemize}
 
 \pagebreak
 
-\begin{itemize}
-\item\textbf{nPointRandom}: Questo Crossover va a modificare n punti di 2 liste di esercizi, ogni lista è sarà suddivisa in sottoliste di meno elementi queste'ultime rappresentano i punti che saranno combinati con gli altri ma in ordine casuale.
-\end{itemize}
 
-\begin{lstlisting}[language=Python, breaklines, no caption]
-def nPointRandom(i1: Individual, i2: Individual, n: int,  crossoverProbability: float) -> tuple[Individual, Individual]:
-    if len(i1) != len(i2):
-        raise ValueError("Invalid individual length! They have to be the same.")
-    elif n > len(i1):
-        raise ValueError("Invalid n value, must be less than the lenght of the individual!")
-    elif crossoverProbability < 0 or crossoverProbability > 1:
-        raise ValueError("Invalid crossoverProbability! Must be between 0 and 1")
 
-    dividedI1, dividedI2 = divide(i1.getList(), n), divide(i2.getList(), n)
 
-    newI1 = []
-    newI2 = []
-
-    for i, pair in enumerate(zip(dividedI1, dividedI2)):
-        if random() < crossoverProbability:
-            newI1.extend(pair[1])
-            newI2.extend(pair[0])
-        else:
-            newI1.extend(pair[0])
-            newI2.extend(pair[1])
-
-    i1.setList(newI1)
-    i2.setList(newI2)
-
-    return i1, i2
-\end{lstlisting}
-
-\pagebreak
+Questi metodi sono eseguiti sugli individui scelti, ma la scelta è eseguita dalla seguente funzione:
 
 \begin{itemize}
-\item\textbf{unifromCrossover}: Questo Crossover va a modificare n punti di 2 liste di esercizi, ogni sottolista viene suddivisa nei suoi singoli di esercizi e queste suddivisioni potrebbero essere scambiate tra le 2 liste .
-\end{itemize}
-
-\begin{lstlisting}[language=Python, breaklines, no caption]
-def uniformCrossover(i1: Individual, i2: Individual, crossoverProbability: float) -> tuple[Individual, Individual]:
-    if len(i1) != len(i2):
-        raise ValueError("Invalid individual length! They have to be the same.")
-    elif crossoverProbability < 0 or crossoverProbability > 1:
-        raise ValueError("Invalid crossoverProbability! Must be between 0 and 1")
-
-    dividedI1, dividedI2 = divide(i1.getList(), len(i1)), divide(i2.getList(), len(i2))
-
-    newI1 = []
-    newI2 = []
-
-    for i, pair in enumerate(zip(dividedI1, dividedI2)):
-        if random() < crossoverProbability:
-            newI1.extend(pair[1])
-        else:
-            newI1.extend(pair[0])
-
-        if random() < crossoverProbability:
-            newI2.extend(pair[0])
-        else:
-            newI2.extend(pair[1])
-
-    i1.setList(newI1)
-    i2.setList(newI2)
-
-    return i1, i2
-\end{lstlisting}
-
-\pagebreak
-
-Queste tipologie di Crossover sono eseguite da:
-
-\begin{itemize}
-\item\textbf{executeCrossover}: Questa funzione esegue il Crossover su una popolazione, la popolazioen rappresenta un insieme di informazioni inerenti all'paziente e ad una lista di esercizi.
-\end{itemize}
-
-\begin{lstlisting}[language=Python, breaklines, no caption]
-def executeCrossover(p: Population, crossoverType: crossover, *args) -> list[Individual]:
-    newIndividuals = list()
-    individuals = p.getIndividuals()
-    size = len(p)
-
-    if size % 2 != 0:
-        raise ValueError("The size of the population must be even!")
-    else:
-        for _ in range(round(len(p) / 2)):
-            i1 = random.choice(individuals)
-            p.removeIndividual(i1)
-            i2 = random.choice(individuals)
-            p.removeIndividual(i2)
-            i1, i2 = crossoverType(i1, i2, *args)
-            newIndividuals.append(i1)
-            newIndividuals.append(i2)
-
-        return newIndividuals
-\end{lstlisting}
-
-\begin{itemize}
-\item\textbf{execute3Crossover}: Questa funzioen esegue il Crossover su 3 popolazioen che invece di 2 così da effettuare combinazioni più rillevanti.
+\item\textbf{execute3Crossover}: Questa funzione infatti, seleziona casualmente su una popolazione della mating pool, gli individui che procederanno ad accoppiarsi, per formare poi una nuova popolazione una volta che tutti gli individui si siano accoppiati.
 \end{itemize}
 
 \begin{lstlisting}[language=Python, breaklines, no caption]
 def execute3Crossover(p: Population, crossoverType: crossover, *args) -> list[Individual]:
+    """
+    Executes the crossover on a population taking 3 individuals instead of 2.
+    :param p: The starting population.
+    :param crossoverType: The crossover algorithm we want to perform.
+    :param args: The arguments to pass to the crossover method as needed.
+    :return: The new population.
+    """
     newIndividuals = list()
     individuals = p.getIndividuals()
     size = len(p)
@@ -1057,6 +1001,7 @@ def execute3Crossover(p: Population, crossoverType: crossover, *args) -> list[In
             i2 = random.choice(individuals)
             p.removeIndividual(i2)
             i3 = random.choice(individuals)
+            p.removeIndividual(i3)
             i1, i2, i3 = crossoverType(i1, i2, i3, *args)
             newIndividuals.append(i1)
             newIndividuals.append(i2)
@@ -1065,23 +1010,20 @@ def execute3Crossover(p: Population, crossoverType: crossover, *args) -> list[In
         return newIndividuals
 \end{lstlisting}
 
-Tutte queste funzionalità vengono effettuate sfruttando la funzione divide che alla ricezioen di ua lista di esercizi essa viene suddivisa in una lista di liste formate dagli esercizi della lista originale, questa fuznioen permette la suddivisione della lista in punti che poi saranno usati dai Crossover.
+
 
 \pagebreak
 
 \subsection{Mutazione}
 
-La mutazione è quella fase degli algoritmi GA che esegue una modifica al singolo dato, tale modifica può portare sia ad un vanaggio che ad un svantaggio, dipende dal tipo di algoritmo che viene usato, quelli da noi sviluppati sono:
+La mutazione è quella fase degli algoritmi GA che esegue una modifica al corredo genetico, tale modifica può portare sia ad un vantaggio che ad un svantaggio, dipende esclusivamente dal caso, quelli da noi sviluppati sono:
 
 \begin{itemize}
-\item\textbf{randomSingleMutation}: Questa funzione può eseguire una mutazione su un esercizio di una popolazione. Se viene effettuate richiama la funzieon mutateEX.
+\item\textbf{randomSingleMutation}: Questa funzione può eseguire una mutazione su un singolo gene all'interno di un individuo scelto casualmente.
+Per popolazioni molto grandi, comporta troppa poca casualità. È quindi sconsigliato l'uso di della condizione di stop sulla base dell'aumento del valore di fitness costante, e di invece usare esclusivamente il numero di generazioni per evitare interruzioni precoci.
 \end{itemize}
 
 \begin{lstlisting}[language=Python, breaklines, no caption]
-import random
-from GA.Population.exercisePopulation import Population
-import GA.Mutation.mutationUtility as mu
-
 def randomSingleMutation(p: Population, mutationRate: float) -> Population:
     if random.random() < mutationRate:
         i = random.choice(p.getIndividuals())
@@ -1091,7 +1033,7 @@ def randomSingleMutation(p: Population, mutationRate: float) -> Population:
 \end{lstlisting}
 
 \begin{itemize}
-\item\textbf{randomIndividualMutation}: Questa fuznione può eseguire una mutazione sull'intero set di esercizi di una popolazione, se la mutazioen accade richiama la funzione mutateIndividual.
+\item\textbf{randomIndividualMutation}: Questa funzione invece, può eseguire una mutazione sull'intero individuo di una popolazione scelto casualmente, risolvendo il problema delle grandi popolazioni incontrata nella precedente versione.
 \end{itemize}
 
 \begin{lstlisting}[language=Python, breaklines, no caption]
@@ -1105,10 +1047,9 @@ def randomIndividualMutation(p: Population, mutationRate: float) -> Population:
     return p
 \end{lstlisting}
 
-\pagebreak
 
 \begin{itemize}
-\item\textbf{worstIndividualMutation}: Questa funzione può eseguire una mutazione ma con la scelta del set di esercizi da cambiare, infatti viene individuato il set di esercizi con la fitness minore, successivamente viene richiamata la funzioen mutateIndividual.
+\item\textbf{worstIndividualMutation}: Quest'ultima infine, può eseguire una mutazione sul peggior individuo di una popolazione controllando i singoli valori di fitness degli individui.
 \end{itemize}
 
 \begin{lstlisting}[language=Python, breaklines, no caption]
@@ -1127,10 +1068,13 @@ def worstIndividualMutation(p: Population, mutationRate: float) -> Population:
 
     return p
         \end{lstlisting}
-    Queste 3 tipologie di mutazioni per funzionare utilizzano:
+
+\pagebreak
+
+Per effettuare le 3 tipologie di mutazioni, vengono utilizzati i seguenti metodi di supporto:
 
 \begin{itemize}
-\item\textbf{mutateEX}: Questa fuznione esegue uan ricerca casuale nel set di esercizi che ha ricevuto e sul DataBase per poi cambiare l'esercizio.
+\item\textbf{mutateEX}: Questa funzione seleziona un singolo gene casualmente dal dataset.
 \end{itemize}
 
 \begin{lstlisting}[language=Python, breaklines, no caption]
@@ -1146,7 +1090,7 @@ def mutateEx(i: Individual, p: Population) -> Individual:
 \end{lstlisting}
 
 \begin{itemize}
-\item\textbf{mutateIndividual}: esegue una ricerca casuale nel DataBase di un numero di esercizi per un intero set per poi sostituirli e ricalcolare il valore fitness.
+\item\textbf{mutateIndividual}: Questa funzione invece si occupa della generazione di un nuovo individuo andando sempre alla ricerca dei geni nel dataset.
 \end{itemize}
 
 \begin{lstlisting}[language=Python, breaklines, no caption]
@@ -1160,47 +1104,138 @@ def mutateIndividual(i: Individual, p: Population):
 
     return newIndividual
 \end{lstlisting}
-
+\begin{itemize}
+\begin{itemize}
+    \item È da precisare, che unicamente in queste due funzioni vengono prelevati nuovi geni dal dataset, e proprio per questo, viene inserita la corretta Generazione all'esercizio affinché, nel caso ci fosse necessità o curiosità, si potrebbe risalire sia a quante generazioni è sopravvissuto, sia in quale generazione è stato pescato.
+\end{itemize}
+\end{itemize}
 \pagebreak
+\subsection{Stopping Condition}
+Infine, l'intera generazione può terminare unicamente in due modi:
+\begin{itemize}
+    \item \textbf{stoppingCondition}: esegue un controllo ad ogni generazione, in modo tale che nel caso non ci siano miglioramenti al valore Fitness entro un numero prestabilito di generazioni, l'algoritmo si ferma.
+\begin{lstlisting}[language=Python, breaklines, no caption]
+def stoppingCondition(p: Population, lastFitness, unchangedCount: int, increaseRate: float) -> tuple[int, int]:
+    currentFitness = round(p.totalFitness())
+    if lastFitness < currentFitness <= lastFitness + (lastFitness * increaseRate):
+        unchangedCount += 1
+    else:
+        unchangedCount = 0
+    lastFitness = p.totalFitness()
+    return unchangedCount, lastFitness
+\end{lstlisting}
+\end{itemize}
+\begin{itemize}
+    \item \textbf{condizione While}: ad ogni ciclo, viene incrementato il valore di una variabile \textit{gen}. Quando raggiunge il valore di \textit{maxGen}, l'algoritmo di ferma.
+\begin{lstlisting}
+    [...]
+    gen = 0
+    maxGen = 400
+
+    while gen < maxGen:
+        gen += 1
+        [...]
+\end{lstlisting}
+
+\end{itemize}
+\pagebreak
+\section{Esempio di esecuzione completa}
+Un esempio di esecuzione del nostro algoritmo Genetico. Viene utilizzato \textit{Rank Selection}, \textit{nPoint} e \textit{random Individual Mutation}. I risultati vengono stampati in un file chiamato "\textit{result.txt}" grazie alla funzione \textit{printIntoResults}.
+\begin{lstlisting}
+from GA.Initialization.populationInitializer import initialize
+from GA.StoppingCondition.stopConditionMethods import stoppingCondition
+from GA.Crossover.crossover3Parents import execute3Crossover as crossover3P
+import GA.Crossover.crossover3Methods as c3Type
+from Printer.printerMethods import printIntoResults
+import GA.Selection.selectionMethods as sType
+import GA.Mutation.mutationMethods as mType
+from multiprocessing import Pool, cpu_count
+
+
+# Responsabile della parallelizzazione dell'algoritmo su più processi
+def startGA():
+    p1 = initialize(6, 5, 904)
+    p2 = initialize(6, 5, 914)
+    p = [p1, p2]
+
+    pool = Pool(processes=(cpu_count() - 1))
+
+    for index, population in enumerate(p):
+        pool.apply_async(GATasks, args=(index, population))
+
+    pool.close()
+    pool.join()
+
+# Selezione -> Crossover -> Mutazione
+def GATasks(processNumber, population):
+    gen = 0
+    maxGen = 400
+
+    unchangedCount = 0
+    lastFitness = 0
+    maxEqualsGen = 5
+    increaseRate = 1
+
+    print(f"Started process {processNumber}.")
+    while gen < maxGen and unchangedCount < maxEqualsGen:
+        gen += 1
+
+        print(f"Current generation for P:{processNumber}: {gen}")
+        population.setIndividuals(sType.rankSelection(population))
+        population.setIndividuals(crossover3P(population, c3Type.nPoint, 2))
+        mType.randomIndividualMutation(population, 0.5)
+        population.incrementGeneration()
+        print("--------------------------------------------------------------------")
+        unchangedCount, lastFitness = stoppingCondition(population, lastFitness, unchangedCount, increaseRate)
+
+    print(f"\n\nProcess {processNumber} has ended.\n\n")
+    printIntoResults(processNumber, population)
+
+
+if __name__ == '__main__':
+    startGA()
+\end{lstlisting}
 
 \section{Considerazioni finali}
-Siamo giunti alla conclusione di un lungo viaggio alla fine del quale ci riteniamo soddisfatti di quanto ottenuto poich´e sono stati raggiunti gli obiettivi che ci eravamo prefissati. Un aspetto di cui andiamo particolarmente fieri è la gestione in multiprocessign dell'algoritmo.
+Siamo giunti alla conclusione di un lungo viaggio, alla fine del quale ci riteniamo soddisfatti di quanto ottenuto, in quanto tutti i membri non avevano mai avuto esperienze pregresse con la programmazione di agenti intelligenti. L'emozione ottenuta al primo corretto funzionamento sarà un ricordo indelebile nella memoria di noi tutti. Ma non solo le gioie rimarranno, rimarranno anche gli sforzi e l'esperienza ottenuti sbattendo la testa innumerevoli volte, ma senza mai perderci d'animo. Riteniamo che sono stati raggiunti gli obiettivi che ci eravamo prefissati, riuscire a raccomandare esercizi. Sicuramente la fitness andrebbe calibrata con l'aiuto di una figura professionale nell'ambito della logopedia. Un aspetto di cui andiamo particolarmente fieri è la gestione in multiprocessign dell'algoritmo che rende possibile, se necessario, l'esecuzione sulla stessa popolazione, ma variando i fatti di selezione, crossover e mutazione. Un ringraziamento speciale a tutti coloro che hanno contribuito alla realizzazione di questo progetto, dai Project Manager, ai colleghi, che ci hanno fornito l'idea di base, dai professori ai tutor per averci insegnato le competenze necessarie alla reale realizzazione dell'algoritmo. Infine un ringraziamento a chiunque abbia raggiunto queste parole.
 
 \subsection{Cosa abbiamo Imparato}
-Grazie a questo progetto abbiamo potuto provare le conoscenze che abbiamo acquisito durante il corso di Intelligenza Artificiale e provare sulla pratica il nostro primo algoritmo di Intelligenza Artificiale, grazie a questa prova abbiamo imparato l'importanza dell'organizzazione e della stesura dei requisiti del progetto, prendendoci più tempo possibile per definire al meglio gli obiettivi da raggiungere, essendo stato utile dedicare molto tempo alla stesura e definizione della funzione di Fitness.
+Grazie a questo progetto abbiamo potuto provare e applicare le conoscenze che abbiamo acquisito durante il corso di \textit{Fondamenti di
+Intelligenza Artificiale}, e provare sulla pratica il nostro primo algoritmo genetico. Grazie a questa prova abbiamo imparato l'importanza dell'organizzazione e della stesura dei requisiti del progetto, prendendoci più tempo possibile per definire al meglio gli obiettivi da raggiungere e da realizzare. Sono state tante le ore passate solo all'idealizzazione dell'algoritmo generico, ancor più le ore dedicate allo studio della funzione di Fitness, per la scelta e lo scarto dei fattori da valutare per dare una raccomandazione mirata ed efficace. Ma ne è valsa la pena.
+\bigskip
+
+\textit{"Any sufficiently advanced technology is indistinguishable from magic"}.
 \pagebreak
 
 \section{Glossario}
 
-\begin{itemize}
-\begin{itemize}
+
+
 Termini speciali utilizzati:
-\end{itemize}
+
 \begin{itemize}
-\item\textbf{Dataset}: Insieme di dati su cui l'algoritmo lavora.
+
+
+    \item\textbf{Dataset}: Insieme di dati su cui un algoritmo opera durante l'analisi o l'addestramento.
+
+    \item\textbf{Database}: Archivio centralizzato di dati, accessibile per il recupero e la modifica delle informazioni salvate.
+
+    \item\textbf{Algoritmo Genetico}: Algoritmo di Intelligenza Artificiale che simula il processo evolutivo per tentare di risolvere problemi di ottimizzazione.
+
+    \item\textbf{SQL}: Linguaggio standardizzato per la gestione di Database, utilizzato per eseguire operazioni sui dati.
+
+    \item\textbf{Fitness}: Valore utilizzato negli Algoritmi Genetici per valutare la qualità di una soluzione proposta.
+
+    \item\textbf{Dizionario}: Struttura dati in programmazione composta da associazioni chiave-valore.
+
+    \item\textbf{Classe}: Costrutto in un linguaggio di programmazione utilizzato come modello per creare oggetti.
+
+    \item\textbf{Algoritmo}: Soluzione strutturata a un problema, composta da operazioni e condizioni ben definite.
+
+    \item\textbf{Comprehension}: È una tecnica sintattica di Python che consente di creare liste, dizionari o insiemi in modo conciso ed efficiente in una singola riga di codice.
+
 \end{itemize}
-\begin{itemize}
-\item\textbf{DataBase}: Archivio di dati centralizzato in una macchina, su cui è possibile prellevarli o modificarli.
-\end{itemize}
-\begin{itemize}
-\item\textbf{Algoritmo Genetico}: Algoritmo dell'Intelligenza Artificiale che simula il ciclo di vita di uan specie per raggiungere l'obiettivo.
-\end{itemize}
-\begin{itemize}
-\item\textbf{SQL}: Linguaggio standardizzato per Database utilizzato per eseguire operazioni sui Database.
-\end{itemize}
-\begin{itemize}
-\item\textbf{Fitness}: Valore utilizzato dall'Algoritmo Genetico per riconoscere la bontà di una soluzione da lui trovata.
-\end{itemize}
-\begin{itemize}
-\item\textbf{Dizionario}:Struttura dati utilizzato in programmazione, formata dall'associazione di chiave valore.
-\end{itemize}
-\begin{itemize}
-\item\textbf{Classe}: Costrutto di un linguaggio di programmazione usato come modello per creare oggetti.
-\end{itemize}
-\begin{itemize}
-\item\textbf{Algoritmo}: Soluzione ad un problema strutturato da operazioni e condizioni.
-\end{itemize}
-\end{itemize}
+
 
 \printindex
 
