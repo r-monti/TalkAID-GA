@@ -1,20 +1,56 @@
 from GA.Initialization.populationInitializer import initialize
-from GA.Selection.rouletteWheel import rouletteWheel as selection
-from GA.Crossover.crossover import executeCrossover as crossover
-import GA.Crossover.crossoverMethods as csType
-from GA.Mutation.mutationMethods import randomSingleMutation as mutation
+from GA.StoppingCondition.stopConditionMethods import stoppingCondition
 
-p = initialize(4, 5, 904)
+# from GA.Crossover.crossover import executeCrossover as crossover
+# import GA.Crossover.crossoverMethods as cType
+from GA.Crossover.crossover3Parents import execute3Crossover as crossover3P
+import GA.Crossover.crossover3Methods as c3Type
 
-while p.getGeneration() < 100:
-    print(f"Generation {p.getGeneration()}: P:{p}")
-    p.setIndividuals(selection(p))
-    p.setIndividuals(crossover(p, csType.nPoint, 2))
-    mutation(p, 0.5)
-    p.incrementGeneration()
-    print("-----------------------------")
+from Printer.printerMethods import printIntoResults
+import GA.Selection.selectionMethods as sType
+import GA.Mutation.mutationMethods as mType
+from multiprocessing import Pool, cpu_count
 
 
-print("\nResult:")
-for individual in p.getIndividuals():
-    print(individual, "Fitness:", individual.fitness())
+def startGA():
+    p1 = initialize(6, 5, 904)
+    p2 = initialize(6, 5, 914)
+    p = [p1, p2]
+
+    pool = Pool(processes=(cpu_count() - 1))
+
+    for index, population in enumerate(p):
+        pool.apply_async(GATasks, args=(index, population))
+
+    pool.close()
+    pool.join()
+
+
+def GATasks(processNumber, population):
+    gen = 0
+    unchangedCount = 0
+    lastFitness = 0
+
+    maxGen = 400
+    maxEqualsGen = 5
+    increaseRate = 1
+
+    print(f"Started process {processNumber}.")
+    while gen < maxGen and unchangedCount < maxEqualsGen:
+        gen += 1
+
+        print(f"Current generation for P:{processNumber}: {gen}")
+        population.setIndividuals(sType.rankSelection(population))
+        # population.setIndividuals(crossover(population, cType.nPoint, 2))
+        population.setIndividuals(crossover3P(population, c3Type.nPoint, 2))
+        mType.randomIndividualMutation(population, 0.5)
+        population.incrementGeneration()
+        print("--------------------------------------------------------------------")
+        unchangedCount, lastFitness = stoppingCondition(population, lastFitness, unchangedCount, increaseRate)
+
+    print(f"\n\nProcess {processNumber} has ended.\n\n")
+    printIntoResults(processNumber, population)
+
+
+if __name__ == '__main__':
+    startGA()

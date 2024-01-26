@@ -13,6 +13,7 @@ class Population:
         :param args: The Individuals that the Population object will contain.
         """
         self._user = u
+        self._entireFitness = 0
         self._currGen = 0
         self._individuals = list()
         for i in args:
@@ -29,6 +30,12 @@ class Population:
             return self._individuals[item]
         else:
             return None
+
+    def totalFitness(self):
+        self._entireFitness = 0
+        for individual in self._individuals:
+            self._entireFitness += individual.fitness()
+        return self._entireFitness
 
     def replaceIndividual(self, oldIndividual: Individual, newIndividual: Individual):
         """

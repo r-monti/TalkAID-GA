@@ -20,7 +20,7 @@ def fitness(ex: Exercise, u: User) -> float:
     """
     This function calculates the fitness of an Exercise done by a User.
     :param ex: The Exercise to be evaluated.
-    :param u: The User instance for the reccomendation.
+    :param u: The User instance for the recommendation.
     :return float: The fitness value.
     """
     f1, f2, f3, f4, f5, f6, f7 = F1, F2, F3, F4, F5, F6, F7
