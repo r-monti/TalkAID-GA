@@ -13,7 +13,8 @@ def randomSelection(population: Population):
     """
     newP = []
     while len(newP) < len(population):
-        newP.append(random.choice(population))
+
+        newP.append(Individual(*random.choice(population)).getList())
     return newP
 
 
@@ -31,7 +32,7 @@ def rankSelection(population: Population):
 
     newPopolation = list()
     size = len(sortedIndividuals)
-    subdivision = (size * (size+1))/2
+    subdivision = (size * (size + 1)) / 2
 
     while len(newPopolation) < len(population):
         newPopolation.append(su.find_rank(sortedIndividuals, subdivision))

@@ -10,9 +10,15 @@ def getExperience(u: User) -> float:
     """
     data = list()
     exercises = u.getExercises()
-    for ex in exercises.values():
-        data.append(ex.getExerciseDifficulty())
-    return stat.median(data)
+
+    if not exercises:
+        return 0
+
+    else:
+        for ex in exercises.values():
+            data.append(ex.getExerciseDifficulty())
+
+        return stat.median(data)
 
 
 def getMaxMinExperience(u: User) -> tuple[float, float]:
@@ -23,9 +29,15 @@ def getMaxMinExperience(u: User) -> tuple[float, float]:
     """
     data = list()
     exercises = u.getExercises()
-    for ex in exercises.values():
-        data.append(ex.getExerciseDifficulty())
-    return max(data), min(data)
+
+    if not exercises:
+        return 2, 1
+
+    else:
+        for ex in exercises.values():
+            data.append(ex.getExerciseDifficulty())
+
+        return max(data), min(data)
 
 
 def getMeanSeverity(u: User) -> float:

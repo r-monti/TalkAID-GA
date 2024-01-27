@@ -134,3 +134,58 @@ def nPointRandom(i1: Individual, i2: Individual, i3: Individual, n: int, crossov
     i3.setList(newI3)
 
     return i1, i2, i3
+
+
+def uniformCrossover(i1: Individual, i2: Individual, i3: Individual, crossoverProbability: float) -> tuple[Individual, Individual, Individual]:
+    """
+    Performs uniform crossover.
+    :param i1: The first individual.
+    :param i2: The second individual.
+    :param i3: The third individual.
+    :param crossoverProbability: The probability of crossover.
+    :return: The two new individuals.
+    """
+
+    if len(i1) != len(i2) != len(i3):
+        raise ValueError("Invalid individual length! They have to be the same.")
+    elif crossoverProbability < 0 or crossoverProbability > 1:
+        raise ValueError("Invalid crossoverProbability! Must be between 0 and 1.")
+
+    dividedI1 = divide(i1.getList(), len(i1))
+    dividedI2 = divide(i2.getList(), len(i2))
+    dividedI3 = divide(i3.getList(), len(i3))
+
+    newI1 = []
+    newI2 = []
+    newI3 = []
+
+    for triplet in zip(dividedI1, dividedI2, dividedI3):
+        if random() < crossoverProbability:
+            if random() < 0.5:
+                newI1.extend(triplet[1])
+            else:
+                newI1.extend(triplet[2])
+        else:
+            newI1.extend(triplet[0])
+
+        if random() < crossoverProbability:
+            if random() < 0.5:
+                newI2.extend(triplet[2])
+            else:
+                newI2.extend(triplet[0])
+        else:
+            newI2.extend(triplet[1])
+
+        if random() < crossoverProbability:
+            if random() < 0.5:
+                newI3.extend(triplet[0])
+            else:
+                newI1.extend(triplet[1])
+        else:
+            newI1.extend(triplet[2])
+
+    i1.setList(newI1)
+    i2.setList(newI2)
+    i3.setList(newI3)
+
+    return i1, i2, i3

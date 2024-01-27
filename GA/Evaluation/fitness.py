@@ -93,13 +93,17 @@ def difficultBasedFitness(e: Exercise, u: User) -> float:
     experience = fu.getExperience(u)
     maxD, minD = fu.getMaxMinExperience(u)
 
+    r = maxD - minD
+    if r == 0:
+        r = 1
+
     distance = abs(difficulty - experience)
     slope = fu.getSlope(severity)
 
     if distance < difficulty <= distance + slope:
         value = 100
     else:
-        value = 100 - (distance / (maxD - minD) * 100)
+        value = 100 - ((distance / r) * 100)
     return value
 
 
@@ -159,9 +163,14 @@ def last50Fitness(e: Exercise, u: User) -> float:
     :param u: The User instance.
     :return: The fitness value.
     """
-    if e.getExerciseID() in u.getExercises().keys():
+    exercisesDone = u.getExercises()
+
+    if not exercisesDone:
+        return 100
+
+    elif e.getExerciseID() in exercisesDone.keys():
         position = 0
-        for index, ID in enumerate(u.getExercises().keys()):
+        for index, ID in enumerate(exercisesDone.keys()):
             if ID == e.getExerciseID():
                 position = index
                 break
