@@ -130,7 +130,7 @@
         \item \textit{Sequenziale}, in quanto le esercitazioni effettuate dai pazienti e le scelte del logopedista influenzano le decisioni future dell’agente;
         \item \textit{Dinamico}, in quanto nel corso delle elaborazioni dell’agente, un paziente potrebbe svolgere un esercizio, cambiando in tal modo le sue esigenze;
         \item \textit{Discreto}, il numero di percezioni dell’agente è limitato in quanto ha un numero discreto di patologie, esercizi, pazienti, azioni e percezioni possibili;
-        \item \textit{Singolo agente}, in quanto il paziente sarà l'unico ad operare nell'ambiente.
+        \item \textit{Singolo agente}, in quanto per il singolo paziente sarà l'unico agente che opera in quello in oggetto.
     \end{itemize}
 
     \subsection{Actuators:}
@@ -387,16 +387,16 @@
     \subsection{Interazioni con il DataBase}
     Le interazioni effettuate dal nostro agente sul database sono esclusivamente operazioni di estrapolazione dati. Le funzioni create per le estrazioni degli esercizi, e relative informazioni sulla loro esecuzione da parte del paziente, sono:
     \begin{itemize}
-        \item\textbf{select\_exercises\_not\_done}: Questa funzione permette di ottenere tutti gli esercizi non ancora svolti dal paziente.
+        \item\textbf{select\_exercises\_not\_done}: questa funzione permette di ottenere tutti gli esercizi non ancora svolti dal paziente.
 
-        \item\textbf{select\_done\_exercises}: Questa funzione permette il recupero egli esercizi svolti dal paziente.
+        \item\textbf{select\_done\_exercises}: questa funzione permette il recupero egli esercizi svolti dal paziente.
 
-        \item\textbf{select\_random\_exercise}: Questa funzione recupera casualmente alcuni esercizi e, nel caso in cui vi siano esercizi precedentemente completati dal paziente, restituisce anche i relativi risultati.
+        \item\textbf{select\_random\_exercise}: questa funzione recupera casualmente alcuni esercizi e, nel caso in cui vi siano esercizi precedentemente completati dal paziente, restituisce anche i relativi risultati.
 
     \end{itemize}
     Per quanto riguarda le estrazioni dei dati inerenti ai pazienti e alle loro patologie:
     \begin{itemize}
-        \item\textbf{informationUser}: Questa funzione permette il recupero di informazioni inerenti alle varie patologie che il paziente è affetto con i livelli di gravità per ognuna di essa.
+        \item\textbf{informationUser}: questa funzione permette il recupero di informazioni inerenti alle varie patologie che il paziente è affetto con i livelli di gravità per ognuna di essa.
 
     \end{itemize}
 
@@ -411,7 +411,7 @@
 
 \begin{itemize}
 
-\item\textbf{difficultBasedFitness}: Restituisce un valore sulla base della difficoltà del singolo esercizio. Per prima cosa otteniamo l'esperienza del paziente andando a calcolare la \textit{mediana} della difficoltà degli ultimi 50 esercizi svolti. Calcoliamo poi la media delle General Severity delle conditions. Quando più è alta questa media, più lenta deve essere la curva di crescita della difficoltà, rispetto all'esperienza. Se la difficoltà rientra nella curva di crescita, restituisce 100, altrimenti un valore sempre più basso quanto si discosta. (Nel caso di paziente con zero esperienza, il valore di experience è uguale a 0).
+\item\textbf{difficultBasedFitness}: restituisce un valore sulla base della difficoltà del singolo esercizio. Per prima cosa otteniamo l'esperienza del paziente andando a calcolare la \textit{mediana} della difficoltà degli ultimi 50 esercizi svolti. Calcoliamo poi la media delle General Severity delle conditions. Quando più è alta questa media, più lenta deve essere la curva di crescita della difficoltà, rispetto all'esperienza. Se la difficoltà rientra nella curva di crescita, restituisce 100, altrimenti un valore sempre più basso quanto si discosta. (Nel caso di paziente con zero esperienza, il valore di experience è uguale a 0).
 \begin{lstlisting}[language = Python]
     def difficultBasedFitness(e: Exercise, u: User) -> float:
         difficulty = e.getExerciseDifficulty()
@@ -434,7 +434,7 @@
 \end{lstlisting}
 
 
-\item\textbf{severityBasedFitness}: Restituisce un valore da 0 a 100 sulla base della tipologia (Lettura o Scrittura) dell'esercizio e la gravità del paziente in tale ambito.
+\item\textbf{severityBasedFitness}: restituisce un valore da 0 a 100 sulla base della tipologia (Lettura o Scrittura) dell'esercizio e la gravità del paziente in tale ambito.
 \begin{lstlisting}[language = Python]
     def severityBasedFitness(e: Exercise, u: User) -> float:
     if e.getExerciseType() == "READTEXT" or e.getExerciseType() == "TEXTTOIMAGES" or e.getExerciseType() == "READIMAGES":
@@ -447,7 +447,7 @@
 
 
 
-\item\textbf{targetBasedFitness}: Restituisce un valore che va da 0 a 100 in base all'adeguatezza dell'esercizio per le patologie affette del paziente, tramite le informazioni contenute nel Target dell'esercizio.
+\item\textbf{targetBasedFitness}: restituisce un valore che va da 0 a 100 in base all'adeguatezza dell'esercizio per le patologie affette del paziente, tramite le informazioni contenute nel Target dell'esercizio.
 \begin{lstlisting}[language = Python]
     def targetBasedFitness(e: Exercise, u: User) -> float:
     rightTarget = 0
@@ -463,7 +463,7 @@
 Le seguenti invece, calcolano la fitness utilizzando le informazioni inerenti all'ultima esecuzione dell'esercizio da parte del paziente. Se non è mai stato eseguito, restituiscono il massimo della fitness:
 
 
-\item\textbf{evaluateBasedFitness}: La funzione restituisce un valore che va da 0 a 100 sottraendo la votazione massima che si può avere alla votazione che il paziente ha avuto su quell'esercizio.
+\item\textbf{evaluateBasedFitness}: la funzione restituisce un valore che va da 0 a 100 sottraendo la votazione massima che si può avere alla votazione che il paziente ha avuto su quell'esercizio.
 \begin{lstlisting}[language = Python]
     def evaluateBasedFitness(e: Exercise) -> float:
     if e.getLastEvaluation() is not None:
@@ -473,7 +473,7 @@ Le seguenti invece, calcolano la fitness utilizzando le informazioni inerenti al
     return value
 \end{lstlisting}
 
-\item\textbf{dateBasedFitness}: Restituisce un valore che va da 0 a 100 sulla base della quantità di tempo passata dalla data odierna all'ultima data di completamento del esercizio.
+\item\textbf{dateBasedFitness}: restituisce un valore che va da 0 a 100 sulla base della quantità di tempo passata dalla data odierna all'ultima data di completamento del esercizio.
 \begin{lstlisting}[language = Python]
     def dateBasedFitness(e: Exercise, maxDays: int) -> float:
     value = 100
@@ -487,7 +487,7 @@ Le seguenti invece, calcolano la fitness utilizzando le informazioni inerenti al
 \end{lstlisting}
 
 
-\item\textbf{feedbackBasedFitness}: Restituisce un valore in base al feedback del paziente, quindi controlla se il paziente ha espresso un giudizio positivo (100) o uno negativo (0).
+\item\textbf{feedbackBasedFitness}: restituisce un valore in base al feedback del paziente, quindi controlla se il paziente ha espresso un giudizio positivo (100) o uno negativo (0).
 \begin{lstlisting}[language = Python]
     def feedbackBasedFitness(e: Exercise) -> float:
     if e.getLastFeedback() is not None:
@@ -499,7 +499,7 @@ Le seguenti invece, calcolano la fitness utilizzando le informazioni inerenti al
         return 100
 \end{lstlisting}
 
-\item\textbf{last50Fitness}: Restituisce un valore in base alla posizione negli ultimi 50 esercizi fatti dall'paziente. Nel caso in cui non è presente, restituisce 100, altrimenti un valore sempre più basso quanto più alta è la posizione.
+\item\textbf{last50Fitness}: restituisce un valore in base alla posizione negli ultimi 50 esercizi fatti dall'paziente. Nel caso in cui non è presente, restituisce 100, altrimenti un valore sempre più basso quanto più alta è la posizione.
 \begin{lstlisting}[language = Python]
     def last50Fitness(e: Exercise, u: User) -> float:
     if e.getExerciseID() in u.getExercises().keys():
