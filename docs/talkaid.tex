@@ -13,9 +13,43 @@
 \usepackage[utf8]{inputenc}
 \makeindex[columns=3, title=Alphabetical Index, intoc]
 \usepackage{xcolor}
-\definecolor{ltgray}{RGB}{169,169,169}
-
+\definecolor{white}{rgb}{1,1,1}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{black}{rgb}{0, 0, 0}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
 \begin{document}
+
+
+
+\lstset{
+ backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  firstnumber=1,                % start line enumeration with line 1000
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{black}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+
 
 \pagestyle{fancy}
 \fancyhead{}
@@ -25,14 +59,18 @@
     \includegraphics[width=0.5\textwidth]{logoTalkAid.png} \\[1cm]
     \textbf{TalkAID - FIA}\\
     \vspace{0.5cm}
-    \large Algoritmo Genetico per la raccomandazione di esercizi di Logopedia, basati su esperienza e necessità dei pazienti.
+    \large Algoritmo Genetico per la raccomandazione di esercizi di Logopedia,\\
+    basati sulle necessità ed esperienza dei pazienti.
 }
     \author{
     Raffaele Monti\\
     Luigi Petrillo\\
     Michele D'Arienzo\\
      Samuele Sparno\\
-    Anna Benedetta Salerno
+    Anna Benedetta Salerno\\
+    \vspace{0.5cm}
+    \\
+    \href{https://github.com/r-monti/fia}{GitHub}
 }
     \date{26 Gennaio 2024}
 
@@ -124,7 +162,7 @@
 
     Date le nostre necessità, abbiamo potuto constatare che ciò di cui abbiamo bisogno è un algoritmo \textit{Genetico} di ottimizzazione.
 
-    Nonostante un'attenta valutazione di vari algoritmi, tra i quali spicca l'utilizzo di tecniche come la segmentazione degli utenti o il collaborative filtering, in particolare il clustering potrebbe aiutare a limitare quali esercizi consigliare in base alle patologie del paziente. Purtroppo, al momento non esistono dataset pertinenti per la nostra valutazione, quindi disponiamo di un insieme di dati limitato e poco realistico, che non permette a un ipotetico algoritmo di apprendimento di effettuare un training ottimale.
+    Nonostante un'attenta valutazione di vari algoritmi, tra i quali spicca l'utilizzo di tecniche come la \textit{segmentazione degli utenti} o il \textit{collaborative filtering}, in particolare il \textit{clustering} potrebbe aiutare a limitare quali esercizi consigliare in base alle patologie del paziente. Purtroppo, al momento non esistono dataset pertinenti per la nostra valutazione, quindi disponiamo di un insieme di dati limitato e poco realistico, che non permette a un ipotetico algoritmo di apprendimento di effettuare un training ottimale.
 
     Abbiamo quindi optato per un algoritmo di ricerca locale genetico, poiché è in grado di individuare un punto ottimo tra le diverse alternative, producendo
     soluzioni sempre migliori rispetto a una funzione obiettivo, anche in assenza di un dataset molto esteso. È importante notare che ciò non garantisce l'ottimalità,
@@ -151,57 +189,29 @@
         \item Di seguito vengono mostrati i vari codici in SQL realizzati per poter popolare il nostro database.
     \end{itemize}
 
-    \lstset{
-        backgroundcolor=\color{white},
-        basicstyle=\footnotesize,
-        breakatwhitespace=false,
-        breaklines=true,
-        captionpos=b,
-        commentstyle=\color{dkgreen},
-        deletekeywords={...},
-        escapeinside={\%*}{*)},
-        extendedchars=true,
-        frame=single,
-        keepspaces=true,
-        language=SQL,
-        otherkeywords={is},
-        morekeywords={*,modify,MODIFY,...},
-        keywordstyle=\keywordcheck,
-        identifierstyle=\setidcolor,
-        numbers=left,
-        numbersep=15pt,
-        numberstyle=\tiny,
-        rulecolor=\color{ltgray},
-        showspaces=false,
-        showstringspaces=false,
-        showtabs=false,
-        stepnumber=1,
-        tabsize=4,
-        title=\lstname
-    }
 
     \pagebreak
 
     \subsection{Popolazione del DataBase}
 
-    \begin{lstlisting}[language=SQL, breaklines, caption=Generazione Casuale esecuzione esercizio]
-        INSERT INTO exercise (ID_user, ID_exercise, InsertionDate, CompletionDate, Evaluation, Feedback)
+\begin{lstlisting}[language=SQL, caption=Generazione Casuale esecuzione esercizio]
+    INSERT INTO exercise (ID_user, ID_exercise, InsertionDate, CompletionDate, Evaluation, Feedback)
         VALUES
         (
-            FLOOR(904 + RAND() * (1003 - 904 + 1)), -- Random user ID
-            FLOOR(1 + RAND() * (84 - 1 + 1)), -- Random exercise ID
-            DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY), -- Random date within the past year
-            DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY), -- Random completion date within the past year
-            FLOOR(RAND() * (100 - 0 + 1)), -- Random evaluation between 0 and 100
-            CASE
-                WHEN RAND() <= 0.33 THEN -1
-                WHEN RAND() <= 0.66 THEN 0
-                ELSE 1
-            END -- Random feedback (-1, 0, or 1)
+        FLOOR(904 + RAND() * (1003 - 904 + 1)), -- Random user ID
+        FLOOR(1 + RAND() * (84 - 1 + 1)), -- Random exercise ID
+        DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY), -- Random date
+        DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY), -- Random completion date
+        FLOOR(RAND() * (100 - 0 + 1)), -- Random evaluation between 0 and 100
+        CASE
+            WHEN RAND() <= 0.33 THEN -1
+            WHEN RAND() <= 0.66 THEN 0
+            ELSE 1
+        END -- Random feedback (-1, 0, or 1)
         );
     \end{lstlisting}
 
-    \begin{lstlisting}[language=SQL, breaklines, caption=Generazione degli utenti]
+    \begin{lstlisting}[language=SQL, caption=Generazione degli utenti]
         DELIMITER //
 
         CREATE PROCEDURE GenerateUsers()
@@ -226,43 +236,45 @@
 
     \pagebreak
 
-    \begin{lstlisting}[language=SQL, breaklines, caption=Generazione delle Writing e Reading severity (tutti i pazienti)]
-        INSERT INTO patientcondition (ID_condition, ID_patient, Severity, WritingSeverity, ReadingSeverity)
-        SELECT
-            FLOOR(1 + RAND() * 12) as ID_condition,  -- Random condition ID (1 to 12)
-            u.ID as ID_patient,
-            1 as Severity,
-            FLOOR(1 + RAND() * 10) as WritingSeverity,
-            FLOOR(1 + RAND() * 10) as ReadingSeverity
-        FROM
-            user u
-        WHERE
-            u.ID_Therapist != 0;
+\begin{lstlisting}[language=SQL, caption=Generazione delle Writing e Reading severity (tutti i pazienti)]
+    INSERT INTO patientcondition (ID_condition, ID_patient, Severity, WritingSeverity, ReadingSeverity)
+    SELECT
+        FLOOR(1 + RAND() * 12) as ID_condition,  -- Random condition ID (1 to 12)
+        u.ID as ID_patient,
+        1 as Severity,
+        FLOOR(1 + RAND() * 10) as WritingSeverity, -- Random Severity
+        FLOOR(1 + RAND() * 10) as ReadingSeverity -- Random Severity
+    FROM
+        user u
+    WHERE
+        u.ID_Therapist != 0;
+\end{lstlisting}
+
+    \begin{lstlisting}[language=SQL, caption=Generazione delle Writing e Reading severity (solo per 30 pazienti)]
+    INSERT INTO patientcondition (ID_condition, ID_patient, Severity, WritingSeverity, ReadingSeverity)
+    SELECT
+        FLOOR(1 + RAND() * 12) as ID_condition,  -- Random condition ID (1 to 12)
+        u.ID as ID_patient,
+        1 as Severity,
+        FLOOR(1 + RAND() * 10) as WritingSeverity, -- Random Severity
+        FLOOR(1 + RAND() * 10) as ReadingSeverity -- Random Severity
+    FROM
+        user u
+    WHERE
+        u.ID_Therapist != 0
+    ORDER BY
+        RAND()  -- Randomly order the users and pick the first one
+    LIMIT 30;
     \end{lstlisting}
 
-    \begin{lstlisting}[language=SQL, breaklines, caption=Generazione delle Writing e Reading severity (solo per 30 pazienti)]
-        INSERT INTO patientcondition (ID_condition, ID_patient, Severity, WritingSeverity, ReadingSeverity)
-        SELECT
-            FLOOR(1 + RAND() * 12) as ID_condition,  -- Random condition ID (1 to 12)
-            u.ID as ID_patient,
-            1 as Severity,
-            FLOOR(1 + RAND() * 10) as WritingSeverity,
-            FLOOR(1 + RAND() * 10) as ReadingSeverity
-        FROM
-            user u
-        WHERE
-            u.ID_Therapist != 0
-        ORDER BY
-            RAND()  -- Randomly order the users and pick the first one
-        LIMIT 30;
-    \end{lstlisting}
-
-    \begin{lstlisting}[language=SQL, breaklines, caption=Generazione della General severity (tutti i pazienti)]
-        UPDATE patientcondition pc
-        SET
-            pc.Severity = LEAST(GREATEST(pc.WritingSeverity, pc.ReadingSeverity) + IF(RAND() < 0.5, -1, 1), 10)
-        WHERE
-            pc.Severity = 1;
+    \begin{lstlisting}[language=SQL, caption=Generazione della General severity (tutti i pazienti)]
+    UPDATE patientcondition pc
+    SET
+        pc.Severity =
+            LEAST(GREATEST(pc.WritingSeverity, pc.ReadingSeverity) +
+            IF(RAND() < 0.5, -1, 1), 10) -- Random Severity
+    WHERE
+        pc.Severity = 1;
     \end{lstlisting}
 
     La necessità di generare in due modi diversi le patologie degli utenti (una volta per tutti i pazienti, una volta solo per 30 pazienti) , è dovuta alla concreta possibilità di pazienti con più di una patologia, come ad esempio \textit{Dislessia} e \textit{Disgrafia}.
@@ -373,10 +385,7 @@
 \pagebreak
 
     \subsection{Interazioni con il DataBase}
-    Le interazioni effettuate dal nostro agente sul database sono esclusivamente operazioni di estrapolazione dati. Elencando, le funzioni create sono:
-
-
-    Per quanto riguarda le estrazioni degli esercizi:
+    Le interazioni effettuate dal nostro agente sul database sono esclusivamente operazioni di estrapolazione dati. Le funzioni create per le estrazioni degli esercizi, e relative informazioni sulla loro esecuzione da parte del paziente, sono:
     \begin{itemize}
         \item\textbf{select\_exercises\_not\_done}: Questa funzione permette di ottenere tutti gli esercizi non ancora svolti dal paziente.
 
@@ -385,11 +394,13 @@
         \item\textbf{select\_random\_exercise}: Questa funzione recupera casualmente alcuni esercizi e, nel caso in cui vi siano esercizi precedentemente completati dal paziente, restituisce anche i relativi risultati.
 
     \end{itemize}
-    Per quanto riguarda le estrazioni dei pazienti:
+    Per quanto riguarda le estrazioni dei dati inerenti ai pazienti e alle loro patologie:
     \begin{itemize}
         \item\textbf{informationUser}: Questa funzione permette il recupero di informazioni inerenti alle varie patologie che il paziente è affetto con i livelli di gravità per ognuna di essa.
 
     \end{itemize}
+
+    Data la lunghezza del codice, sono stati inseriti solo i nomi delle funzioni. Per la completa documentazione, fare riferimento alla pagina GitHub.
 
 \pagebreak
 
@@ -401,7 +412,7 @@
 \begin{itemize}
 
 \item\textbf{difficultBasedFitness}: Restituisce un valore sulla base della difficoltà del singolo esercizio. Per prima cosa otteniamo l'esperienza del paziente andando a calcolare la \textit{mediana} della difficoltà degli ultimi 50 esercizi svolti. Calcoliamo poi la media delle General Severity delle conditions. Quando più è alta questa media, più lenta deve essere la curva di crescita della difficoltà, rispetto all'esperienza. Se la difficoltà rientra nella curva di crescita, restituisce 100, altrimenti un valore sempre più basso quanto si discosta. (Nel caso di paziente con zero esperienza, il valore di experience è uguale a 0).
-\begin{lstlisting}
+\begin{lstlisting}[language = Python]
     def difficultBasedFitness(e: Exercise, u: User) -> float:
         difficulty = e.getExerciseDifficulty()
         severity = fu.getMeanSeverity(u)
@@ -424,7 +435,7 @@
 
 
 \item\textbf{severityBasedFitness}: Restituisce un valore da 0 a 100 sulla base della tipologia (Lettura o Scrittura) dell'esercizio e la gravità del paziente in tale ambito.
-\begin{lstlisting}
+\begin{lstlisting}[language = Python]
     def severityBasedFitness(e: Exercise, u: User) -> float:
     if e.getExerciseType() == "READTEXT" or e.getExerciseType() == "TEXTTOIMAGES" or e.getExerciseType() == "READIMAGES":
         value = fu.getMeanReadingSeverity(u)
@@ -437,7 +448,7 @@
 
 
 \item\textbf{targetBasedFitness}: Restituisce un valore che va da 0 a 100 in base all'adeguatezza dell'esercizio per le patologie affette del paziente, tramite le informazioni contenute nel Target dell'esercizio.
-\begin{lstlisting}
+\begin{lstlisting}[language = Python]
     def targetBasedFitness(e: Exercise, u: User) -> float:
     rightTarget = 0
     for key in u.getConditions().keys():
@@ -453,7 +464,7 @@ Le seguenti invece, calcolano la fitness utilizzando le informazioni inerenti al
 
 
 \item\textbf{evaluateBasedFitness}: La funzione restituisce un valore che va da 0 a 100 ottenuto sottraendo la votazione massima che si può avere da un'esecuzione di un esercizio, e la votazione che il paziente ha avuto su quell'esercizio.
-\begin{lstlisting}
+\begin{lstlisting}[language = Python]
     def evaluateBasedFitness(e: Exercise) -> float:
     if e.getLastEvaluation() is not None:
         value = 100 - e.getLastEvaluation()
@@ -463,7 +474,7 @@ Le seguenti invece, calcolano la fitness utilizzando le informazioni inerenti al
 \end{lstlisting}
 
 \item\textbf{dateBasedFitness}: Restituisce un valore che va da 0 a 100 sulla base della quantità di tempo passata dalla data odierna all'ultima data di completamento del esercizio.
-\begin{lstlisting}
+\begin{lstlisting}[language = Python]
     def dateBasedFitness(e: Exercise, maxDays: int) -> float:
     value = 100
     if e.getLastCompletionDate() is not None:
@@ -477,7 +488,7 @@ Le seguenti invece, calcolano la fitness utilizzando le informazioni inerenti al
 
 
 \item\textbf{feedbackBasedFitness}: Restituisce un valore in base al feedback del paziente, quindi controlla se il paziente ha espresso un giudizio positivo (100) o uno negativo (0).
-\begin{lstlisting}
+\begin{lstlisting}[language = Python]
     def feedbackBasedFitness(e: Exercise) -> float:
     if e.getLastFeedback() is not None:
         if e.getLastFeedback() > 0:
@@ -489,7 +500,7 @@ Le seguenti invece, calcolano la fitness utilizzando le informazioni inerenti al
 \end{lstlisting}
 
 \item\textbf{last50Fitness}: Restituisce un valore in base alla posizione negli ultimi 50 esercizi fatti dall'paziente. Nel caso in cui non è presente, restituisce 100, altrimenti un valore sempre più basso quanto più alta è la posizione.
-\begin{lstlisting}
+\begin{lstlisting}[language = Python]
     def last50Fitness(e: Exercise, u: User) -> float:
     if e.getExerciseID() in u.getExercises().keys():
         position = 0
@@ -506,7 +517,7 @@ Le seguenti invece, calcolano la fitness utilizzando le informazioni inerenti al
 \pagebreak
 
 Tutti questi valori sono di varia importanza e origine, per questo ogni funzione nel calcolo del valore fitness è moltiplicato con una costante di importanza dedicata.
-\begin{lstlisting}
+\begin{lstlisting}[language = Python]
     def fitness(ex: Exercise, u: User) -> float:
     f1, f2, f3, f4, f5, f6, f7 = F1, F2, F3, F4, F5, F6, F7
 
@@ -521,7 +532,7 @@ Tutti questi valori sono di varia importanza e origine, per questo ogni funzione
     return somma
 \end{lstlisting}
 
-Tale variabile è modificabile in modo tale che il logopedista può decidere se considerare più un determinante rispetto ad un'altra in base alle proprie esigenze ed esperienza. Inoltre ci sembrava inopportuno forzare l'utilizzo delle nostre personali costanti, data la nostra incompentenza nel settore della terapia logopedica rispetto all'effettivo terapista.
+Tale variabile è modificabile in modo tale che il logopedista può decidere se considerare più un determinante rispetto ad un'altra in base alle proprie esigenze ed esperienza. Inoltre ci sembrava inopportuno forzare l'utilizzo delle nostre personali costanti, data la nostra incompetenza nel settore della terapia logopedica rispetto all'effettivo terapista.
 
 \pagebreak
 
@@ -602,7 +613,7 @@ Più precisamente sono:
 
 \item\textbf{user}: contiene l'istanza della classe User, dotata delle informazioni inerenti al paziente;
 
-\item\textbf{entirefitness}: valore fitness dell'intera Popolation;
+\item\textbf{entireFitness}: valore fitness dell'intera Popolation;
 
 \item\textbf{currGen}: valore attuale della generazione;
 
@@ -610,7 +621,7 @@ Più precisamente sono:
 
 
 
-\begin{lstlisting}
+\begin{lstlisting}[language = Python]
     class Population:
     def __init__(self, u: User, *args: Individual):
 
@@ -630,7 +641,7 @@ La classe \textit{User} è caratterizzato da:
 \item\textbf{ID}: indicante l'id identificativo del paziente;
 \item\textbf{conditions}: dizionario delle patologie del paziente, in cui la chiave è il nome della patologia e il valore è una tupla delle tre gravità (Generale, Scrittura, Lettura);
 \item\textbf{exercises}: dizionario degli ultimi 50 esercizi eseguiti dal paziente, in cui la chiave è l'ID dell'esercizio e il valore è l'istanza della classe Exercise inerente a quell'esercizio.
-\begin{lstlisting}
+\begin{lstlisting}[language = Python]
     class User:
     def __init__(self, ID: int, conditions: dict, exercises: dict):
 
@@ -653,12 +664,12 @@ La classe \textit{Exercise} è caratterizzata da:
 \item\textbf{ID}: indica l'id identificativo dell'esercizio;
 \item\textbf{exerciseDifficulty}: la difficoltà dell'esercizio;
 \item\textbf{target}: indica a quali patologie è meglio dedicata l'esercizio;
-\item\textbf{extTpe}: indica il tipo di esercizio tra i 7 sviluppati;
+\item\textbf{extType}: indica il tipo di esercizio tra i 7 sviluppati;
 \item\textbf{lastEvaluation}: indicante l'ultima valutazione dell'esercizio se questo è stato già eseguito;
 \item\textbf{lasCompletionDate}: indicante l'ultima data in cui è stato completato l'esercizio;
 \item\textbf{lastFeedback}: indicante il feedback lasciato dal paziente all'esercizio.
 
-\begin{lstlisting}[language=Python, breaklines, no caption]
+\begin{lstlisting}[language=Python]
     class Exercise:
     def __init__(self, ID: int, exerciseDifficulty: int, target: str, exType: str,
                  lastEvaluation: int | None, lastCompletionDate: str | None, lastFeedback: int | None):
@@ -679,7 +690,7 @@ Infine, più precisamente la classe \textit{Individual} è caratterizzato da:
 \begin{itemize}
 \item\textbf{individualFitness}: valore fitness del singolo set di esercizi;
 \item\textbf{exercises}: la lista delle istanze di Exercise che compongono il set di esercizi.
-\begin{lstlisting}
+\begin{lstlisting}[language = Python]
     class Individual:
     def __init__(self, *args: Exercise):
         self._individualFitness = 0
@@ -699,7 +710,7 @@ Nella fase di Selezione, viene anche attuata la fase di valutazione, poiché abb
 \item\textbf{Roulette Wheel}: Come nei Casinò, abbiamo una "ruota" in cui ogni porzione è proporzionale al valore di fitness dell'individuo. Facendo girare la ruota, si selezionano gli individui vincenti.
 \end{itemize}
 
-\begin{lstlisting}[language=Python, breaklines, no caption]
+\begin{lstlisting}[language=Python]
 def rouletteWheel(population: Population):
     user = population.getUser()
     totalFitness = 0
@@ -727,7 +738,7 @@ def rouletteWheel(population: Population):
 
 \end{itemize}
 
-\begin{lstlisting}[language=Python, breaklines, no caption]
+\begin{lstlisting}[language=Python]
 def rankSelection(population: Population):
     user = population.getUser()
     for i in range(len(population)):
@@ -761,7 +772,7 @@ def find_rank(individuals: list[Individual], subdivision: float) -> Individual:
 
 \end{itemize}
 
-\begin{lstlisting}[language=Python, breaklines, no caption]
+\begin{lstlisting}[language=Python]
 def randomSelection(population: Population):
     newP = []
     while len(newP) < len(population):
@@ -780,7 +791,7 @@ Questa fase si occupa di generare nuovi elementi a partire da quelli selezionati
 \item\textbf{nPoint}: Spezza le liste degli individui selezionati in n punti. Ciascuna lista viene quindi suddivisa in sottoliste più piccole, le quali saranno scambiate con le altre analoghe sottoliste nei punti di divisione.
 \end{itemize}
 
-\begin{lstlisting}[language=Python, breaklines, no caption]
+\begin{lstlisting}[language=Python]
 def nPoint(i1: Individual, i2: Individual, i3: Individual, n: int) -> tuple[Individual, Individual, Individual]:
     if len(i1) != len(i2) != len(i3):
         raise ValueError("Invalid individual length! They have to be the same.")
@@ -819,7 +830,7 @@ def nPoint(i1: Individual, i2: Individual, i3: Individual, n: int) -> tuple[Indi
 \item\textbf{nPointReverse}: A differenza della precedente implementazione, questa versione esegue lo scambio già dal primo elemento, affinché possa risultare più casuale un possibile ripescaggio dello stesso individuo.
 \end{itemize}
 
-\begin{lstlisting}[language=Python, breaklines, no caption]
+\begin{lstlisting}[language=Python]
 def nPointReverse(i1: Individual, i2: Individual, i3: Individual, n: int) -> tuple[Individual, Individual, Individual]:
     if len(i1) != len(i2) != len(i3):
         raise ValueError("Invalid individual length! They have to be the same.")
@@ -859,7 +870,7 @@ def nPointReverse(i1: Individual, i2: Individual, i3: Individual, n: int) -> tup
 \item\textbf{nPointRandom}: Questa versione di nPoint aggiunge la possibilità di dichiarare la \textit{probabilità di crossover}(precedentemente avveniva sempre).
 \end{itemize}
 
-\begin{lstlisting}[language=Python, breaklines, no caption]
+\begin{lstlisting}[language=Python]
 def nPointRandom(i1: Individual, i2: Individual, i3: Individual, n: int, crossoverProbability: float) -> tuple[Individual, Individual, Individual]:
     if len(i1) != len(i2) != len(i3):
         raise ValueError("Invalid individual length! They have to be the same.")
@@ -908,7 +919,7 @@ def nPointRandom(i1: Individual, i2: Individual, i3: Individual, n: int, crossov
 \item\textbf{uniformCrossover}: In questo caso, ogni gene ha la possibilità di venir casualmente rimpiazzato con un gene degli altri genitori.
 \end{itemize}
 
-\begin{lstlisting}[language=Python, breaklines, no caption]
+\begin{lstlisting}[language=Python]
 def uniformCrossover(i1: Individual, i2: Individual, i3: Individual, crossoverProbability: float) -> tuple[Individual, Individual, Individual]:
     if len(i1) != len(i2) != len(i3):
         raise ValueError("Invalid individual length! They have to be the same.")
@@ -955,18 +966,17 @@ def uniformCrossover(i1: Individual, i2: Individual, i3: Individual, crossoverPr
     return i1, i2, i3
         \end{lstlisting}
 
-\begin{itemize}
-\begin{itemize}
-    \item La funzione \textit{divide} si occupa, in base a n, della divisione delle liste in input in sottoliste usando la seguente \textit{comprehension}.
+
+La funzione \textit{divide} si occupa, in base a n, della divisione delle liste in input in sottoliste usando la seguente \textit{comprehension}.
 
 
-\end{itemize}
-     \begin{lstlisting}[language=Python, breaklines, no caption]
+
+     \begin{lstlisting}[language=Python]
 def divide(lst: list, n: int) -> list:
 
     return [lst[i * len(lst) // n: (i + 1) * len(lst) // n] for i in range(n)]
         \end{lstlisting}
-\end{itemize}
+
 
 \pagebreak
 
@@ -979,7 +989,7 @@ Questi metodi sono eseguiti sugli individui scelti, ma la scelta è eseguita dal
 \item\textbf{execute3Crossover}: Questa funzione infatti, seleziona casualmente su una popolazione della mating pool, gli individui che procederanno ad accoppiarsi, per formare poi una nuova popolazione una volta che tutti gli individui si siano accoppiati.
 \end{itemize}
 
-\begin{lstlisting}[language=Python, breaklines, no caption]
+\begin{lstlisting}[language=Python]
 def execute3Crossover(p: Population, crossoverType: crossover, *args) -> list[Individual]:
     """
     Executes the crossover on a population taking 3 individuals instead of 2.
@@ -1023,7 +1033,7 @@ La mutazione è quella fase degli algoritmi GA che esegue una modifica al corred
 Per popolazioni molto grandi, comporta troppa poca casualità. È quindi sconsigliato l'uso di della condizione di stop sulla base dell'aumento del valore di fitness costante, e di invece usare esclusivamente il numero di generazioni per evitare interruzioni precoci.
 \end{itemize}
 
-\begin{lstlisting}[language=Python, breaklines, no caption]
+\begin{lstlisting}[language=Python]
 def randomSingleMutation(p: Population, mutationRate: float) -> Population:
     if random.random() < mutationRate:
         i = random.choice(p.getIndividuals())
@@ -1036,7 +1046,7 @@ def randomSingleMutation(p: Population, mutationRate: float) -> Population:
 \item\textbf{randomIndividualMutation}: Questa funzione invece, può eseguire una mutazione sull'intero individuo di una popolazione scelto casualmente, risolvendo il problema delle grandi popolazioni incontrata nella precedente versione.
 \end{itemize}
 
-\begin{lstlisting}[language=Python, breaklines, no caption]
+\begin{lstlisting}[language=Python]
 def randomIndividualMutation(p: Population, mutationRate: float) -> Population:
     individuals = p.getIndividuals()
 
@@ -1052,7 +1062,7 @@ def randomIndividualMutation(p: Population, mutationRate: float) -> Population:
 \item\textbf{worstIndividualMutation}: Quest'ultima infine, può eseguire una mutazione sul peggior individuo di una popolazione controllando i singoli valori di fitness degli individui.
 \end{itemize}
 
-\begin{lstlisting}[language=Python, breaklines, no caption]
+\begin{lstlisting}[language=Python]
 def worstIndividualMutation(p: Population, mutationRate: float) -> Population:
     individuals = p.getIndividuals()
     minF = individuals[0].fitness()
@@ -1077,7 +1087,7 @@ Per effettuare le 3 tipologie di mutazioni, vengono utilizzati i seguenti metodi
 \item\textbf{mutateEX}: Questa funzione seleziona un singolo gene casualmente dal dataset.
 \end{itemize}
 
-\begin{lstlisting}[language=Python, breaklines, no caption]
+\begin{lstlisting}[language = Python]
 def mutateEx(i: Individual, p: Population) -> Individual:
     userId = p.getUser().getID()
     gen = p.getGeneration()
@@ -1093,7 +1103,7 @@ def mutateEx(i: Individual, p: Population) -> Individual:
 \item\textbf{mutateIndividual}: Questa funzione invece si occupa della generazione di un nuovo individuo andando sempre alla ricerca dei geni nel dataset.
 \end{itemize}
 
-\begin{lstlisting}[language=Python, breaklines, no caption]
+\begin{lstlisting}[language = Python]
 def mutateIndividual(i: Individual, p: Population):
     userId = p.getUser().getID()
     gen = p.getGeneration()
@@ -1104,17 +1114,15 @@ def mutateIndividual(i: Individual, p: Population):
 
     return newIndividual
 \end{lstlisting}
-\begin{itemize}
-\begin{itemize}
-    \item È da precisare, che unicamente in queste due funzioni vengono prelevati nuovi geni dal dataset, e proprio per questo, viene inserita la corretta Generazione all'esercizio affinché, nel caso ci fosse necessità o curiosità, si potrebbe risalire sia a quante generazioni è sopravvissuto, sia in quale generazione è stato pescato.
-\end{itemize}
-\end{itemize}
+
+    È da precisare, che unicamente in queste due funzioni vengono prelevati nuovi geni dal dataset, e proprio per questo, viene inserita la corretta Generazione all'esercizio affinché, nel caso ci fosse necessità o curiosità, si potrebbe risalire sia a quante generazioni è sopravvissuto, sia in quale generazione è stato pescato.
+
 \pagebreak
 \subsection{Stopping Condition}
 Infine, l'intera generazione può terminare unicamente in due modi:
 \begin{itemize}
     \item \textbf{stoppingCondition}: esegue un controllo ad ogni generazione, in modo tale che nel caso non ci siano miglioramenti al valore Fitness entro un numero prestabilito di generazioni, l'algoritmo si ferma.
-\begin{lstlisting}[language=Python, breaklines, no caption]
+\begin{lstlisting}[language = Python]
 def stoppingCondition(p: Population, lastFitness, unchangedCount: int, increaseRate: float) -> tuple[int, int]:
     currentFitness = round(p.totalFitness())
     if lastFitness < currentFitness <= lastFitness + (lastFitness * increaseRate):
@@ -1127,7 +1135,7 @@ def stoppingCondition(p: Population, lastFitness, unchangedCount: int, increaseR
 \end{itemize}
 \begin{itemize}
     \item \textbf{condizione While}: ad ogni ciclo, viene incrementato il valore di una variabile \textit{gen}. Quando raggiunge il valore di \textit{maxGen}, l'algoritmo di ferma.
-\begin{lstlisting}
+\begin{lstlisting}[language = Python]
     [...]
     gen = 0
     maxGen = 400
@@ -1141,7 +1149,7 @@ def stoppingCondition(p: Population, lastFitness, unchangedCount: int, increaseR
 \pagebreak
 \section{Esempio di esecuzione completa}
 Un esempio di esecuzione del nostro algoritmo Genetico. Viene utilizzato \textit{Rank Selection}, \textit{nPoint} e \textit{random Individual Mutation}. I risultati vengono stampati in un file chiamato "\textit{result.txt}" grazie alla funzione \textit{printIntoResults}.
-\begin{lstlisting}
+\begin{lstlisting}[language = Python]
 from GA.Initialization.populationInitializer import initialize
 from GA.StoppingCondition.stopConditionMethods import stoppingCondition
 from GA.Crossover.crossover3Parents import execute3Crossover as crossover3P
@@ -1152,7 +1160,7 @@ import GA.Mutation.mutationMethods as mType
 from multiprocessing import Pool, cpu_count
 
 
-# Responsabile della parallelizzazione dell'algoritmo su più processi
+# Responsabile della parallelizzazione dell'algoritmo su multipli processi
 def startGA():
     p1 = initialize(6, 5, 904)
     p2 = initialize(6, 5, 914)
@@ -1197,7 +1205,7 @@ if __name__ == '__main__':
 \end{lstlisting}
 
 \section{Considerazioni finali}
-Siamo giunti alla conclusione di un lungo viaggio, alla fine del quale ci riteniamo soddisfatti di quanto ottenuto, in quanto tutti i membri non avevano mai avuto esperienze pregresse con la programmazione di agenti intelligenti. L'emozione ottenuta al primo corretto funzionamento sarà un ricordo indelebile nella memoria di noi tutti. Ma non solo le gioie rimarranno, rimarranno anche gli sforzi e l'esperienza ottenuti sbattendo la testa innumerevoli volte, ma senza mai perderci d'animo. Riteniamo che sono stati raggiunti gli obiettivi che ci eravamo prefissati, riuscire a raccomandare esercizi. Sicuramente la fitness andrebbe calibrata con l'aiuto di una figura professionale nell'ambito della logopedia. Un aspetto di cui andiamo particolarmente fieri è la gestione in multiprocessign dell'algoritmo che rende possibile, se necessario, l'esecuzione sulla stessa popolazione, ma variando i fatti di selezione, crossover e mutazione. Un ringraziamento speciale a tutti coloro che hanno contribuito alla realizzazione di questo progetto, dai Project Manager, ai colleghi, che ci hanno fornito l'idea di base, dai professori ai tutor per averci insegnato le competenze necessarie alla reale realizzazione dell'algoritmo. Infine un ringraziamento a chiunque abbia raggiunto queste parole.
+Siamo giunti alla conclusione di un lungo viaggio, alla fine del quale ci riteniamo soddisfatti di quanto ottenuto, in quanto tutti i membri non avevano mai avuto esperienze pregresse con la programmazione di agenti intelligenti. L'emozione ottenuta al primo corretto funzionamento sarà un ricordo indelebile nella memoria di noi tutti. Ma non solo le gioie rimarranno, rimarranno anche gli sforzi e l'esperienza ottenuti sbattendo la testa innumerevoli volte, ma senza mai perderci d'animo. Riteniamo che sono stati raggiunti gli obiettivi che ci eravamo prefissati, riuscire a raccomandare esercizi. Sicuramente la fitness andrebbe calibrata con l'aiuto di una figura professionale nell'ambito della logopedia. Un aspetto di cui andiamo particolarmente fieri è la gestione in multiprocessing dell'algoritmo che rende possibile, se necessario, l'esecuzione sulla stessa popolazione, ma variando i fatti di selezione, crossover e mutazione. Un ringraziamento speciale a tutti coloro che hanno contribuito alla realizzazione di questo progetto, dai Project Manager, ai colleghi, che ci hanno fornito l'idea di base, dai professori ai tutor per averci insegnato le competenze necessarie alla reale realizzazione dell'algoritmo. Infine un ringraziamento a chiunque abbia raggiunto queste parole.
 
 \subsection{Cosa abbiamo Imparato}
 Grazie a questo progetto abbiamo potuto provare e applicare le conoscenze che abbiamo acquisito durante il corso di \textit{Fondamenti di
