@@ -12,6 +12,8 @@
 \usepackage{imakeidx}
 \usepackage[utf8]{inputenc}
 \makeindex[columns=3, title=Alphabetical Index, intoc]
+\usepackage{caption}
+\captionsetup[table]{position=bottom}
 \usepackage{xcolor}
 \definecolor{white}{rgb}{1,1,1}
 \definecolor{mygreen}{rgb}{0,0.6,0}
@@ -21,7 +23,7 @@
 
 
 
-\lstset{ 
+\lstset{
  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
   basicstyle=\footnotesize,        % the size of the fonts that are used for the code
   breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
@@ -68,7 +70,7 @@
     Michele D'Arienzo\\
      Samuele Sparno\\
     Anna Benedetta Salerno\\
-    \vspace{0.5cm} 
+    \vspace{0.5cm}
     \\
     \href{https://github.com/r-monti/fia}{GitHub}
 }
@@ -81,16 +83,14 @@
     \tableofcontents
 
     \pagebreak
-    
+
     \section{Sistema Attuale}
 
     Il progetto TALKAID rappresenta davvero un passo avanti significativo nel campo della riabilitazione e del supporto alle persone con disabilità del linguaggio. La possibilità di offrire trattamenti completamente \textit{a distanza} e in maniera \textit{asincrona} è un'innovazione che potrebbe aprire nuove opportunità per un numero ancora maggiore di individui affetti da queste patologie.
 
-    La registrazione e il monitoraggio dei progressi dei pazienti potrebbe essere complessa e limitata a causa della mancanza di strumenti tecnologici dedicati.
+   Attualmente i metodi tradizionali potrebbero non essere altamente personalizzati alle esigenze specifiche dei pazienti, poiché potrebbe essere difficile adattarli in modo rapido ed efficiente. Inoltre la necessità delle visite dal vivo può essere un ostacolo per coloro che abitano a grandi distanze dai centri di logopedia oppure per i pazienti lavoratori.
 
-    Inoltre i metodi tradizionali potrebbero non essere altamente personalizzati alle esigenze specifiche dei pazienti, poiché potrebbe essere difficile adattarli in modo rapido ed efficiente. Inoltre la necessità delle visite dal vivo può essere un ostacolo per coloro che abitano a grandi distanze dai centri di logopedia oppure per i lavoratori.
-
-    
+    Infine, la registrazione e il monitoraggio dei progressi potrebbe essere complessa e limitata a causa della mancanza di strumenti tecnologici dedicati.
 
     La componente di Intelligenza Artificiale è ritenuta fondamentale ai nostri obiettivi siccome aggiunge un livello di personalizzazione e adattabilità, permettendo ai pazienti di ricevere esercizi mirati in base al loro necessità ed esperienza. Questo non solo rende il trattamento più efficace, ma anche più agevole per i logopedisti, in quanto saranno aiutati dall'IA nella scelta degli esercizi migliori. I pazienti verranno incoraggiati a perseguire con impegno il percorso di miglioramento attraverso le loro statistiche.
 
@@ -116,13 +116,13 @@
     Le prestazioni dell’agente sono valutate attraverso le seguenti misure:
 
     \begin{itemize}
-        \item La sua capacità di consigliare esercizi il più mirati possibile per il paziente in base alla patologia;
-        \item Il punteggio dell'esercizio che il paziente ha effettuato su quell'esercizio.
+        \item La sua capacità di consigliare esercizi il più mirati possibile per il paziente;
+        \item Il punteggio dell'esecuzione che il paziente ha effettuato sull'esercizio raccomandato.
     \end{itemize}
 
     \subsection{Environment:}
 
-    L’ambiente è:
+    L’ambiente in cui opera l'agente ha le seguenti caratteristiche:
 
     \begin{itemize}
         \item \textit{Completamente osservabile}, in quanto si ha accesso a tutte le informazioni relative ai pazienti, in particolare le patologie, gli esercizi svolti e le informazioni sull'esecuzione degli esercizi come valutazione, feedback etc;
@@ -130,20 +130,20 @@
         \item \textit{Sequenziale}, in quanto le esercitazioni effettuate dai pazienti e le scelte del logopedista influenzano le decisioni future dell’agente;
         \item \textit{Dinamico}, in quanto nel corso delle elaborazioni dell’agente, un paziente potrebbe svolgere un esercizio, cambiando in tal modo le sue esigenze;
         \item \textit{Discreto}, il numero di percezioni dell’agente è limitato in quanto ha un numero discreto di patologie, esercizi, pazienti, azioni e percezioni possibili;
-        \item \textit{Singolo agente}, in quanto per il singolo paziente sarà l'unico agente che opera in quello in oggetto.
+        \item \textit{Singolo agente}, in quanto per il singolo paziente, ci sarà un unico agente.
     \end{itemize}
 
     \subsection{Actuators:}
 
     \begin{itemize}
-        \item Salvataggio della lista di esercizi in un database, che sarà poi esposto in forma tabellare  al logopedista curante nella sua homepage, affinché quest'ultimo possa approvare o meno, per ogni paziente, i risultati dell'agente.
+        \item L'agente effettua il salvataggio della lista di esercizi raccomandati in un database, che sarà poi esposto in forma tabellare  al logopedista curante nella sua homepage, affinché quest'ultimo possa approvare o meno, per ogni paziente, i risultati dell'agente.
     \end{itemize}
 
     \subsection{Sensors:}
 
     \begin{itemize}
         \item L'agente accede ad un dataset, il quale è un riadattamento del database attualmente utilizzato dal sistema principale di TalkAID, eliminando gli attributi non necessari e aggiungendo gli attributi gravità di lettura e scrittura, necessari al fine di poter avere una più completa visualizzazione delle necessità reali del paziente. (Nella versione definitiva del sistema principale, gli attributi aggiunti per gravità di lettura e scrittura esisterebbero e verrebbero gestiti dal logopedista curante);
-        
+
         \item Il dataset comprende informazioni e dati su:
             \begin{itemize}
                 \item Le condizioni trattate dal sistema principale;
@@ -152,7 +152,7 @@
                 \item La gravità delle condizioni degli utenti.
             \end{itemize}
 
-        
+
 
     \end{itemize}
 
@@ -162,7 +162,7 @@
 
     Date le nostre necessità, abbiamo potuto constatare che ciò di cui abbiamo bisogno è un algoritmo \textit{Genetico} di ottimizzazione.
 
-    Nonostante un'attenta valutazione di vari algoritmi, tra i quali spicca l'utilizzo di tecniche come la \textit{segmentazione degli utenti} o il \textit{collaborative filtering}, in particolare il \textit{clustering} potrebbe aiutare a limitare quali esercizi consigliare in base alle patologie del paziente. Purtroppo, al momento non esistono dataset pertinenti per la nostra valutazione, quindi disponiamo di un insieme di dati limitato e poco realistico, che non permette a un ipotetico algoritmo di apprendimento di effettuare un training ottimale.
+    Nonostante un'attenta valutazione di vari algoritmi, tra i quali spicca l'utilizzo di tecniche come la \textit{segmentazione degli utenti} o il \textit{collaborative filtering}, e in particolare il \textit{clustering} avrebbe potrebbe aiutare a limitare quali esercizi consigliare in base alle patologie del paziente, purtroppo al momento non esistono dataset pertinenti per la nostra valutazione, quindi disponiamo di un insieme di dati limitato e poco realistico, che non permette a un ipotetico algoritmo di apprendimento di effettuare un training ottimale.
 
     Abbiamo quindi optato per un algoritmo di ricerca locale genetico, poiché è in grado di individuare un punto ottimo tra le diverse alternative, producendo
     soluzioni sempre migliori rispetto a una funzione obiettivo, anche in assenza di un dataset molto esteso. È importante notare che ciò non garantisce l'ottimalità,
@@ -177,11 +177,11 @@
     Avendo la necessità di utilizzare un dataset sul quale il nostro modello avrebbe dovuto estrapolare le informazioni riguardanti gli esercizi e i pazienti, la sfida consisteva in due opzioni:
 
     \begin{itemize}
-        \item Cercare un dataset pre-esistente al fine di avere molte informazioni, e al massimo effettuare data cleaning e adeguarlo a quello che ci serve.
+        \item Cercare un dataset pre-esistente al fine di avere molte informazioni, e al massimo effettuare data cleaning e adeguarlo alle nostre necessità.
         \item Creare un dataset, formulando gli esercizi, aggiungendo i pazienti e creando le varie valutazioni per ogni esercizio.
     \end{itemize}
 
-    Purtroppo la ricerca di un dataset pre-esistente non è stato proficuo data l'unicità delle nostre richieste; infatti, non abbiamo trovato dataset che riguardassero nel dettaglio la valutazione di esercizi di logopedia.
+    Purtroppo la ricerca di un dataset pre-esistente non è stata proficua data l'unicità delle nostre richieste; infatti, non abbiamo trovato dataset che riguardassero nel dettaglio la valutazione di esercizi di logopedia.
 
     Di conseguenza, abbiamo deciso di creare un nostro dataset, utilizzando un database in MySQL e generando le varie tipologie di esercizi di nostra iniziativa, ottenendo \textit{84 esercizi}, divisi per \textit{7 diverse tipologie}, e una selezione di \textit{12 patologie} tra le più comuni e con difficoltà il più possibile incentrate principalmente sulla Scrittura o Lettura. La generazione dei pazienti e la generazione delle valutazioni degli esercizi sono state prodotte sinteticamente mediante l'utilizzo di valori casuali.
 
@@ -189,7 +189,7 @@
         \item Di seguito vengono mostrati i vari codici in SQL realizzati per poter popolare il nostro database.
     \end{itemize}
 
-    
+
     \pagebreak
 
     \subsection{Popolazione del DataBase}
@@ -200,8 +200,8 @@
         (
         FLOOR(904 + RAND() * (1003 - 904 + 1)), -- Random user ID
         FLOOR(1 + RAND() * (84 - 1 + 1)), -- Random exercise ID
-        DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY), -- Random date 
-        DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY), -- Random completion date 
+        DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY), -- Random date
+        DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY), -- Random completion date
         FLOOR(RAND() * (100 - 0 + 1)), -- Random evaluation between 0 and 100
         CASE
             WHEN RAND() <= 0.33 THEN -1
@@ -222,7 +222,7 @@
             WHILE i <= 10 DO -- For each therapist user
                 SET j = 1;
                 WHILE j <= 10 DO -- Create 10 patient users
-                    INSERT INTO user (ID_Therapist) VALUES (i); 
+                    INSERT INTO user (ID_Therapist) VALUES (i);
                     SET j = j + 1;
                 END WHILE;
                 SET i = i + 1;
@@ -270,14 +270,14 @@
     \begin{lstlisting}[language=SQL, caption=Generazione della General severity (tutti i pazienti)]
     UPDATE patientcondition pc
     SET
-        pc.Severity = 
-            LEAST(GREATEST(pc.WritingSeverity, pc.ReadingSeverity) + 
+        pc.Severity =
+            LEAST(GREATEST(pc.WritingSeverity, pc.ReadingSeverity) +
             IF(RAND() < 0.5, -1, 1), 10) -- Random Severity
     WHERE
         pc.Severity = 1;
     \end{lstlisting}
 
-    La necessità di generare in due modi diversi le patologie degli utenti (una volta per tutti i pazienti, una volta solo per 30 pazienti) è dovuta alla concreta possibilità di pazienti con più di una patologia, come ad esempio \textit{Dislessia} e \textit{Disgrafia}.
+    La necessità di generare in due modi diversi le patologie degli utenti (una volta per tutti i pazienti, una volta solo per 30 pazienti), è dovuta alla concreta possibilità di pazienti con più di una patologia, come ad esempio \textit{Dislessia} e \textit{Disgrafia}.
 
     \pagebreak
 
@@ -285,60 +285,12 @@
     In questa sezione, illustriamo il processo di ideazione delle tabelle, riportando il loro nome, descrivendone la funzione e indicando gli attributi contenuti.
 
 \begin{itemize}
-\item     \textit{condition} - Contiene tutte le informazioni sulle patologie trattate dal sistema, importante per le relazioni tra esercizi e patologie.
+\item     \textit{exercise\_glossary} - Contiene le varie informazioni specifiche degli esercizi, necessario poiché ci permette di poter trovare il target specifico di un determinato esercizio, o la sua difficoltà.
 \end{itemize}
 
     \begin{table}[h]
         \centering
-        \caption{condition Table}
-        \begin{tabular}{|c|p{8cm}|}
-            \hline
-                \textbf{Attributo} & \textbf{Descrizione} \\
-            \hline
-                ID\_condition & id della patologia\\
-            \hline
-                Description & serve per capire cosa provoca la patologia, non è un dato rilevante per il nostro agente\\
-            \hline
-                Name & nome della patologia\\
-            \hline
-        \end{tabular}
-    \end{table}
 
-\begin{itemize}
-\item    \textit{exercise} - Contiene tutti gli esercizi assegnati e/o svolti, utile per poter tenere traccia dell'andamento dei vari pazienti.
-\end{itemize}
-
-    \begin{table}[h]
-        \centering
-        \caption{exercise Table}
-        \begin{tabular}{|c|p{8cm}|}
-            \hline
-                \textbf{Attributo} & \textbf{Descrizione} \\
-            \hline
-                ID\_user & id del paziente associato all'esercizio\\
-            \hline
-                ID\_exercise & id dell'esercizio che ha svolto il paziente\\
-            \hline
-                InsertionDate & data di assegnazione dell'esercizio da parte del logopedista\\
-            \hline
-                CompletionDate & data di completamento dell'esercizio\\
-            \hline
-                Evaluation & che punteggio il paziente ha raggiunto\\
-            \hline
-                Feedback & feedback per mostrare se l'esercizio è piaciuto o meno\\
-            \hline
-        \end{tabular}
-    \end{table}
-
-\pagebreak
-
-\begin{itemize}
-\item     \textit{exercise\_glossary} - Contiene le varie informazioni specifiche degli esercizi, interessante poiché ci permette di poter trovare il target specifico di un determinato esercizio, o la sua difficoltà.
-\end{itemize}
-
-    \begin{table}[h]
-        \centering
-        \caption{execise\_glossary Table}
         \begin{tabular}{|c|p{8cm}|}
             \hline
             \textbf{Attributo} & \textbf{Descrizione} \\
@@ -356,15 +308,76 @@
                 Target & il target è la patologia alla quale questo esercizio è mirato\\
             \hline
         \end{tabular}
+        \caption{execise\_glossary Table}
     \end{table}
 
+
 \begin{itemize}
-\item     \textit{patient\_condition} - Contiene le informazioni riguardo la patologia che affligge il paziente, in base a questa il nostro agente potrà selezionare esercizi specifici per il paziente.
+\item    \textit{exercise} - Contiene tutti gli esercizi assegnati e/o svolti, utile per poter tenere traccia dell'andamento dei vari pazienti.
 \end{itemize}
 
     \begin{table}[h]
         \centering
-        \caption{patient\_condition Table}
+
+        \begin{tabular}{|c|p{8cm}|}
+            \hline
+                \textbf{Attributo} & \textbf{Descrizione} \\
+            \hline
+                ID\_user & id del paziente associato all'esercizio\\
+            \hline
+                ID\_exercise & id dell'esercizio che ha svolto il paziente\\
+            \hline
+                InsertionDate & data di assegnazione dell'esercizio da parte del logopedista\\
+            \hline
+                CompletionDate & data di completamento dell'esercizio\\
+            \hline
+                Evaluation & che punteggio il paziente ha raggiunto\\
+            \hline
+                Feedback & feedback per mostrare se l'esercizio è piaciuto o meno\\
+            \hline
+        \end{tabular}
+        \caption{exercise Table}
+    \end{table}
+
+
+
+
+
+
+\pagebreak
+
+
+\begin{itemize}
+\item     \textit{condition} - Contiene tutte le informazioni sulle patologie trattate dal sistema, importante per le relazioni tra target degli esercizi e patologie.
+\end{itemize}
+
+    \begin{table}[h]
+        \centering
+
+        \begin{tabular}{|c|p{8cm}|}
+            \hline
+                \textbf{Attributo} & \textbf{Descrizione} \\
+            \hline
+                ID\_condition & id della patologia\\
+            \hline
+                Description & serve per capire cosa provoca la patologia, non è un dato rilevante per il nostro agente\\
+            \hline
+                Name & nome della patologia\\
+            \hline
+        \end{tabular}
+        \caption{condition Table}
+    \end{table}
+
+
+
+
+\begin{itemize}
+\item     \textit{patient\_condition} - Contiene le informazioni riguardo la patologia che affligge il paziente e, in base alle informazioni contenute, il nostro agente potrà selezionare esercizi specifici per il paziente.
+\end{itemize}
+
+    \begin{table}[h]
+        \centering
+
         \begin{tabular}{|c|p{8cm}|}
             \hline
             \textbf{Attributo} & \textbf{Descrizione} \\
@@ -380,9 +393,13 @@
                 ReadingSeverity & gravità della condizione del paziente nel leggere\\
             \hline
         \end{tabular}
+        \caption{patient\_condition Table}
     \end{table}
 
-\pagebreak
+
+
+
+
 
     \subsection{Interazioni con il DataBase}
     Le interazioni effettuate dal nostro agente sul database sono esclusivamente operazioni di estrapolazione dati. Le funzioni create per le estrazioni degli esercizi, e relative informazioni sulla loro esecuzione da parte del paziente, sono:
@@ -405,8 +422,8 @@
 \pagebreak
 
     \section{Studio della funzione di fitness}
-    Da qui cominciamo a descrivere lo studio che è stato effettuato per poter sviluppare la funzione di fitness. Essa è basata su varie informazioni inerenti al paziente, agli esercizi e la loro ultima esecuzione, se esiste. 
-    
+    Da qui iniziamo a descrivere lo studio che è stato effettuato per poter sviluppare la funzione di fitness. Essa è basata su varie informazioni inerenti al paziente, agli esercizi e la loro ultima esecuzione, se esiste.
+
     Più precisamente, le seguenti calcolano la fitness unicamente dall'esercizio e necessità del paziente:
 
 \begin{itemize}
@@ -418,14 +435,14 @@
         severity = fu.getMeanSeverity(u)
         experience = fu.getExperience(u)
         maxD, minD = fu.getMaxMinExperience(u)
-    
+
         r = maxD - minD
         if r == 0:
             r = 1
-    
+
         distance = abs(difficulty - experience)
         slope = fu.getSlope(severity)
-    
+
         if distance < difficulty <= distance + slope:
             value = 100
         else:
@@ -463,7 +480,7 @@
 Le seguenti invece, calcolano la fitness utilizzando le informazioni inerenti all'ultima esecuzione dell'esercizio da parte del paziente. Se non è mai stato eseguito, restituiscono il massimo della fitness:
 
 
-\item\textbf{evaluateBasedFitness}: la funzione restituisce un valore che va da 0 a 100 sottraendo la votazione massima che si può avere alla votazione che il paziente ha avuto su quell'esercizio.
+\item\textbf{evaluateBasedFitness}: la funzione restituisce un valore che va da 0 a 100 sottraendo la votazione massima di un esercizio alla votazione che il paziente ha avuto su quell'esercizio.
 \begin{lstlisting}[language = Python]
     def evaluateBasedFitness(e: Exercise) -> float:
     if e.getLastEvaluation() is not None:
@@ -499,7 +516,7 @@ Le seguenti invece, calcolano la fitness utilizzando le informazioni inerenti al
         return 100
 \end{lstlisting}
 
-\item\textbf{last50Fitness}: restituisce un valore in base alla posizione negli ultimi 50 esercizi fatti dall'paziente. Nel caso in cui non è presente, restituisce 100, altrimenti un valore sempre più basso quanto più alta è la posizione.
+\item\textbf{last50Fitness}: restituisce un valore in base alla posizione negli ultimi 50 esercizi fatti dal paziente. Nel caso in cui non è presente, restituisce 100, altrimenti un valore sempre più basso quanto più alta è la posizione.
 \begin{lstlisting}[language = Python]
     def last50Fitness(e: Exercise, u: User) -> float:
     if e.getExerciseID() in u.getExercises().keys():
@@ -532,7 +549,7 @@ Tutti questi valori sono di varia importanza e origine, per questo ogni funzione
     return somma
 \end{lstlisting}
 
-Tale variabile è modificabile in modo tale che il logopedista può decidere se considerare più un determinante rispetto ad un'altra in base alle proprie esigenze ed esperienza. Inoltre ci sembrava inopportuno forzare l'utilizzo delle nostre personali costanti, data la nostra incompetenza nel settore della terapia logopedica rispetto all'effettivo terapista.
+Tale variabile è modificabile in modo tale che il logopedista può decidere quale fattore considerare più determinante in base alle proprie esigenze ed esperienza. Inoltre ci sembrava inopportuno forzare l'utilizzo delle nostre personali costanti, data la nostra incompetenza nel settore della terapia logopedica rispetto all'effettivo terapista.
 
 \pagebreak
 
@@ -556,7 +573,7 @@ L'algoritmo genetico è suddiviso nelle fasi di Selezione, Crossover, Mutazione 
 
 \item La \textbf{\textit{probabilità di mutazione}} è dichiarabile prima dell'avvio dell'algoritmo;
 
-\item L' \textbf{\textit{inizializzazione}} avviene selezionando casualmente degli esercizi dal dataset e, nel caso fossero già stati eseguiti almeno una volta, conterrebbero le informazioni dell'ultima esecuzione ;
+\item L'\textbf{\textit{inizializzazione}} avviene selezionando casualmente degli esercizi dal dataset e, nel caso fossero già stati eseguiti almeno una volta, conterrebbero le informazioni dell'ultima esecuzione;
 
 \item Gli \textbf{\textit{individui}} sono istanze di una classe, essa contiene il valore di fitness dell'individuo e una lista di istanze di esercizi (più informazioni alla sezione \ref{sec:individualImplementation});
 
@@ -566,7 +583,7 @@ L'algoritmo genetico è suddiviso nelle fasi di Selezione, Crossover, Mutazione 
 
 \end{itemize}
 
-\item Per la \textbf{\textit{Selezione}} abbiamo sviluppato sia l'algoritmo \textit{Roulette Wheel} (ma abbiamo notato una tendenza verso la convergenza prematura), che \textit{Rank Selection}, il quale risolve il problema riscontrato dalla Roulette Wheel. Inoltre abbiamo anche implementato una \textit{Random Selection}.
+\item Per la \textbf{\textit{Selezione}} abbiamo sviluppato sia l'algoritmo \textit{Roulette Wheel} (ma abbiamo notato una tendenza verso la convergenza prematura), che \textit{Rank Selection}, il quale risolve il problema riscontrato dalla Roulette Wheel. Inoltre abbiamo anche implementato una \textit{Random Selection};
 
 \item Per il \textbf{\textit{Crossover}} ne abbiamo sviluppati diversi, tutti funzionanti sia per 2 che per 3 genitori:
 
@@ -595,7 +612,7 @@ L'algoritmo genetico è suddiviso nelle fasi di Selezione, Crossover, Mutazione 
 \item La \textit{\textbf{Stopping condition}} ha due implementazioni, che si possono usare singolarmente o in coppia:
 \begin{itemize}
     \item \textit{Stop dopo x generazioni}, in cui l'algoritmo si ferma dopo aver eseguito x generazioni;
-    \item \textit{Stop se il valore fitness non aumenta dell' \textbf{y\%} entro \textbf{x}} generaizoni consecutive, si interrompe e restituisce l'ultima generazione.
+    \item \textit{Stop se il valore fitness non aumenta dell' \textbf{x\%} entro \textbf{y}} generazioni consecutive, restituendo l'ultima generazione.
 \end{itemize}
 \end{itemize}
 
@@ -624,7 +641,7 @@ Più precisamente sono:
 \begin{lstlisting}[language = Python]
     class Population:
     def __init__(self, u: User, *args: Individual):
-        
+
         self._user = u
         self._entireFitness = 0
         self._currGen = 0
@@ -644,7 +661,7 @@ La classe \textit{User} è caratterizzata da:
 \begin{lstlisting}[language = Python]
     class User:
     def __init__(self, ID: int, conditions: dict, exercises: dict):
-        
+
         self._ID = ID
         self._conditions = conditions
         self._exercises = exercises
@@ -666,7 +683,7 @@ La classe \textit{Exercise} è caratterizzata da:
 \item\textbf{target}: indica a quali patologie è meglio dedicata l'esercizio;
 \item\textbf{extType}: indica il tipo di esercizio tra i 7 sviluppati;
 \item\textbf{lastEvaluation}: indicante l'ultima valutazione dell'esercizio se questo è stato già eseguito;
-\item\textbf{lasCompletionDate}: indicante l'ultima data in cui è stato completato l'esercizio;
+\item\textbf{lastCompletionDate}: indicante l'ultima data in cui è stato completato l'esercizio;
 \item\textbf{lastFeedback}: indicante il feedback lasciato dal paziente all'esercizio.
 
 \begin{lstlisting}[language=Python]
@@ -731,7 +748,7 @@ def rouletteWheel(population: Population):
 \end{lstlisting}
 
 \begin{itemize}
-\item\textbf{Rank Selection}: questo metodo sfrutta il rango di ciascun individuo per suddividere una "torta" di selezione in partizioni proporzionali al rango dell'elemento. Il rango varia dal più basso al più alto, con la percentuale di essere selezionato proporzionata al rango. Riesce a mitigare i difetti della Roulette Wheel, poiché la percentuale è legata agli elementi e non unicamente al valore di fitness. 
+\item\textbf{Rank Selection}: questo metodo sfrutta il rango di ciascun individuo per suddividere una "torta" di selezione in partizioni proporzionali al rango dell'elemento. Il rango varia dal più basso al più alto, con la percentuale di essere selezionato proporzionata al rango. Riesce a mitigare i difetti della Roulette Wheel, poiché la percentuale è legata agli elementi e non unicamente al valore di fitness.
 \begin{itemize}
     \item Per individuare i ranghi degli elementi, viene utilizzata la funzione \textit{findRank}.
 \end{itemize}
@@ -968,12 +985,12 @@ def uniformCrossover(i1: Individual, i2: Individual, i3: Individual, crossoverPr
 
 
 La funzione \textit{divide} si occupa, in base a n, della divisione delle liste in input in sottoliste usando la seguente \textit{comprehension}.
-   
-    
+
+
 
      \begin{lstlisting}[language=Python]
 def divide(lst: list, n: int) -> list:
-   
+
     return [lst[i * len(lst) // n: (i + 1) * len(lst) // n] for i in range(n)]
         \end{lstlisting}
 
@@ -1029,7 +1046,7 @@ def execute3Crossover(p: Population, crossoverType: crossover, *args) -> list[In
 La mutazione è quella fase degli algoritmi GA che esegue una modifica al corredo genetico, tale modifica può portare sia ad un vantaggio che uno svantaggio, dipende esclusivamente dal caso, quelli da noi sviluppati sono:
 
 \begin{itemize}
-\item\textbf{randomSingleMutation}: questa funzione può eseguire una mutazione su un singolo gene all'interno di un individuo scelto casualmente. 
+\item\textbf{randomSingleMutation}: questa funzione può eseguire una mutazione su un singolo gene all'interno di un individuo scelto casualmente.
 Per popolazioni molto grandi, comporta troppa poca casualità. È quindi sconsigliato l'uso di della condizione di stop sulla base dell'aumento del valore di fitness costante, e di invece usare esclusivamente il numero di generazioni per evitare interruzioni precoci.
 \end{itemize}
 
@@ -1078,7 +1095,7 @@ def worstIndividualMutation(p: Population, mutationRate: float) -> Population:
 
     return p
         \end{lstlisting}
-        
+
 \pagebreak
 
 Per effettuare le 3 tipologie di mutazioni, vengono utilizzati i seguenti metodi di supporto:
@@ -1144,11 +1161,11 @@ def stoppingCondition(p: Population, lastFitness, unchangedCount: int, increaseR
         gen += 1
         [...]
 \end{lstlisting}
-    
+
 \end{itemize}
 \pagebreak
 \section{Esempio di esecuzione completa}
-Un esempio di esecuzione del nostro algoritmo Genetico. Viene utilizzato \textit{Rank Selection}, \textit{nPoint} e \textit{random Individual Mutation}. I risultati vengono stampati in un file chiamato "\textit{result.txt}" grazie alla funzione \textit{printIntoResults}.
+Viene utilizzato \textit{Rank Selection}, \textit{nPoint} e \textit{random Individual Mutation}. I risultati vengono stampati in un file chiamato "\textit{result.txt}" grazie alla funzione \textit{printIntoResults}.
 \begin{lstlisting}[language = Python]
 from GA.Initialization.populationInitializer import initialize
 from GA.StoppingCondition.stopConditionMethods import stoppingCondition
@@ -1178,7 +1195,7 @@ def startGA():
 def GATasks(processNumber, population):
     gen = 0
     maxGen = 400
-    
+
     unchangedCount = 0
     lastFitness = 0
     maxEqualsGen = 5
@@ -1203,13 +1220,32 @@ def GATasks(processNumber, population):
 if __name__ == '__main__':
     startGA()
 \end{lstlisting}
+\pagebreak
+Sono qui riportati i risultati di una possibile esecuzione utilizzando l'esempio:
+\begin{lstlisting}
+Timestamp: 2024-01-26 13:36:50.679099, process 0
+Individual 1475633164928: [ID: 38, ID: 59, ID: 75, ID: 58, ID: 23] Fitness: 2767.142
+Individual 1475633164592: [ID: 75, ID: 51, ID: 49, ID: 8, ID: 45] Fitness: 2766.428
+Individual 1475633163248: [ID: 53, ID: 83, ID: 44, ID: 2, ID: 55] Fitness: 2531.142
+Individual 1475633163920: [ID: 45, ID: 36, ID: 5, ID: 62, ID: 50] Fitness: 2787.142
+Individual 1475633165312: [ID: 79, ID: 63, ID: 76, ID: 75, ID: 5] Fitness: 2695.0
+Individual 1475633166416: [ID: 30, ID: 12, ID: 61, ID: 84, ID: 32] Fitness: 2855.0
 
+
+Timestamp: 2024-01-26 13:38:14.389298, process 1
+Individual 1947156753632: [ID: 41, ID: 39, ID: 17, ID: 18, ID: 67] Fitness: 2405.0
+Individual 1947156754448: [ID: 24, ID: 78, ID: 6, ID: 35, ID: 16] Fitness: 1998.0
+Individual 1947156754208: [ID: 49, ID: 31, ID: 5, ID: 14, ID: 74] Fitness: 2680.0
+Individual 1947156754496: [ID: 71, ID: 59, ID: 47, ID: 29, ID: 74] Fitness: 2150.0
+Individual 1947156754688: [ID: 70, ID: 11, ID: 46, ID: 80, ID: 38] Fitness: 2460.0
+Individual 1947156753968: [ID: 78, ID: 25, ID: 29, ID: 81, ID: 43] Fitness: 2488.0
+\end{lstlisting}
 \section{Considerazioni finali}
-Siamo giunti alla conclusione di un lungo viaggio, alla fine del quale ci riteniamo soddisfatti di quanto ottenuto, in quanto tutti i membri non avevano mai avuto esperienze pregresse con la programmazione di agenti intelligenti. L'emozione ottenuta al primo corretto funzionamento sarà un ricordo indelebile nella memoria di noi tutti. Ma non solo le gioie rimarranno, rimarranno anche gli sforzi e l'esperienza ottenuti dando il meglio di noi stessi anche davanti alle difficoltà. Riteniamo che sono stati raggiunti gli obiettivi che ci eravamo prefissati, riuscire a raccomandare esercizi. Sicuramente la fitness andrebbe calibrata con l'aiuto di una figura professionale nell'ambito della logopedia. Un aspetto di cui andiamo particolarmente fieri è la gestione in multiprocessing dell'algoritmo che rende possibile, se necessario, l'esecuzione sulla stessa popolazione, ma variando i fatti di selezione, crossover e mutazione. Un ringraziamento speciale a tutti coloro che hanno contribuito alla realizzazione di questo progetto, dai Project Manager, ai colleghi, che ci hanno fornito l'idea di base, dai professori ai tutor per averci insegnato le competenze necessarie alla reale realizzazione dell'algoritmo. Infine un ringraziamento a chiunque abbia raggiunto queste parole.
+Siamo giunti alla conclusione di un lungo viaggio, alla fine del quale ci riteniamo soddisfatti di quanto ottenuto, in quanto tutti i membri non avevano mai avuto esperienze pregresse con la programmazione di agenti intelligenti. L'emozione ottenuta al primo corretto funzionamento sarà un ricordo indelebile nella memoria di noi tutti. Ma non solo le gioie rimarranno, rimarranno anche gli sforzi e l'esperienza ottenuti dando il meglio di noi stessi anche davanti alle difficoltà ed errori. Riteniamo che sono stati raggiunti gli obiettivi che ci eravamo prefissati, riuscire a raccomandare esercizi. Sicuramente la funzione di fitness andrebbe calibrata con l'aiuto di una figura professionale nell'ambito della logopedia per un risultato ancora più preciso. Un aspetto di cui andiamo particolarmente fieri è la gestione in multiprocessing dell'algoritmo che rende possibile, se necessario, l'esecuzione sulla stessa popolazione, ma variando i metodi di Selezione, Crossover e Mutazione. Un ringraziamento speciale a tutti coloro che hanno contribuito alla realizzazione di questo progetto, dai Project Manager, ai colleghi, che ci hanno fornito l'idea di base, dai professori ai tutor per averci insegnato le competenze necessarie alla reale realizzazione dell'algoritmo. Infine un ringraziamento a chiunque abbia raggiunto queste parole.
 
 \subsection{Cosa abbiamo Imparato}
 Grazie a questo progetto abbiamo potuto provare e applicare le conoscenze che abbiamo acquisito durante il corso di \textit{Fondamenti di
-Intelligenza Artificiale}, e provare sulla pratica il nostro primo algoritmo genetico. Grazie a questa prova abbiamo imparato l'importanza dell'organizzazione e della stesura dei requisiti del progetto, prendendoci più tempo possibile per definire al meglio gli obiettivi da raggiungere e da realizzare. Sono state tante le ore passate solo all'idealizzazione dell'algoritmo generico, ancor più le ore dedicate allo studio della funzione di Fitness, per la scelta e lo scarto dei fattori da valutare per dare una raccomandazione mirata ed efficace. Ma ne è valsa la pena. 
+Intelligenza Artificiale}, e provare sulla pratica il nostro primo algoritmo genetico. Grazie a questa prova abbiamo imparato l'importanza dell'organizzazione e della stesura dei requisiti del progetto, prendendoci più tempo possibile per definire al meglio gli obiettivi da raggiungere e da realizzare. Sono state tante le ore passate solo all'idealizzazione dell'algoritmo generico, ancor più le ore dedicate allo studio della funzione di Fitness, per la scelta e lo scarto dei fattori da valutare per dare una raccomandazione mirata ed efficace. Ma ne è valsa la pena.
 \bigskip
 
 \textit{"Any sufficiently advanced technology is indistinguishable from magic"}.
@@ -1226,11 +1262,11 @@ Termini speciali utilizzati:
 
     \item\textbf{Dataset}: insieme di dati su cui un algoritmo opera durante l'analisi o l'addestramento.
 
-    \item\textbf{Database}: archivio centralizzato di dati, accessibile per il recupero e la modifica delle informazioni salvate.
+    \item\textbf{Database}: archivio centralizzato di dati persistenti, accessibile per il recupero e la modifica delle informazioni salvate.
 
     \item\textbf{Algoritmo Genetico}: algoritmo di Intelligenza Artificiale che simula il processo evolutivo per tentare di risolvere problemi di ottimizzazione.
 
-    \item\textbf{SQL}: linguaggio standardizzato per la gestione di Database, utilizzato per eseguire operazioni sui dati.
+    \item\textbf{SQL}: linguaggio per la gestione di Database, utilizzato per eseguire operazioni sui dati.
 
     \item\textbf{Fitness}: valore utilizzato negli Algoritmi Genetici per valutare la qualità di una soluzione proposta.
 
