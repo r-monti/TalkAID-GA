@@ -595,7 +595,7 @@ L'algoritmo genetico è suddiviso nelle fasi di Selezione, Crossover, Mutazione 
 \item La \textit{\textbf{Stopping condition}} ha due implementazioni, che si possono usare singolarmente o in coppia:
 \begin{itemize}
     \item \textit{Stop dopo x generazioni}, in cui l'algoritmo si ferma dopo aver eseguito x generazioni;
-    \item \textit{Stop se il valore fitness aumenta per \textbf{x} generazioni di \textbf{y\%}}, in cui l'algoritmo controlla ad ogni generazione, l'aumentare del valore di fitness, e nel caso in cui non aumenta di una percentuale di nostra decisione, si interrompe e restituisce l'ultima generazione.
+    \item \textit{Stop se il valore fitness non aumenta dell' \textbf{y\%} entro \textbf{x}} generaizoni consecutive, si interrompe e restituisce l'ultima generazione.
 \end{itemize}
 \end{itemize}
 
