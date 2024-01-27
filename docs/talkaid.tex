@@ -21,7 +21,7 @@
 
 
 
-\lstset{
+\lstset{ 
  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
   basicstyle=\footnotesize,        % the size of the fonts that are used for the code
   breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
@@ -68,7 +68,7 @@
     Michele D'Arienzo\\
      Samuele Sparno\\
     Anna Benedetta Salerno\\
-    \vspace{0.5cm}
+    \vspace{0.5cm} 
     \\
     \href{https://github.com/r-monti/fia}{GitHub}
 }
@@ -81,7 +81,7 @@
     \tableofcontents
 
     \pagebreak
-
+    
     \section{Sistema Attuale}
 
     Il progetto TALKAID rappresenta davvero un passo avanti significativo nel campo della riabilitazione e del supporto alle persone con disabilità del linguaggio. La possibilità di offrire trattamenti completamente \textit{a distanza} e in maniera \textit{asincrona} è un'innovazione che potrebbe aprire nuove opportunità per un numero ancora maggiore di individui affetti da queste patologie.
@@ -90,7 +90,7 @@
 
     Inoltre i metodi tradizionali potrebbero non essere altamente personalizzati alle esigenze specifiche dei pazienti, poiché potrebbe essere difficile adattarli in modo rapido ed efficiente. Inoltre la necessità delle visite dal vivo può essere un ostacolo per coloro che abitano a grandi distanze dai centri di logopedia oppure per i lavoratori.
 
-
+    
 
     La componente di Intelligenza Artificiale è ritenuta fondamentale ai nostri obiettivi siccome aggiunge un livello di personalizzazione e adattabilità, permettendo ai pazienti di ricevere esercizi mirati in base al loro necessità ed esperienza. Questo non solo rende il trattamento più efficace, ma anche più agevole per i logopedisti, in quanto saranno aiutati dall'IA nella scelta degli esercizi migliori. I pazienti verranno incoraggiati a perseguire con impegno il percorso di miglioramento attraverso le loro statistiche.
 
@@ -120,7 +120,7 @@
         \item Il punteggio dell'esercizio che il paziente ha effettuato su quell'esercizio.
     \end{itemize}
 
-    \subsection{Environment :}
+    \subsection{Environment:}
 
     L’ambiente è:
 
@@ -130,7 +130,7 @@
         \item \textit{Sequenziale}, in quanto le esercitazioni effettuate dai pazienti e le scelte del logopedista influenzano le decisioni future dell’agente;
         \item \textit{Dinamico}, in quanto nel corso delle elaborazioni dell’agente, un paziente potrebbe svolgere un esercizio, cambiando in tal modo le sue esigenze;
         \item \textit{Discreto}, il numero di percezioni dell’agente è limitato in quanto ha un numero discreto di patologie, esercizi, pazienti, azioni e percezioni possibili;
-        \item \textit{Singolo agente}, in quanto per il singolo paziente sarà l’unico agente che opera in questo ambiente è quello in oggetto.
+        \item \textit{Singolo agente}, in quanto il paziente sarà l'unico ad operare nell'ambiente.
     \end{itemize}
 
     \subsection{Actuators:}
@@ -143,7 +143,7 @@
 
     \begin{itemize}
         \item L'agente accede ad un dataset, il quale è un riadattamento del database attualmente utilizzato dal sistema principale di TalkAID, eliminando gli attributi non necessari e aggiungendo gli attributi gravità di lettura e scrittura, necessari al fine di poter avere una più completa visualizzazione delle necessità reali del paziente. (Nella versione definitiva del sistema principale, gli attributi aggiunti per gravità di lettura e scrittura esisterebbero e verrebbero gestiti dal logopedista curante);
-
+        
         \item Il dataset comprende informazioni e dati su:
             \begin{itemize}
                 \item Le condizioni trattate dal sistema principale;
@@ -152,7 +152,7 @@
                 \item La gravità delle condizioni degli utenti.
             \end{itemize}
 
-
+        
 
     \end{itemize}
 
@@ -189,7 +189,7 @@
         \item Di seguito vengono mostrati i vari codici in SQL realizzati per poter popolare il nostro database.
     \end{itemize}
 
-
+    
     \pagebreak
 
     \subsection{Popolazione del DataBase}
@@ -200,8 +200,8 @@
         (
         FLOOR(904 + RAND() * (1003 - 904 + 1)), -- Random user ID
         FLOOR(1 + RAND() * (84 - 1 + 1)), -- Random exercise ID
-        DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY), -- Random date
-        DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY), -- Random completion date
+        DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY), -- Random date 
+        DATE_SUB(NOW(), INTERVAL FLOOR(RAND() * 365) DAY), -- Random completion date 
         FLOOR(RAND() * (100 - 0 + 1)), -- Random evaluation between 0 and 100
         CASE
             WHEN RAND() <= 0.33 THEN -1
@@ -222,7 +222,7 @@
             WHILE i <= 10 DO -- For each therapist user
                 SET j = 1;
                 WHILE j <= 10 DO -- Create 10 patient users
-                    INSERT INTO user (ID_Therapist) VALUES (i);
+                    INSERT INTO user (ID_Therapist) VALUES (i); 
                     SET j = j + 1;
                 END WHILE;
                 SET i = i + 1;
@@ -270,14 +270,14 @@
     \begin{lstlisting}[language=SQL, caption=Generazione della General severity (tutti i pazienti)]
     UPDATE patientcondition pc
     SET
-        pc.Severity =
-            LEAST(GREATEST(pc.WritingSeverity, pc.ReadingSeverity) +
+        pc.Severity = 
+            LEAST(GREATEST(pc.WritingSeverity, pc.ReadingSeverity) + 
             IF(RAND() < 0.5, -1, 1), 10) -- Random Severity
     WHERE
         pc.Severity = 1;
     \end{lstlisting}
 
-    La necessità di generare in due modi diversi le patologie degli utenti (una volta per tutti i pazienti, una volta solo per 30 pazienti) , è dovuta alla concreta possibilità di pazienti con più di una patologia, come ad esempio \textit{Dislessia} e \textit{Disgrafia}.
+    La necessità di generare in due modi diversi le patologie degli utenti (una volta per tutti i pazienti, una volta solo per 30 pazienti) è dovuta alla concreta possibilità di pazienti con più di una patologia, come ad esempio \textit{Dislessia} e \textit{Disgrafia}.
 
     \pagebreak
 
@@ -405,8 +405,8 @@
 \pagebreak
 
     \section{Studio della funzione di fitness}
-    Da qui cominciamo a descrivere lo studio che è stato effettuato per poter sviluppare la funzione di fitness. Essa è basata su varie informazioni inerenti al paziente, agli esercizi e la loro ultima esecuzione, se esiste.
-
+    Da qui cominciamo a descrivere lo studio che è stato effettuato per poter sviluppare la funzione di fitness. Essa è basata su varie informazioni inerenti al paziente, agli esercizi e la loro ultima esecuzione, se esiste. 
+    
     Più precisamente, le seguenti calcolano la fitness unicamente dall'esercizio e necessità del paziente:
 
 \begin{itemize}
@@ -418,14 +418,14 @@
         severity = fu.getMeanSeverity(u)
         experience = fu.getExperience(u)
         maxD, minD = fu.getMaxMinExperience(u)
-
+    
         r = maxD - minD
         if r == 0:
             r = 1
-
+    
         distance = abs(difficulty - experience)
         slope = fu.getSlope(severity)
-
+    
         if distance < difficulty <= distance + slope:
             value = 100
         else:
@@ -463,7 +463,7 @@
 Le seguenti invece, calcolano la fitness utilizzando le informazioni inerenti all'ultima esecuzione dell'esercizio da parte del paziente. Se non è mai stato eseguito, restituiscono il massimo della fitness:
 
 
-\item\textbf{evaluateBasedFitness}: La funzione restituisce un valore che va da 0 a 100 ottenuto sottraendo la votazione massima che si può avere da un'esecuzione di un esercizio, e la votazione che il paziente ha avuto su quell'esercizio.
+\item\textbf{evaluateBasedFitness}: La funzione restituisce un valore che va da 0 a 100 sottraendo la votazione massima che si può avere alla votazione che il paziente ha avuto su quell'esercizio.
 \begin{lstlisting}[language = Python]
     def evaluateBasedFitness(e: Exercise) -> float:
     if e.getLastEvaluation() is not None:
@@ -541,7 +541,7 @@ Tale variabile è modificabile in modo tale che il logopedista può decidere se 
 
 Vista la dimensione del nostro gruppo abbiamo anche deciso di implementare e provare diversi algoritmi per le diverse fasi dell'algoritmo Genetico.
 
-L'algoritmo genetico è suddiviso nelle fasi di Selezione, Crossover, Mutazione e valutazione.
+L'algoritmo genetico è suddiviso nelle fasi di Selezione, Crossover, Mutazione e Valutazione.
 
 \subsection{Scelte progettuali}
 
@@ -624,7 +624,7 @@ Più precisamente sono:
 \begin{lstlisting}[language = Python]
     class Population:
     def __init__(self, u: User, *args: Individual):
-
+        
         self._user = u
         self._entireFitness = 0
         self._currGen = 0
@@ -636,7 +636,7 @@ Più precisamente sono:
 
 \bigskip
 
-La classe \textit{User} è caratterizzato da:
+La classe \textit{User} è caratterizzata da:
 \begin{itemize}
 \item\textbf{ID}: indicante l'id identificativo del paziente;
 \item\textbf{conditions}: dizionario delle patologie del paziente, in cui la chiave è il nome della patologia e il valore è una tupla delle tre gravità (Generale, Scrittura, Lettura);
@@ -644,7 +644,7 @@ La classe \textit{User} è caratterizzato da:
 \begin{lstlisting}[language = Python]
     class User:
     def __init__(self, ID: int, conditions: dict, exercises: dict):
-
+        
         self._ID = ID
         self._conditions = conditions
         self._exercises = exercises
@@ -686,7 +686,7 @@ La classe \textit{Exercise} è caratterizzata da:
 \end{lstlisting}
 \end{itemize}
 \label{sec:individualImplementation}
-Infine, più precisamente la classe \textit{Individual} è caratterizzato da:
+Infine, più precisamente la classe \textit{Individual} è caratterizzata da:
 \begin{itemize}
 \item\textbf{individualFitness}: valore fitness del singolo set di esercizi;
 \item\textbf{exercises}: la lista delle istanze di Exercise che compongono il set di esercizi.
@@ -704,10 +704,10 @@ Infine, più precisamente la classe \textit{Individual} è caratterizzato da:
 
 \subsection{Selezione}
 
-Nella fase di Selezione, viene anche attuata la fase di valutazione, poiché abbiamo implementato metodi che si basano sui valori di fitness. Nello specifico, abbiamo sviluppato 3 tipi diversi di algoritmi per la selezione degli individui da inserire nella mating pool:
+Nella fase di Selezione, viene anche attuata la fase di Valutazione, poiché abbiamo implementato metodi che si basano sui valori di fitness. Nello specifico, abbiamo sviluppato 3 tipi diversi di algoritmi per la selezione degli individui da inserire nella mating pool:
 
 \begin{itemize}
-\item\textbf{Roulette Wheel}: Come nei Casinò, abbiamo una "ruota" in cui ogni porzione è proporzionale al valore di fitness dell'individuo. Facendo girare la ruota, si selezionano gli individui vincenti.
+\item\textbf{Roulette Wheel}: come nei Casinò, abbiamo una "ruota" in cui ogni porzione è proporzionale al valore di fitness dell'individuo. Facendo girare la ruota, si selezionano gli individui vincenti.
 \end{itemize}
 
 \begin{lstlisting}[language=Python]
@@ -731,7 +731,7 @@ def rouletteWheel(population: Population):
 \end{lstlisting}
 
 \begin{itemize}
-\item\textbf{Rank Selection}: Questo metodo sfrutta il rango di ciascun individuo per suddividere una "torta" di selezione in partizioni proporzionali al rango dell'elemento. Il rango varia dal più basso al più alto, con la percentuale di essere selezionato proporzionata al rango. Riesce a mitigare i difetti della Roulette Wheel, poiché la percentuale è legata agli elementi e non unicamente al valore di fitness.
+\item\textbf{Rank Selection}: questo metodo sfrutta il rango di ciascun individuo per suddividere una "torta" di selezione in partizioni proporzionali al rango dell'elemento. Il rango varia dal più basso al più alto, con la percentuale di essere selezionato proporzionata al rango. Riesce a mitigare i difetti della Roulette Wheel, poiché la percentuale è legata agli elementi e non unicamente al valore di fitness. 
 \begin{itemize}
     \item Per individuare i ranghi degli elementi, viene utilizzata la funzione \textit{findRank}.
 \end{itemize}
@@ -768,7 +768,7 @@ def find_rank(individuals: list[Individual], subdivision: float) -> Individual:
 
 \begin{itemize}
 
-\item\textbf{Random Selection}: La selezione degli individui attuata è completamente casuale; in effetti, l'assenza di una logica sottostante può generare dati del tutto inefficienti o dati straordinariamente eccezionali. Tutto è lasciato al caso.
+\item\textbf{Random Selection}: la selezione degli individui attuata è completamente casuale; in effetti, l'assenza di una logica sottostante può generare dati del tutto inefficienti o dati straordinariamente eccezionali. Tutto è lasciato al caso.
 
 \end{itemize}
 
@@ -788,7 +788,7 @@ Questa fase si occupa di generare nuovi elementi a partire da quelli selezionati
 \subsubsection {Metodologie di Crossover applicate a 3 elementi}
 
 \begin{itemize}
-\item\textbf{nPoint}: Spezza le liste degli individui selezionati in n punti. Ciascuna lista viene quindi suddivisa in sottoliste più piccole, le quali saranno scambiate con le altre analoghe sottoliste nei punti di divisione.
+\item\textbf{nPoint}: spezza le liste degli individui selezionati in n punti. Ciascuna lista viene quindi suddivisa in sottoliste più piccole, le quali saranno scambiate con le altre analoghe sottoliste nei punti di divisione.
 \end{itemize}
 
 \begin{lstlisting}[language=Python]
@@ -827,7 +827,7 @@ def nPoint(i1: Individual, i2: Individual, i3: Individual, n: int) -> tuple[Indi
 \pagebreak
 
 \begin{itemize}
-\item\textbf{nPointReverse}: A differenza della precedente implementazione, questa versione esegue lo scambio già dal primo elemento, affinché possa risultare più casuale un possibile ripescaggio dello stesso individuo.
+\item\textbf{nPointReverse}: a differenza della precedente implementazione, questa versione esegue lo scambio già dal primo elemento, affinché possa risultare più casuale un possibile ripescaggio dello stesso individuo.
 \end{itemize}
 
 \begin{lstlisting}[language=Python]
@@ -867,7 +867,7 @@ def nPointReverse(i1: Individual, i2: Individual, i3: Individual, n: int) -> tup
         \pagebreak
 
 \begin{itemize}
-\item\textbf{nPointRandom}: Questa versione di nPoint aggiunge la possibilità di dichiarare la \textit{probabilità di crossover}(precedentemente avveniva sempre).
+\item\textbf{nPointRandom}: questa versione di nPoint aggiunge la possibilità di dichiarare la \textit{probabilità di crossover} (precedentemente avveniva sempre).
 \end{itemize}
 
 \begin{lstlisting}[language=Python]
@@ -916,7 +916,7 @@ def nPointRandom(i1: Individual, i2: Individual, i3: Individual, n: int, crossov
 
 
 \begin{itemize}
-\item\textbf{uniformCrossover}: In questo caso, ogni gene ha la possibilità di venir casualmente rimpiazzato con un gene degli altri genitori.
+\item\textbf{uniformCrossover}: in questo caso, ogni gene ha la possibilità di venir casualmente rimpiazzato con un gene degli altri genitori.
 \end{itemize}
 
 \begin{lstlisting}[language=Python]
@@ -968,12 +968,12 @@ def uniformCrossover(i1: Individual, i2: Individual, i3: Individual, crossoverPr
 
 
 La funzione \textit{divide} si occupa, in base a n, della divisione delle liste in input in sottoliste usando la seguente \textit{comprehension}.
-
-
+   
+    
 
      \begin{lstlisting}[language=Python]
 def divide(lst: list, n: int) -> list:
-
+   
     return [lst[i * len(lst) // n: (i + 1) * len(lst) // n] for i in range(n)]
         \end{lstlisting}
 
@@ -986,7 +986,7 @@ def divide(lst: list, n: int) -> list:
 Questi metodi sono eseguiti sugli individui scelti, ma la scelta è eseguita dalla seguente funzione:
 
 \begin{itemize}
-\item\textbf{execute3Crossover}: Questa funzione infatti, seleziona casualmente su una popolazione della mating pool, gli individui che procederanno ad accoppiarsi, per formare poi una nuova popolazione una volta che tutti gli individui si siano accoppiati.
+\item\textbf{execute3Crossover}: questa funzione infatti, seleziona casualmente su una popolazione della mating pool, gli individui che procederanno ad accoppiarsi, per formare poi una nuova popolazione una volta che tutti gli individui si siano accoppiati.
 \end{itemize}
 
 \begin{lstlisting}[language=Python]
@@ -1026,10 +1026,10 @@ def execute3Crossover(p: Population, crossoverType: crossover, *args) -> list[In
 
 \subsection{Mutazione}
 
-La mutazione è quella fase degli algoritmi GA che esegue una modifica al corredo genetico, tale modifica può portare sia ad un vantaggio che ad un svantaggio, dipende esclusivamente dal caso, quelli da noi sviluppati sono:
+La mutazione è quella fase degli algoritmi GA che esegue una modifica al corredo genetico, tale modifica può portare sia ad un vantaggio che uno svantaggio, dipende esclusivamente dal caso, quelli da noi sviluppati sono:
 
 \begin{itemize}
-\item\textbf{randomSingleMutation}: Questa funzione può eseguire una mutazione su un singolo gene all'interno di un individuo scelto casualmente.
+\item\textbf{randomSingleMutation}: questa funzione può eseguire una mutazione su un singolo gene all'interno di un individuo scelto casualmente. 
 Per popolazioni molto grandi, comporta troppa poca casualità. È quindi sconsigliato l'uso di della condizione di stop sulla base dell'aumento del valore di fitness costante, e di invece usare esclusivamente il numero di generazioni per evitare interruzioni precoci.
 \end{itemize}
 
@@ -1043,7 +1043,7 @@ def randomSingleMutation(p: Population, mutationRate: float) -> Population:
 \end{lstlisting}
 
 \begin{itemize}
-\item\textbf{randomIndividualMutation}: Questa funzione invece, può eseguire una mutazione sull'intero individuo di una popolazione scelto casualmente, risolvendo il problema delle grandi popolazioni incontrata nella precedente versione.
+\item\textbf{randomIndividualMutation}: questa funzione invece, può eseguire una mutazione sull'intero individuo di una popolazione scelto casualmente, risolvendo il problema delle grandi popolazioni incontrata nella precedente versione.
 \end{itemize}
 
 \begin{lstlisting}[language=Python]
@@ -1059,7 +1059,7 @@ def randomIndividualMutation(p: Population, mutationRate: float) -> Population:
 
 
 \begin{itemize}
-\item\textbf{worstIndividualMutation}: Quest'ultima infine, può eseguire una mutazione sul peggior individuo di una popolazione controllando i singoli valori di fitness degli individui.
+\item\textbf{worstIndividualMutation}: quest'ultima infine, può eseguire una mutazione sul peggior individuo di una popolazione controllando i singoli valori di fitness degli individui.
 \end{itemize}
 
 \begin{lstlisting}[language=Python]
@@ -1078,13 +1078,13 @@ def worstIndividualMutation(p: Population, mutationRate: float) -> Population:
 
     return p
         \end{lstlisting}
-
+        
 \pagebreak
 
 Per effettuare le 3 tipologie di mutazioni, vengono utilizzati i seguenti metodi di supporto:
 
 \begin{itemize}
-\item\textbf{mutateEX}: Questa funzione seleziona un singolo gene casualmente dal dataset.
+\item\textbf{mutateEX}: questa funzione seleziona un singolo gene casualmente dal dataset.
 \end{itemize}
 
 \begin{lstlisting}[language = Python]
@@ -1100,7 +1100,7 @@ def mutateEx(i: Individual, p: Population) -> Individual:
 \end{lstlisting}
 
 \begin{itemize}
-\item\textbf{mutateIndividual}: Questa funzione invece si occupa della generazione di un nuovo individuo andando sempre alla ricerca dei geni nel dataset.
+\item\textbf{mutateIndividual}: questa funzione invece si occupa della generazione di un nuovo individuo andando sempre alla ricerca dei geni nel dataset.
 \end{itemize}
 
 \begin{lstlisting}[language = Python]
@@ -1144,7 +1144,7 @@ def stoppingCondition(p: Population, lastFitness, unchangedCount: int, increaseR
         gen += 1
         [...]
 \end{lstlisting}
-
+    
 \end{itemize}
 \pagebreak
 \section{Esempio di esecuzione completa}
@@ -1178,7 +1178,7 @@ def startGA():
 def GATasks(processNumber, population):
     gen = 0
     maxGen = 400
-
+    
     unchangedCount = 0
     lastFitness = 0
     maxEqualsGen = 5
@@ -1205,11 +1205,11 @@ if __name__ == '__main__':
 \end{lstlisting}
 
 \section{Considerazioni finali}
-Siamo giunti alla conclusione di un lungo viaggio, alla fine del quale ci riteniamo soddisfatti di quanto ottenuto, in quanto tutti i membri non avevano mai avuto esperienze pregresse con la programmazione di agenti intelligenti. L'emozione ottenuta al primo corretto funzionamento sarà un ricordo indelebile nella memoria di noi tutti. Ma non solo le gioie rimarranno, rimarranno anche gli sforzi e l'esperienza ottenuti sbattendo la testa innumerevoli volte, ma senza mai perderci d'animo. Riteniamo che sono stati raggiunti gli obiettivi che ci eravamo prefissati, riuscire a raccomandare esercizi. Sicuramente la fitness andrebbe calibrata con l'aiuto di una figura professionale nell'ambito della logopedia. Un aspetto di cui andiamo particolarmente fieri è la gestione in multiprocessing dell'algoritmo che rende possibile, se necessario, l'esecuzione sulla stessa popolazione, ma variando i fatti di selezione, crossover e mutazione. Un ringraziamento speciale a tutti coloro che hanno contribuito alla realizzazione di questo progetto, dai Project Manager, ai colleghi, che ci hanno fornito l'idea di base, dai professori ai tutor per averci insegnato le competenze necessarie alla reale realizzazione dell'algoritmo. Infine un ringraziamento a chiunque abbia raggiunto queste parole.
+Siamo giunti alla conclusione di un lungo viaggio, alla fine del quale ci riteniamo soddisfatti di quanto ottenuto, in quanto tutti i membri non avevano mai avuto esperienze pregresse con la programmazione di agenti intelligenti. L'emozione ottenuta al primo corretto funzionamento sarà un ricordo indelebile nella memoria di noi tutti. Ma non solo le gioie rimarranno, rimarranno anche gli sforzi e l'esperienza ottenuti dando il meglio di noi stessi anche davanti alle difficoltà. Riteniamo che sono stati raggiunti gli obiettivi che ci eravamo prefissati, riuscire a raccomandare esercizi. Sicuramente la fitness andrebbe calibrata con l'aiuto di una figura professionale nell'ambito della logopedia. Un aspetto di cui andiamo particolarmente fieri è la gestione in multiprocessing dell'algoritmo che rende possibile, se necessario, l'esecuzione sulla stessa popolazione, ma variando i fatti di selezione, crossover e mutazione. Un ringraziamento speciale a tutti coloro che hanno contribuito alla realizzazione di questo progetto, dai Project Manager, ai colleghi, che ci hanno fornito l'idea di base, dai professori ai tutor per averci insegnato le competenze necessarie alla reale realizzazione dell'algoritmo. Infine un ringraziamento a chiunque abbia raggiunto queste parole.
 
 \subsection{Cosa abbiamo Imparato}
 Grazie a questo progetto abbiamo potuto provare e applicare le conoscenze che abbiamo acquisito durante il corso di \textit{Fondamenti di
-Intelligenza Artificiale}, e provare sulla pratica il nostro primo algoritmo genetico. Grazie a questa prova abbiamo imparato l'importanza dell'organizzazione e della stesura dei requisiti del progetto, prendendoci più tempo possibile per definire al meglio gli obiettivi da raggiungere e da realizzare. Sono state tante le ore passate solo all'idealizzazione dell'algoritmo generico, ancor più le ore dedicate allo studio della funzione di Fitness, per la scelta e lo scarto dei fattori da valutare per dare una raccomandazione mirata ed efficace. Ma ne è valsa la pena.
+Intelligenza Artificiale}, e provare sulla pratica il nostro primo algoritmo genetico. Grazie a questa prova abbiamo imparato l'importanza dell'organizzazione e della stesura dei requisiti del progetto, prendendoci più tempo possibile per definire al meglio gli obiettivi da raggiungere e da realizzare. Sono state tante le ore passate solo all'idealizzazione dell'algoritmo generico, ancor più le ore dedicate allo studio della funzione di Fitness, per la scelta e lo scarto dei fattori da valutare per dare una raccomandazione mirata ed efficace. Ma ne è valsa la pena. 
 \bigskip
 
 \textit{"Any sufficiently advanced technology is indistinguishable from magic"}.
@@ -1224,23 +1224,23 @@ Termini speciali utilizzati:
 \begin{itemize}
 
 
-    \item\textbf{Dataset}: Insieme di dati su cui un algoritmo opera durante l'analisi o l'addestramento.
+    \item\textbf{Dataset}: insieme di dati su cui un algoritmo opera durante l'analisi o l'addestramento.
 
-    \item\textbf{Database}: Archivio centralizzato di dati, accessibile per il recupero e la modifica delle informazioni salvate.
+    \item\textbf{Database}: archivio centralizzato di dati, accessibile per il recupero e la modifica delle informazioni salvate.
 
-    \item\textbf{Algoritmo Genetico}: Algoritmo di Intelligenza Artificiale che simula il processo evolutivo per tentare di risolvere problemi di ottimizzazione.
+    \item\textbf{Algoritmo Genetico}: algoritmo di Intelligenza Artificiale che simula il processo evolutivo per tentare di risolvere problemi di ottimizzazione.
 
-    \item\textbf{SQL}: Linguaggio standardizzato per la gestione di Database, utilizzato per eseguire operazioni sui dati.
+    \item\textbf{SQL}: linguaggio standardizzato per la gestione di Database, utilizzato per eseguire operazioni sui dati.
 
-    \item\textbf{Fitness}: Valore utilizzato negli Algoritmi Genetici per valutare la qualità di una soluzione proposta.
+    \item\textbf{Fitness}: valore utilizzato negli Algoritmi Genetici per valutare la qualità di una soluzione proposta.
 
-    \item\textbf{Dizionario}: Struttura dati in programmazione composta da associazioni chiave-valore.
+    \item\textbf{Dizionario}: struttura dati in programmazione composta da associazioni chiave-valore.
 
-    \item\textbf{Classe}: Costrutto in un linguaggio di programmazione utilizzato come modello per creare oggetti.
+    \item\textbf{Classe}: costrutto in un linguaggio di programmazione utilizzato come modello per creare oggetti.
 
-    \item\textbf{Algoritmo}: Soluzione strutturata a un problema, composta da operazioni e condizioni ben definite.
-
-    \item\textbf{Comprehension}: È una tecnica sintattica di Python che consente di creare liste, dizionari o insiemi in modo conciso ed efficiente in una singola riga di codice.
+    \item\textbf{Algoritmo}: soluzione strutturata a un problema, composta da operazioni e condizioni ben definite.
+    
+    \item\textbf{Comprehension}: è una tecnica sintattica di Python che consente di creare liste, dizionari o insiemi in modo conciso ed efficiente in una singola riga di codice.
 
 \end{itemize}
 
